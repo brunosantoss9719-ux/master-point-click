@@ -96,7 +96,7 @@ try{
   await evaluate(send,"document.querySelector('#new-game').click(); true");
   await sleep(650);
   const landscape=await evaluate(send,"(()=>({width:innerWidth,height:innerHeight,rotate:!!document.querySelector('#rotate'),game:getComputedStyle(document.querySelector('#game-screen')).display,appHeight:Math.round(document.querySelector('#app').getBoundingClientRect().height),dialogue:!document.querySelector('#dialogue').classList.contains('hidden'),audioButton:!!document.querySelector('#audio-btn')}))()");
-  if(landscape.rotate||landscape.game==='none'||!landscape.dialogue||!landscape.audioButton)throw new Error('Fluxo landscape não entrou no jogo');
+  if(landscape.rotate||landscape.game==='none'||!landscape.dialogue||!landscape.audioButton)throw new Error('Fluxo landscape não entrou no jogo: '+JSON.stringify(landscape));
   if(Math.abs(landscape.appHeight-landscape.height)>2)throw new Error('Viewport cortado: app='+landscape.appHeight+', viewport='+landscape.height);
   await capture(send,'artifacts/mobile-landscape.png');
 
