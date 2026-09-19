@@ -55,7 +55,7 @@ async function capture(send,file){
 
 async function waitForDom(send){
   for(let i=0;i<80;i++){
-    const ready=await evaluate(send,"document.readyState!=='loading' && !!document.querySelector('#new-game')");
+    const ready=await evaluate(send,"document.readyState==='complete' && !!document.querySelector('#new-game')");
     if(ready)return;
     await sleep(100);
   }
@@ -99,6 +99,15 @@ try{
   const landscape=await evaluate(send,"(()=>({width:innerWidth,height:innerHeight,rotate:!!document.querySelector('#rotate'),game:getComputedStyle(document.querySelector('#game-screen')).display,appHeight:Math.round(document.querySelector('#app').getBoundingClientRect().height),dialogue:!document.querySelector('#dialogue').classList.contains('hidden'),audioButton:!!document.querySelector('#audio-btn')}))()");
   if(landscape.rotate||landscape.game==='none'||!landscape.dialogue||!landscape.audioButton)throw new Error('Fluxo landscape não entrou no jogo: '+JSON.stringify(landscape));
   if(Math.abs(landscape.appHeight-landscape.height)>2)throw new Error('Viewport cortado: app='+landscape.appHeight+', viewport='+landscape.height);
+
+  let daniel=null;
+  for(let i=0;i<12;i++){
+    daniel=await evaluate(send,"(()=>{const el=document.querySelector('#character');const sprite=el?.querySelector('.sprite');return {person:el?.dataset.person||'',show:!!el?.classList.contains('show'),background:sprite?getComputedStyle(sprite).backgroundImage:''}})()");
+    if(daniel.person==='daniel'&&daniel.show&&daniel.background.includes('daniel-vorcaro.webp'))break;
+    await evaluate(send,"document.querySelector('#dialogue').click(); true");
+    await sleep(180);
+  }
+  if(!daniel||daniel.person!=='daniel'||!daniel.show||!daniel.background.includes('daniel-vorcaro.webp'))throw new Error('Retrato novo do Daniel não apareceu: '+JSON.stringify(daniel));
   await capture(send,'artifacts/mobile-landscape.png');
 
   await send('Emulation.setDeviceMetricsOverride',{
