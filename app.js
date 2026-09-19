@@ -321,8 +321,8 @@ if(globalThis.navigator?.serviceWorker){
 }
 
 function launchGame(action){
-  audio.start();
-  enterImmersive();
+  try{audio.start()}catch{}
+  try{enterImmersive()}catch{}
   action();
   updateAudioButton();
 }
@@ -413,7 +413,7 @@ function showEnding(){
 
 dialogue.addEventListener('click',e=>{if(!e.target.closest('.choice'))nextLine()});$('#scene').addEventListener('click',()=>{if(!dialogue.classList.contains('hidden'))nextLine()});
 $('#new-game').onclick=()=>launchGame(reset);$('#continue-game').onclick=()=>launchGame(()=>{const saved=load();if(saved){state={...freshState(),...saved};begin()}});$('#start-sources').onclick=openAbout;
-$('#phone-btn').onclick=openPhone;$('#inventory-btn').onclick=openInventory;$('#dossier-btn').onclick=openDossier;$('#audio-btn').onclick=()=>{audio.start();audio.toggle();updateAudioButton()};$('#menu-btn').onclick=openMenu;$('#modal-close').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
+$('#phone-btn').onclick=openPhone;$('#inventory-btn').onclick=openInventory;$('#dossier-btn').onclick=openDossier;$('#audio-btn').onclick=()=>{try{audio.start();audio.toggle()}catch{}updateAudioButton()};$('#menu-btn').onclick=openMenu;$('#modal-close').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if((e.key===' '||e.key==='Enter')&&!dialogue.classList.contains('hidden'))nextLine()});
 
 updateAudioButton();const saved=load();if(saved?.started){$('#continue-game').hidden=false}
