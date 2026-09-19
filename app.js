@@ -1,4 +1,5 @@
 const SAVE_KEY = 'master-ultima-chamada-v1';
+const AUDIO_PREF_KEY = 'master-ultima-chamada-audio-muted-v1';
 
 const dossier = [
   {id:'brb',tag:'DOCUMENTADO',title:'O anúncio do BRB',text:'Em março de 2025, o BRB anunciou a aquisição de 49% das ações ordinárias e 100% das preferenciais do Master — 58% do capital total — sujeita a aprovações.',source:'Reuters, 29 abr. 2025',url:'https://www.reuters.com/business/finance/brazils-brb-close-completing-due-diligence-acquire-banco-master-2025-04-29/'},
@@ -147,6 +148,168 @@ let state=freshState(), queue=[], afterDialogue=null, typing=false, typeTimer=nu
 
 const $=s=>document.querySelector(s), start=$('#start-screen'), game=$('#game-screen'), dialogue=$('#dialogue'), lineEl=$('#line'), speakerEl=$('#speaker'), choicesEl=$('#choices'), character=$('#character');
 
+function readMutedPreference(){
+  try{return localStorage.getItem(AUDIO_PREF_KEY)==='1'}catch{return false}
+}
+
+const audio=(()=>{
+  let ctx=null,master=null,musicGain=null,fxGain=null,ambienceGain=null,musicTimer=null,chordIndex=0,started=false,muted=readMutedPreference();
+  const progression=[
+    [60,64,67,71],
+    [57,60,64,67],
+    [62,65,69,72],
+    [55,59,62,65]
+  ];
+  const speakerPitch={DANIEL:168,HELENA:214,'OTÁVIO':148,CAIO:244,INVESTIGADORA:184,NARRADOR:126};
+
+  function ensure(){
+    if(ctx)return true;
+    const AudioCtor=globalThis.AudioContext||globalThis.webkitAudioContext;
+    if(!AudioCtor)return false;
+    ctx=new AudioCtor();
+    master=ctx.createGain();musicGain=ctx.createGain();fxGain=ctx.createGain();ambienceGain=ctx.createGain();
+    master.gain.value=muted?0:.72;musicGain.gain.value=.23;fxGain.gain.value=.8;ambienceGain.gain.value=.16;
+    musicGain.connect(master);fxGain.connect(master);ambienceGain.connect(master);master.connect(ctx.destination);
+    return true;
+  }
+
+  function midi(note){return 440*Math.pow(2,(note-69)/12)}
+
+  function softNote(note,when,duration,gainValue,type='triangle',destination=musicGain){
+    const osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter();
+    osc.type=type;osc.frequency.setValueAtTime(midi(note),when);osc.detune.setValueAtTime(((note%5)-2)*2,when);
+    filter.type='lowpass';filter.frequency.setValueAtTime(1450,when);filter.Q.value=.4;
+    gain.gain.setValueAtTime(.0001,when);
+    gain.gain.exponentialRampToValueAtTime(Math.max(.0002,gainValue),when+.22);
+    gain.gain.setValueAtTime(Math.max(.0002,gainValue*.86),when+Math.max(.3,duration-.55));
+    gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
+    osc.connect(filter);filter.connect(gain);gain.connect(destination);
+    osc.start(when);osc.stop(when+duration+.04);
+  }
+
+  function scheduleChord(){
+    if(!ctx||muted)return;
+    const when=ctx.currentTime+.035,chord=progression[chordIndex++%progression.length],duration=4.05;
+    chord.forEach((note,i)=>softNote(note,when,duration,.013-(i*.0012)));
+    softNote(chord[0]-12,when+.05,2.7,.019,'sine');
+    softNote(chord[1]-12,when+2.03,1.65,.012,'sine');
+  }
+
+  function startAmbience(){
+    const seconds=1.8,length=Math.floor(ctx.sampleRate*seconds),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
+    for(let i=0;i<length;i++){
+      const drift=Math.sin(i/1900)*.07;
+      data[i]=(Math.random()*2-1)*(.38+drift);
+    }
+    const noise=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();
+    noise.buffer=buffer;noise.loop=true;filter.type='lowpass';filter.frequency.value=1200;filter.Q.value=.2;gain.gain.value=.035;
+    noise.connect(filter);filter.connect(gain);gain.connect(ambienceGain);noise.start();
+  }
+
+  function start(){
+    if(!ensure())return;
+    ctx.resume?.().catch?.(()=>{});
+    if(started)return;
+    started=true;startAmbience();scheduleChord();
+    musicTimer=setInterval(scheduleChord,3950);
+  }
+
+  function blip(speaker,charCode=0){
+    if(!ctx||muted||ctx.state==='suspended')return;
+    const now=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain(),base=speakerPitch[speaker]||198;
+    osc.type='triangle';osc.frequency.setValueAtTime(base+(charCode%7)*3,now);
+    gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.017,now+.004);gain.gain.exponentialRampToValueAtTime(.0001,now+.028);
+    osc.connect(gain);gain.connect(fxGain);osc.start(now);osc.stop(now+.032);
+  }
+
+  function toggle(){
+    muted=!muted;
+    try{localStorage.setItem(AUDIO_PREF_KEY,muted?'1':'0')}catch{}
+    if(master){
+      const now=ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setTargetAtTime(muted?0:.72,now,.025);
+      if(!muted&&!started)start();
+      if(!muted&&started)scheduleChord();
+    }
+    return muted;
+  }
+
+  function isMuted(){return muted}
+  return {start,blip,toggle,isMuted};
+})();
+
+function updateAudioButton(){
+  const button=$('#audio-btn');if(!button)return;
+  const muted=audio.isMuted();
+  button.classList[muted?'add':'remove']('muted');
+  button.setAttribute('aria-pressed',muted?'true':'false');
+  button.setAttribute('aria-label',muted?'Ligar som':'Desligar som');
+}
+
+function lockLandscape(){
+  const orientation=globalThis.screen?.orientation;
+  if(!orientation?.lock)return;
+  try{
+    const result=orientation.lock('landscape');
+    result?.catch?.(()=>{});
+  }catch{}
+}
+
+function enterImmersive(){
+  const root=document.documentElement;
+  if(!root)return;
+  if(!document.fullscreenElement&&root.requestFullscreen){
+    try{
+      const request=root.requestFullscreen({navigationUI:'hide'});
+      request?.then?.(lockLandscape)?.catch?.(()=>lockLandscape());
+      return;
+    }catch{}
+  }
+  lockLandscape();
+}
+
+function syncViewport(){
+  const root=document.documentElement;if(!root?.style?.setProperty)return;
+  const height=globalThis.visualViewport?.height||globalThis.innerHeight;
+  if(height)root.style.setProperty('--app-height',Math.round(height)+'px');
+}
+
+globalThis.visualViewport?.addEventListener?.('resize',syncViewport);
+globalThis.visualViewport?.addEventListener?.('scroll',syncViewport);
+globalThis.addEventListener?.('resize',syncViewport);
+globalThis.addEventListener?.('orientationchange',()=>setTimeout(syncViewport,80));
+syncViewport();
+
+let deferredInstallPrompt=null;
+globalThis.addEventListener?.('beforeinstallprompt',event=>{
+  event.preventDefault();
+  deferredInstallPrompt=event;
+  const button=$('#install-app');if(button)button.hidden=false;
+});
+globalThis.addEventListener?.('appinstalled',()=>{
+  deferredInstallPrompt=null;
+  const button=$('#install-app');if(button)button.hidden=true;
+});
+const installButton=$('#install-app');
+if(installButton)installButton.onclick=async()=>{
+  if(!deferredInstallPrompt)return;
+  deferredInstallPrompt.prompt();
+  try{await deferredInstallPrompt.userChoice}catch{}
+  deferredInstallPrompt=null;installButton.hidden=true;
+};
+
+if(globalThis.navigator?.serviceWorker){
+  globalThis.addEventListener?.('load',()=>globalThis.navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+
+function launchGame(action){
+  audio.start();
+  enterImmersive();
+  action();
+  updateAudioButton();
+}
+
 function save(){localStorage.setItem(SAVE_KEY,JSON.stringify(state)); updateBadges()}
 function load(){try{return JSON.parse(localStorage.getItem(SAVE_KEY))}catch{return null}}
 function reset(){state=freshState(); localStorage.removeItem(SAVE_KEY); begin()}
@@ -204,7 +367,7 @@ function nextLine(){
   if(!item){dialogue.classList.add('hidden');choicesEl.innerHTML='';hideCharacter();const cb=afterDialogue;afterDialogue=null;if(cb)cb();return}
   const [speaker,text]=item; speakerEl.textContent=speaker;showCharacter(speaker);typeText(text)
 }
-function typeText(text){clearInterval(typeTimer);typing=true;currentFullText=text;lineEl.textContent='';choicesEl.innerHTML='';$('#dialogue-hint').textContent='toque para continuar';let i=0;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;if(reduced){finishTyping();return}typeTimer=setInterval(()=>{lineEl.textContent=text.slice(0,++i);if(i>=text.length)finishTyping()},15)}
+function typeText(text){clearInterval(typeTimer);typing=true;currentFullText=text;lineEl.textContent='';choicesEl.innerHTML='';$('#dialogue-hint').textContent='toque para continuar';let i=0;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;if(reduced){finishTyping();return}typeTimer=setInterval(()=>{lineEl.textContent=text.slice(0,++i);const char=text[i-1];if(i%3===0&&char&&/\S/.test(char))audio.blip(speakerEl.textContent,char.charCodeAt(0));if(i>=text.length)finishTyping()},15)}
 function finishTyping(){clearInterval(typeTimer);lineEl.textContent=currentFullText;typing=false}
 function showCharacter(speaker){const map={DANIEL:'daniel',HELENA:'helena',OTÁVIO:'otavio',CAIO:'caio',INVESTIGADORA:'investigadora'};const person=map[speaker];if(!person){hideCharacter();return}character.dataset.person=person;character.className='show '+(person==='daniel'?'':'right')}
 function hideCharacter(){character.className='';}
@@ -232,8 +395,8 @@ function showEnding(){
 }
 
 dialogue.addEventListener('click',e=>{if(!e.target.closest('.choice'))nextLine()});$('#scene').addEventListener('click',()=>{if(!dialogue.classList.contains('hidden'))nextLine()});
-$('#new-game').onclick=reset;$('#continue-game').onclick=()=>{const saved=load();if(saved){state={...freshState(),...saved};begin()}};$('#start-sources').onclick=openAbout;
-$('#phone-btn').onclick=openPhone;$('#inventory-btn').onclick=openInventory;$('#dossier-btn').onclick=openDossier;$('#menu-btn').onclick=openMenu;$('#modal-close').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
+$('#new-game').onclick=()=>launchGame(reset);$('#continue-game').onclick=()=>launchGame(()=>{const saved=load();if(saved){state={...freshState(),...saved};begin()}});$('#start-sources').onclick=openAbout;
+$('#phone-btn').onclick=openPhone;$('#inventory-btn').onclick=openInventory;$('#dossier-btn').onclick=openDossier;$('#audio-btn').onclick=()=>{audio.start();audio.toggle();updateAudioButton()};$('#menu-btn').onclick=openMenu;$('#modal-close').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if((e.key===' '||e.key==='Enter')&&!dialogue.classList.contains('hidden'))nextLine()});
 
-const saved=load();if(saved?.started){$('#continue-game').hidden=false}
+updateAudioButton();const saved=load();if(saved?.started){$('#continue-game').hidden=false}
