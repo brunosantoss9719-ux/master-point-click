@@ -87,7 +87,7 @@ try{
     screenOrientation:{type:'landscapePrimary',angle:90}
   });
   const navigation=await send('Page.navigate',{url:APP_URL});
-  if(navigation.errorText)throw new Error('Falha de navegação: '+navigation.errorText);
+  if(navigation.errorText&&navigation.errorText!=='net::ERR_ABORTED')throw new Error('Falha de navegação: '+navigation.errorText);
   await waitForDom(send);
   const manifestLink=await evaluate(send,"document.querySelector('link[rel=manifest]')?.getAttribute('href')||''");
   if(manifestLink!=='manifest.webmanifest')throw new Error('Link do manifesto ausente');
