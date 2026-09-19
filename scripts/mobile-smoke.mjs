@@ -125,6 +125,17 @@ try{
   if(!toffoli||toffoli.person!=='toffoli'||!toffoli.show||!toffoli.background.includes('toffoli.webp')||!toffoli.scene.includes('stf-office.webp'))throw new Error('Arco Toffolinho não apareceu: '+JSON.stringify(toffoli));
   await capture(send,'artifacts/mobile-toffolinho.png');
 
+  await evaluate(send,"enterScene(8); true");
+  await sleep(300);
+  let mendonca=null;
+  for(let i=0;i<8;i++){
+    mendonca=await evaluate(send,"(()=>{const el=document.querySelector('#character');const sprite=el?.querySelector('.sprite');return {person:el?.dataset.person||'',show:!!el?.classList.contains('show'),background:sprite?getComputedStyle(sprite).backgroundImage:'',scene:document.querySelector('#scene-bg')?.getAttribute('src')||''}})()");
+    if(mendonca.person==='mendonca'&&mendonca.show&&mendonca.background.includes('andre-mendonca.webp')&&mendonca.scene.includes('stf-office.webp'))break;
+    await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(160);
+  }
+  if(!mendonca||mendonca.person!=='mendonca'||!mendonca.show||!mendonca.background.includes('andre-mendonca.webp'))throw new Error('Arco Mendonça não apareceu: '+JSON.stringify(mendonca));
+  await capture(send,'artifacts/mobile-mendonca.png');
+
   for(let i=0;i<14;i++){
     const hidden=await evaluate(send,"document.querySelector('#dialogue').classList.contains('hidden')");
     if(hidden)break;
@@ -137,7 +148,7 @@ try{
     await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(80);
   }
   const puzzle=await evaluate(send,"(()=>({open:!document.querySelector('#modal').classList.contains('hidden'),cards:document.querySelectorAll('.puzzle-card').length,title:document.querySelector('#modal-title').textContent,overflow:document.querySelector('.modal-panel').scrollHeight>document.querySelector('.modal-panel').clientHeight}))()");
-  if(!puzzle.open||puzzle.cards<3||puzzle.title!=='Três voltas da chave')throw new Error('Puzzle mobile não abriu corretamente: '+JSON.stringify(puzzle));
+  if(!puzzle.open||puzzle.cards<4||puzzle.title!=='A fronteira do fluxo')throw new Error('Puzzle Mendonça mobile não abriu corretamente: '+JSON.stringify(puzzle));
   await capture(send,'artifacts/mobile-puzzle.png');
 
   await send('Emulation.setDeviceMetricsOverride',{
@@ -154,7 +165,7 @@ try{
   const swReady=await evaluate(send,"Promise.race([navigator.serviceWorker?.ready.then(()=>true).catch(()=>false),new Promise(resolve=>setTimeout(()=>resolve(false),5000))])");
   if(!swReady)throw new Error('Service worker não ficou pronto em 5s');
 
-  console.log('PASS mobile smoke:',JSON.stringify({landscape,toffoli,portrait,swReady}));
+  console.log('PASS mobile smoke:',JSON.stringify({landscape,toffoli,mendonca,puzzle,portrait,swReady}));
   ws.close();
 }finally{
   chrome.kill('SIGTERM');

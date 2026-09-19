@@ -19,3 +19,12 @@ Puzzles do arco: separar condições pendentes do acordo BRB, reconstruir a cron
 Toffolinho é uma caricatura satírica controlável. A intenção de “ferrar tudo” estrutura as escolhas e o humor, mas não é apresentada como fato. Decisões, datas e relações documentadas aparecem no Dossiê; pensamentos e diálogos de gabinete são dramatização.
 
 Puzzles do arco: ordenar níveis de acesso aos autos, montar uma cadeia de custódia rastreável e cruzar as relações reportadas do Tayayá. Falhar nunca bloqueia a história, mas aumenta a pressão; resolver sem erro melhora a confiança.
+
+## Arco III — André Mendonça
+
+9. **O Fluxo (19/02/2026):** a perícia de cerca de 100 aparelhos volta ao fluxo ordinário da PF, enquanto novas investigações continuam sob autorização do relator.
+10. **A Pergunta (24/08/2026):** mensagens que citam a direção da PF e a PGR levam a uma reunião reservada e a um relatório sobre autoridades.
+11. **A Caneta (8–10/09/2026):** Mendonça afasta Andrei Rodrigues; Fachin suspende a medida e o conflito chega ao plenário.
+12. **A Senha (19/09/2026):** o gabinete não consegue abrir a cópia criptografada de 500 GB e pede ajuda técnica à própria PF.
+
+Puzzles do arco: definir a fronteira de competência, reconstruir o rastro mensagem–relatório, ordenar a ruptura institucional e remontar a custódia digital. O arco termina no estado documentado em 19 de setembro de 2026; o conflito permanecia aberto.

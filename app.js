@@ -14,7 +14,11 @@ const dossier = [
   {id:'sigilo_stf',arc:'toffoli',tag:'REPORTADO',title:'O processo sob sigilo máximo',text:'Ao assumir o caso no fim de 2025, Dias Toffoli impôs ao processo o nível mais alto de sigilo usado no STF. A condução e o acesso aos autos passaram a ser alvo de críticas públicas.',source:'CartaCapital, 13 fev. 2026',url:'https://www.cartacapital.com.br/politica/a-dimensao-do-sigilo-sob-o-qual-andre-mendonca-assume-o-caso-master/'},
   {id:'provas_lacradas',arc:'toffoli',tag:'DOCUMENTADO',title:'A caixa lacrada',text:'Na segunda fase da Compliance Zero, autorizada por Toffoli, materiais apreendidos foram enviados lacrados ao STF antes de sua análise pericial. A ordem virou símbolo da disputa sobre quem controlaria as provas.',source:'STF — Petição 15.556',url:'https://digital.stf.jus.br/'},
   {id:'tayaya',arc:'toffoli',tag:'REPORTADO',title:'O resort entrou nos autos',text:'Reportagens revelaram que empresa ligada à família Toffoli teve participação no resort Tayayá e que um fundo ligado ao cunhado de Vorcaro entrou no empreendimento. Toffoli negou favorecimento e irregularidade.',source:'Folha, 12 mar. 2026',url:'https://www1.folha.uol.com.br/mercado/2026/03/toffoli-deve-se-afastar-de-todos-os-julgamentos-do-caso-master.shtml'},
-  {id:'redistribuicao',arc:'toffoli',tag:'DOCUMENTADO',title:'Livre redistribuição',text:'Em 12 de fevereiro de 2026, após reunião dos ministros, Toffoli pediu o envio dos feitos à Presidência do STF. Os atos anteriores foram declarados válidos e o sorteio eletrônico levou o caso a André Mendonça.',source:'Nota do STF reproduzida pelo PlatôBR, 12 fev. 2026',url:'https://platobr.com.br/em-reuniao-dos-ministros-do-stf-toffoli-deixa-relatoria-do-processo-sobre-o-master'}
+  {id:'redistribuicao',arc:'toffoli',tag:'DOCUMENTADO',title:'Livre redistribuição',text:'Em 12 de fevereiro de 2026, após reunião dos ministros, Toffoli pediu o envio dos feitos à Presidência do STF. Os atos anteriores foram declarados válidos e o sorteio eletrônico levou o caso a André Mendonça.',source:'Nota do STF reproduzida pelo PlatôBR, 12 fev. 2026',url:'https://platobr.com.br/em-reuniao-dos-ministros-do-stf-toffoli-deixa-relatoria-do-processo-sobre-o-master'},
+  {id:'fluxo_pf',arc:'mendonca',tag:'DOCUMENTADO',title:'Fluxo ordinário, porta controlada',text:'Em 19 de fevereiro, Mendonça reduziu o sigilo, liberou à PF a perícia de cerca de 100 aparelhos pelo fluxo ordinário e restringiu o acesso aos agentes diretamente envolvidos. Novas investigações continuaram dependentes de autorização prévia do relator.',source:'CartaCapital, 19 fev. 2026',url:'https://www.cartacapital.com.br/justica/mendonca-reduz-sigilo-e-da-mais-autonomia-a-pf-no-caso-master/'},
+  {id:'relatorio_pf',arc:'mendonca',tag:'REPORTADO',title:'A pergunta virou relatório',text:'Mendonça afirmou ter recebido material da PF em agosto e ordenado providências porque mensagens mencionavam o diretor-geral Andrei Rodrigues e o procurador-geral Paulo Gonet. O relatório também identificou Alexandre de Moraes como interlocutor de Vorcaro; os citados contestaram suspeitas e irregularidades.',source:'Folha, 15 set. 2026',url:'https://www1.folha.uol.com.br/poder/2026/09/mendonca-reage-a-moraes-e-diz-que-nao-ha-irregularidade-em-relatorio-da-pf.shtml'},
+  {id:'afastamento_pf',arc:'mendonca',tag:'DOCUMENTADO',title:'A chefia afastada — e restabelecida',text:'Em 8 de setembro, Mendonça determinou o afastamento de Andrei Rodrigues da direção-geral da PF. No dia seguinte, o presidente do STF, Edson Fachin, suspendeu a decisão e autorizou seu retorno. A medida provocou forte reação dentro do tribunal.',source:'UOL, 15 set. 2026',url:'https://noticias.uol.com.br/politica/ultimas-noticias/2026/09/15/gilmar-critica-afastamento-de-chefe-da-pf-como-afastar-diretor-da-nasa.htm'},
+  {id:'copia_500gb',arc:'mendonca',tag:'REPORTADO',title:'A cópia que não abriu',text:'Em 19 de setembro, Mendonça e Luiz Fux informaram à PF que seus gabinetes não conseguiram acessar a cópia criptografada, de cerca de 500 GB, do celular de Vorcaro. A PF disse manter seguros o aparelho e a extração originais; Mendonça afirmou guardar sua cópia lacrada como contraprova.',source:'UOL, 19 set. 2026',url:'https://noticias.uol.com.br/politica/ultimas-noticias/2026/09/19/mendonca-e-fux-pedem-ajuda-a-pf-para-acessar-copia-de-celular-de-vorcaro.ghtm'}
 ];
 
 const inventoryCatalog = {
@@ -22,7 +26,8 @@ const inventoryCatalog = {
   nota:{icon:'◫',name:'Nota ao mercado',desc:'Curta o bastante para caber em qualquer interpretação.'},
   passagem:{icon:'✈',name:'Rota para Dubai',desc:'Uma viagem pode ser agenda, saída ou manchete.'},
   celular:{icon:'▣',name:'Celular',desc:'Tudo chega aqui. Algumas coisas ficam.'},
-  cracha:{icon:'◇',name:'Crachá recolhido',desc:'Um retângulo de plástico já sem porta para abrir.'}
+  cracha:{icon:'◇',name:'Crachá recolhido',desc:'Um retângulo de plástico já sem porta para abrir.'},
+  drive:{icon:'▥',name:'Cópia criptografada',desc:'Quinhentos gigabytes. Uma chave ausente.'}
 };
 
 const scenes = [
@@ -186,6 +191,74 @@ const scenes = [
         {text:'Insistir em permanecer — até a reunião decidir.',effects:{pressure:3,exposure:3,trust:-2},flag:'resistiu_saida',reply:[['TOFFOLI','Não há impedimento. Os atos são válidos.'],['NARRADOR','Os colegas concordam com a validade dos atos — e a noite termina com o envio do caso para livre redistribuição.'],['SISTEMA','Relator sorteado: André Mendonça.'],['TOFFOLI','Então chamem de decisão institucional.']]}
       ],ending:'toffoli'}
     ]
+  },
+  {
+    chapter:'MENDONÇA I · O FLUXO', date:'19 FEV 2026 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(4,35,55,.2)',
+    intro:[
+      ['NARRADOR','A chave chega ao gabinete de André Mendonça com o peso dos atos preservados e das críticas ainda frescas.'],
+      ['MENDONÇA','A investigação precisa andar. Mas andar não é correr sem mapa.'],
+      ['CHEFE DE GABINETE','Cerca de cem aparelhos esperam perícia. A PF quer o fluxo normal de volta.'],
+      ['NARRADOR','As decisões públicas são documentadas. As conversas de gabinete deste arco são dramatização.']
+    ],
+    hotspots:[
+      {id:'autos_recebidos',label:'Autos redistribuídos',x:69,y:48,lines:[['CHEFE DE GABINETE','O processo veio inteiro. As responsabilidades, em caixas separadas.'],['MENDONÇA','No Supremo, uma caixa nunca chega sem corredor.']]},
+      {id:'nivel_sigilo',label:'Controle de acesso',x:84,y:52,lines:[['CHEFE DE GABINETE','O sigilo máximo virou parte da crise.'],['MENDONÇA','Então reduzimos o cadeado sem abandonar a porta.']]},
+      {id:'despacho_fluxo',label:'Primeiro despacho',x:53,y:55,required:true,dossier:'fluxo_pf',lines:[['CHEFE DE GABINETE','Defina a fronteira: o que volta ao fluxo policial e o que ainda depende do relator?']],puzzle:{type:'select',title:'A fronteira do fluxo',kicker:'PUZZLE · COMPETÊNCIA',prompt:'Marque apenas o que a PF foi autorizada a fazer no fluxo já existente.',options:[{text:'Periciar os aparelhos apreendidos',correct:true},{text:'Compartilhar dados entre agentes diretamente envolvidos',correct:true},{text:'Abrir qualquer nova investigação sem consulta',correct:false},{text:'Divulgar publicamente o conteúdo dos dispositivos',correct:false}],success:'A perícia volta ao fluxo; novas frentes continuam passando pelo relator.'},choices:[
+        {text:'Liberar a perícia e exigir autorização para novas frentes.',effects:{trust:2,pressure:1,exposure:1},flag:'fluxo_controlado',reply:[['MENDONÇA','Perícia no fluxo ordinário. Nova investigação, pedido fundamentado.'],['NARRADOR','DOCUMENTADO: foi essa a arquitetura do despacho de 19 de fevereiro.']]},
+        {text:'Centralizar também cada etapa da perícia.',effects:{trust:-1,pressure:2,exposure:-1},flag:'centralizou_pericia',reply:[['MENDONÇA','Nada se move sem nova conferência do gabinete.'],['CHEFE DE GABINETE','Mais controle. E mais um gargalo.'],['NARRADOR','DRAMATIZAÇÃO: na decisão real, a perícia dos aparelhos voltou ao fluxo ordinário da PF.']]}
+      ],advance:true}
+    ]
+  },
+  {
+    chapter:'MENDONÇA II · A PERGUNTA', date:'24 AGO 2026 · BRASÍLIA', bg:'assets/pf-lab.webp', tint:'rgba(0,30,48,.18)',
+    intro:[
+      ['NARRADOR','Seis meses de perícias transformam aparelhos em conversas, conversas em nomes e nomes em problemas de competência.'],
+      ['DELEGADA','Ministro, o material menciona “Paulo” e “Andrei”. Também há diálogos atribuídos a outras autoridades.'],
+      ['MENDONÇA','Quando a investigação cita quem a conduz, o organograma vira evidência.'],
+      ['DELEGADA','E qualquer pergunta parece interferência.']
+    ],
+    hotspots:[
+      {id:'monitores_pf',label:'Monitores forenses',x:62,y:37,lines:[['NARRADOR','Os dados não chegam em frases completas. Chegam em fragmentos, horários, imagens e lacunas.'],['MENDONÇA','Uma lacuna também precisa de cadeia de custódia.']]},
+      {id:'armario_evidencias',label:'Armário de evidências',x:88,y:28,lines:[['DELEGADA','Originais preservados. Cópias de trabalho registradas.'],['MENDONÇA','Que cada mão deixe uma assinatura.']]},
+      {id:'relatorio_nomes',label:'Relatório preliminar',x:42,y:67,required:true,dossier:'relatorio_pf',lines:[['DELEGADA','Antes da ordem, reconstrua o caminho que levou uma mensagem a se tornar crise institucional.']],puzzle:{type:'match',title:'Da mensagem ao relatório',kicker:'PUZZLE · RASTRO',prompt:'Ligue cada etapa ao que ela produziu.',pairs:[{left:'Mensagem recuperada',right:'Menções a “Paulo” e “Andrei”'},{left:'Delegados chamados',right:'Ordem para detalhar os achados'},{left:'Relatório entregue',right:'Citações a autoridades e novas providências'}],success:'O conflito nasce quando o rastro técnico alcança o topo do organograma.'},choices:[
+        {text:'Ouvir diretamente os delegados e fixar prazo de 72 horas.',effects:{pressure:2,exposure:2,trust:0},flag:'chamou_delegados',reply:[['MENDONÇA','Tragam os delegados. Compartimentação máxima. Quero o quadro em setenta e duas horas.'],['NARRADOR','REPORTADO: Mendonça afirmou ter adotado contato direto para preservar sigilo e funcionalidade.']]},
+        {text:'Encaminhar tudo pela direção da PF e pela PGR.',effects:{pressure:1,exposure:-1,trust:2},flag:'via_institucional',reply:[['MENDONÇA','A cadeia institucional também é uma cadeia de custódia. Formalizem pelos canais.'],['DELEGADA','Mesmo quando os canais aparecem nas mensagens?'],['NARRADOR','DRAMATIZAÇÃO: o caminho documentado incluiu o contato direto com os delegados.']]}
+      ],advance:true}
+    ]
+  },
+  {
+    chapter:'MENDONÇA III · A CANETA', date:'8–10 SET 2026 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(65,0,15,.24)',
+    intro:[
+      ['NARRADOR','O relatório atravessa o tribunal. A pergunta sobre a PF vira uma decisão contra a chefia da PF.'],
+      ['CHEFE DE GABINETE','A minuta afasta Andrei Rodrigues. A Segunda Turma começou a votar.'],
+      ['MENDONÇA','Se o comando aparece no objeto da apuração, a cautela precisa alcançar o comando.'],
+      ['CHEFE DE GABINETE','E se a cautela parecer tomada de poder?']
+    ],
+    hotspots:[
+      {id:'votos_turma',label:'Painel da Segunda Turma',x:62,y:28,lines:[['CHEFE DE GABINETE','Dois votos acompanharam a medida antes do pedido de vista.'],['MENDONÇA','No processo eletrônico, até o silêncio tem horário.']]},
+      {id:'telefone_fachin',label:'Ligação da Presidência',x:88,y:51,lines:[['CHEFE DE GABINETE','A Presidência quer esclarecimentos. A AGU pediu o retorno imediato do diretor.'],['MENDONÇA','A caneta que pergunta é a mesma que pode suspender.']]},
+      {id:'ordem_afastamento',label:'Ordem de afastamento',x:72,y:55,required:true,dossier:'afastamento_pf',lines:[['NARRADOR','Quatro datas. Uma escalada. Coloque a crise na ordem.']],puzzle:{type:'order',title:'Quatro dias de ruptura',kicker:'PUZZLE · CRONOLOGIA INSTITUCIONAL',prompt:'Toque nos acontecimentos do primeiro ao último.',options:[{id:'debate',text:'15 SET · A medida vira confronto público no STF'},{id:'reuniao',text:'24 AGO · Delegados levam os achados ao relator'},{id:'fachin',text:'9 SET · Fachin suspende o afastamento'},{id:'afasta',text:'8 SET · Mendonça afasta o diretor-geral'}],solution:['reuniao','afasta','fachin','debate'],success:'Uma reunião reservada virou afastamento, reversão e confronto aberto.'},choices:[
+        {text:'Afastar cautelarmente a direção da PF.',effects:{pressure:3,exposure:3,trust:-2},flag:'afastou_andrei',reply:[['MENDONÇA','Assino o afastamento cautelar. A apuração não pode depender de quem aparece nela.'],['NARRADOR','DOCUMENTADO: a ordem foi dada em 8 de setembro e suspensa por Fachin no dia seguinte.']]},
+        {text:'Levar a suspeita diretamente ao plenário.',effects:{pressure:2,exposure:2,trust:1},flag:'levou_plenario',reply:[['MENDONÇA','Não afasto sozinho. Remeto ao plenário com urgência.'],['CHEFE DE GABINETE','Menos impacto imediato. Mais testemunhas.'],['NARRADOR','DRAMATIZAÇÃO: Mendonça determinou o afastamento; Fachin suspendeu a medida no dia seguinte.']]}
+      ],advance:true}
+    ]
+  },
+  {
+    chapter:'MENDONÇA IV · A SENHA', date:'19 SET 2026 · BRASÍLIA', bg:'assets/pf-lab.webp', tint:'rgba(0,18,45,.25)',
+    intro:[
+      ['NARRADOR','Onze dias depois da ordem contra a chefia policial, uma cópia do celular de Vorcaro repousa no gabinete. Quinhentos gigabytes. Lacrada. Criptografada.'],
+      ['CHEFE DE GABINETE','O arquivo chegou. Não abre. O gabinete de Fux encontrou o mesmo problema.'],
+      ['MENDONÇA','A prova está aqui. O acesso, não.'],
+      ['CHEFE DE GABINETE','Para abrir, precisamos pedir ajuda à PF.']
+    ],onEnter:()=>addItem('drive'),
+    hotspots:[
+      {id:'original_pf',label:'Extração original',x:15,y:45,lines:[['DELEGADA','O aparelho e a extração original permanecem sob guarda técnica da PF.'],['MENDONÇA','O original fica onde a discussão começou.']]},
+      {id:'copia_lacrada',label:'Cópia lacrada',x:79,y:70,lines:[['CHEFE DE GABINETE','O senhor disse que a manteve lacrada como contraprova.'],['MENDONÇA','Uma cópia intocada prova o que não fizemos. Não revela o que precisamos ler.']]},
+      {id:'terminal_cripto',label:'Terminal criptografado',x:58,y:39,required:true,dossier:'copia_500gb',lines:[['SISTEMA','ACESSO NEGADO. Reconstrua onde cada parte do material permaneceu.']],puzzle:{type:'order',title:'A chave que falta',kicker:'PUZZLE · CUSTÓDIA DIGITAL',prompt:'Ordene o caminho do dado até o pedido de socorro técnico.',options:[{id:'pedido',text:'Gabinete pede auxílio técnico à PF'},{id:'copia',text:'PF produz uma cópia criptografada'},{id:'falha',text:'Gabinete não consegue acessar os arquivos'},{id:'original',text:'PF preserva aparelho e extração originais'}],solution:['original','copia','falha','pedido'],success:'O original ficou na PF; a cópia chegou ao gabinete; a senha trouxe a PF de volta à sala.'},choices:[
+        {text:'Pedir auxílio técnico formal à PF.',effects:{trust:2,pressure:-1,exposure:1},flag:'pediu_ajuda_pf',reply:[['MENDONÇA','Oficie-se. Precisamos de acesso integral, com registro de cada passo.'],['DELEGADA','A equipe técnica responde. A crise institucional fica fora da sala — se couber.']]},
+        {text:'Exigir nova cópia e chave verificável.',effects:{trust:0,pressure:2,exposure:2},flag:'exigiu_nova_copia',reply:[['MENDONÇA','Nova cópia, nova chave e hash de verificação. Tudo formalizado.'],['DELEGADA','É um pedido de ajuda escrito como ordem. Ainda é ajuda.']]}
+      ],ending:'mendonca'}
+    ]
   }
 ];
 
@@ -197,7 +270,11 @@ const messagesByScene = [
   [{from:'Sistema',time:'06:12',text:'Aparelho recolhido para perícia.'}],
   [{from:'Secretaria',time:'18:42',text:'Distribuição concluída. Autos recebidos no gabinete.'},{from:'Assessoria',time:'19:03',text:'Imprensa solicita informação sobre o grau de sigilo.'}],
   [{from:'PF',time:'08:11',text:'Solicitada autorização para início imediato das perícias.'},{from:'Secretaria',time:'08:37',text:'Material apreendido em deslocamento para Brasília.'}],
-  [{from:'Presidência',time:'18:06',text:'Reunião presencial confirmada. Todos os ministros presentes.'},{from:'Assessoria',time:'18:19',text:'Nova reportagem sobre o Tayayá publicada.'}]
+  [{from:'Presidência',time:'18:06',text:'Reunião presencial confirmada. Todos os ministros presentes.'},{from:'Assessoria',time:'18:19',text:'Nova reportagem sobre o Tayayá publicada.'}],
+  [{from:'Secretaria',time:'08:12',text:'Petição 15.556 vinculada ao gabinete.'},{from:'PF',time:'08:31',text:'Equipe aguarda definição do fluxo pericial.'},{from:'PGR',time:'09:04',text:'Ciência da redistribuição registrada.'}],
+  [{from:'Equipe pericial',time:'16:18',text:'Material compartimentado. Menções a autoridades exigem definição de competência.'},{from:'Secretaria',time:'17:02',text:'Reunião reservada confirmada para hoje.'}],
+  [{from:'Presidência',time:'09:11',text:'Solicitados esclarecimentos sobre a medida cautelar.'},{from:'AGU',time:'09:27',text:'Pedido de restabelecimento das funções protocolado.'},{from:'Segunda Turma',time:'10:01',text:'Julgamento suspenso após pedido de vista.'}],
+  [{from:'Equipe técnica',time:'18:42',text:'Falha ao montar o volume criptografado.'},{from:'Gabinete Fux',time:'18:51',text:'Mesmo problema de acesso por aqui.'},{from:'Secretaria',time:'19:03',text:'Minuta de ofício à PF pronta.'}]
 ];
 
 function freshState(){return {scene:0,seen:{},flags:{},metrics:{pressure:0,exposure:0,trust:0},inventory:[],dossier:['brb'],selected:null,started:false,unread:0,finished:false,playStarted:Date.now()}}
@@ -217,7 +294,7 @@ const audio=(()=>{
     [62,65,69,72],
     [55,59,62,65]
   ];
-  const speakerPitch={DANIEL:168,HELENA:214,'OTÁVIO':148,CAIO:244,INVESTIGADORA:184,TOFFOLI:142,ASSESSORA:206,SISTEMA:118,NARRADOR:126};
+  const speakerPitch={DANIEL:168,HELENA:214,'OTÁVIO':148,CAIO:244,INVESTIGADORA:184,TOFFOLI:142,MENDONÇA:154,ASSESSORA:206,'CHEFE DE GABINETE':198,DELEGADA:181,SISTEMA:118,NARRADOR:126};
 
   function ensure(){
     if(ctx)return true;
@@ -424,7 +501,7 @@ function interact(h){
   renderHotspots();
   const finish=()=>{
     if(h.advance||h.ending){
-      if(h.ending)return h.ending==='toffoli'?showToffoliEnding():showEnding();
+      if(h.ending)return h.ending==='toffoli'?showToffoliEnding():h.ending==='mendonca'?showMendoncaEnding():showEnding();
       setTimeout(()=>enterScene(Math.min(state.scene+1,scenes.length-1)),500)
     }
     save()
@@ -434,7 +511,7 @@ function interact(h){
     if(h.puzzle&&!state.flags['puzzle_'+key])showPuzzle(h.puzzle,key,choose);
     else choose();
   };
-  const revisitSpeaker=state.scene>=5?'TOFFOLI':'DANIEL';
+  const revisitSpeaker=state.scene>=8?'MENDONÇA':state.scene>=5?'TOFFOLI':'DANIEL';
   play(first?h.lines:[[revisitSpeaker,'Já vi o que precisava aqui.']],proceed)
 }
 
@@ -457,7 +534,7 @@ function nextLine(){
 }
 function typeText(text){clearInterval(typeTimer);typing=true;currentFullText=text;lineEl.textContent='';choicesEl.innerHTML='';$('#dialogue-hint').textContent='toque para continuar';let i=0;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;if(reduced){finishTyping();return}typeTimer=setInterval(()=>{lineEl.textContent=text.slice(0,++i);const char=text[i-1];if(i%3===0&&char&&/\S/.test(char))audio.blip(speakerEl.textContent,char.charCodeAt(0));if(i>=text.length)finishTyping()},15)}
 function finishTyping(){clearInterval(typeTimer);lineEl.textContent=currentFullText;typing=false}
-function showCharacter(speaker){const map={DANIEL:'daniel',HELENA:'helena',OTÁVIO:'otavio',CAIO:'caio',INVESTIGADORA:'investigadora',TOFFOLI:'toffoli'};const person=map[speaker];if(!person){hideCharacter();return}character.dataset.person=person;character.className='show '+(person==='daniel'||person==='toffoli'?'':'right')}
+function showCharacter(speaker){const map={DANIEL:'daniel',HELENA:'helena',OTÁVIO:'otavio',CAIO:'caio',INVESTIGADORA:'investigadora',TOFFOLI:'toffoli',MENDONÇA:'mendonca'};const person=map[speaker];if(!person){hideCharacter();return}character.dataset.person=person;character.className='show '+(['daniel','toffoli','mendonca'].includes(person)?'':'right')}
 function hideCharacter(){character.className='';}
 
 function updateBadges(){
@@ -557,8 +634,14 @@ function showEnding(){
 }
 
 function showToffoliEnding(){
+  state.finished=true;state.dossier=dossier.filter(d=>d.arc!=='mendonca').map(d=>d.id);save();
+  openModal('A CHAVE MUDA DE MÃO','FIM DO ARCO II',`<div class="ending"><div class="ending-stamp">O sigilo permanece. O relator, não.</div><div><h3>A CHAVE MUDA DE MÃO</h3><p>Toffolinho deixa a relatoria com os atos preservados pelo tribunal. O processo atravessa o corredor, entra novamente no sorteio e para no gabinete de André Mendonça.</p><p><b>Documentado:</b> a redistribuição ocorreu em 12 de fevereiro de 2026. A intenção de “ferrar tudo” é a lente satírica do jogo, não um fato atribuído ao ministro.</p><div class="menu-actions"><button id="ending-next">Continuar: André Mendonça</button><button id="ending-dossier">Abrir Dossiê</button><button id="ending-restart">Jogar desde o início</button></div></div></div>`);
+  $('#ending-next').onclick=()=>{closeModal();state.finished=false;state.flags.arc_mendonca=true;enterScene(8)};$('#ending-dossier').onclick=openDossier;$('#ending-restart').onclick=()=>{closeModal();reset()}
+}
+
+function showMendoncaEnding(){
   state.finished=true;state.dossier=dossier.map(d=>d.id);save();
-  openModal('A CHAVE MUDA DE MÃO','FIM DO ARCO II',`<div class="ending"><div class="ending-stamp">O sigilo permanece. O relator, não.</div><div><h3>A CHAVE MUDA DE MÃO</h3><p>Toffolinho deixa a relatoria com os atos preservados pelo tribunal. O processo atravessa o corredor, entra novamente no sorteio e para no gabinete de André Mendonça.</p><p><b>Documentado:</b> a redistribuição ocorreu em 12 de fevereiro de 2026. A intenção de “ferrar tudo” é a lente satírica do jogo, não um fato atribuído ao ministro.</p><div class="menu-actions"><button id="ending-dossier">Abrir Dossiê completo</button><button id="ending-restart">Jogar desde o início</button></div></div></div>`);
+  openModal('A CHAVE SEM SENHA','FIM DO ARCO III',`<div class="ending"><div class="ending-stamp">A caneta manda. A criptografia pergunta quem executa.</div><div><h3>A CHAVE SEM SENHA</h3><p>Depois de devolver o fluxo, ordenar o relatório, afastar a chefia e ver a medida suspensa, Mendonça termina diante de uma cópia que seu gabinete não consegue abrir. Para acessar o celular que incendiou o tribunal, precisa novamente da Polícia Federal.</p><p><b>Documentado até 19 de setembro de 2026:</b> Mendonça e Fux pediram auxílio técnico à PF para acessar cerca de 500 GB de dados. O aparelho e a extração originais permaneciam sob guarda policial. A disputa seguia aberta.</p><div class="menu-actions"><button id="ending-dossier">Abrir Dossiê completo</button><button id="ending-restart">Jogar desde o início</button></div></div></div>`);
   $('#ending-dossier').onclick=openDossier;$('#ending-restart').onclick=()=>{closeModal();reset()}
 }
 

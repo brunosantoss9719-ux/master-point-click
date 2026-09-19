@@ -1,9 +1,9 @@
-const CACHE='master-shell-v7';
+const CACHE='master-shell-v8';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=story-puzzles-1',
-  './app.js?v=story-puzzles-1',
+  './styles.css?v=mendonca-arc-1',
+  './app.js?v=mendonca-arc-1',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',
@@ -13,6 +13,8 @@ const SHELL=[
   './assets/daniel-vorcaro.webp',
   './assets/toffoli.webp',
   './assets/stf-office.webp',
+  './assets/andre-mendonca.webp',
+  './assets/pf-lab.webp',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/icon-192.svg',

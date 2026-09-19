@@ -84,10 +84,22 @@ for(let scene=5;scene<8;scene++){
   clickHotspot(optional);
   clickHotspot(required,0);
 }
-const end=g.getState();
+let end=g.getState();
 if(elements['#modal-title'].textContent!=='A CHAVE MUDA DE MÃO')throw new Error('Arco Toffolinho não terminou em André Mendonça');
-if(end.dossier.length!==13)throw new Error(`Dossiê final incompleto: ${end.dossier.length}`);
-if(Object.keys(end.flags).filter(flag=>flag.startsWith('puzzle_')&&!flag.startsWith('puzzle_clean_')).length!==6)throw new Error('Os 6 puzzles narrativos não foram concluídos');
+if(end.dossier.length!==13)throw new Error(`Dossiê do arco Toffolinho incompleto: ${end.dossier.length}`);
+g.enterScene(8);drain();
+for(let scene=8;scene<12;scene++){
+  if(g.getState().scene!==scene)throw new Error(`Esperava cena Mendonça ${scene}, recebeu ${g.getState().scene}`);
+  const sceneData=g.scenes[scene];
+  const optional=sceneData.hotspots.findIndex(h=>!h.required);
+  const required=sceneData.hotspots.findIndex(h=>h.required);
+  clickHotspot(optional);
+  clickHotspot(required,scene%2);
+}
+end=g.getState();
+if(elements['#modal-title'].textContent!=='A CHAVE SEM SENHA')throw new Error('Arco Mendonça não terminou no pedido de ajuda técnica à PF');
+if(end.dossier.length!==17)throw new Error(`Dossiê final incompleto: ${end.dossier.length}`);
+if(Object.keys(end.flags).filter(flag=>flag.startsWith('puzzle_')&&!flag.startsWith('puzzle_clean_')).length!==10)throw new Error('Os 10 puzzles narrativos não foram concluídos');
 if(!storage.has('master-ultima-chamada-v1'))throw new Error('Autosave não foi persistido');
 if(endings.size!==3)throw new Error(`Ramificação produziu apenas ${endings.size} finais: ${[...endings].join(', ')}`);
-console.log(`PASS: 3 rotas Vorcaro + arco Toffolinho; 8 cenas; 6 puzzles; finais ${[...endings].join(' / ')} / A CHAVE MUDA DE MÃO; Dossiê e save/continue verificados.`);
+console.log(`PASS: 3 rotas Vorcaro + arcos Toffolinho e Mendonça; 12 cenas; 10 puzzles; finais ${[...endings].join(' / ')} / A CHAVE MUDA DE MÃO / A CHAVE SEM SENHA; Dossiê e save/continue verificados.`);
