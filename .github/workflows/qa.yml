@@ -1,1 +1,43 @@
-name: QA\n\non:\n  push:\n    branches:\n      - main\n      - 'work/**'\n  pull_request:\n\npermissions:\n  contents: read\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 22\n      - name: Validate game\n        run: |\n          npm test\n          node --check app.js\n      - name: Start static server\n        run: |\n          npm start >/tmp/master-serve.log 2>&1 &\n          echo $! >/tmp/master-serve.pid\n          for i in {1..40}; do\n            curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0\n            sleep .25\n          done\n          cat /tmp/master-serve.log\n          exit 1\n      - name: Mobile visual smoke\n        run: node scripts/mobile-smoke.mjs\n      - name: Upload mobile screenshots\n        if: always()\n        uses: actions/upload-artifact@v4\n        with:\n          name: mobile-smoke\n          path: artifacts/*.png\n          if-no-files-found: warn\n
+name: QA
+
+on:
+  push:
+    branches:
+      - main
+      - 'work/**'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate game
+        run: |
+          npm test
+          node --check app.js
+      - name: Start static server
+        run: |
+          npm start >/tmp/master-serve.log 2>&1 &
+          echo $! >/tmp/master-serve.pid
+          for i in {1..40}; do
+            curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0
+            sleep .25
+          done
+          cat /tmp/master-serve.log
+          exit 1
+      - name: Mobile visual smoke
+        run: node scripts/mobile-smoke.mjs
+      - name: Upload mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-smoke
+          path: artifacts/*.png
+          if-no-files-found: warn
