@@ -1,0 +1,57 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+
+class Classes {
+  constructor(initial=''){ this.values=new Set(initial.split(/\s+/).filter(Boolean)); }
+  add(...v){v.forEach(x=>this.values.add(x))}
+  remove(...v){v.forEach(x=>this.values.delete(x))}
+  contains(v){return this.values.has(v)}
+}
+class Element {
+  constructor(classes=''){this.classList=new Classes(classes);this.style={};this.dataset={};this.children=[];this.hidden=false;this.attributes={};this._html='';}
+  set innerHTML(v){this._html=v;this.children=[]}
+  get innerHTML(){return this._html}
+  set textContent(v){this._text=String(v)}
+  get textContent(){return this._text||''}
+  appendChild(v){this.children.push(v);return v}
+  setAttribute(k,v){this.attributes[k]=v}
+  removeAttribute(k){delete this.attributes[k]}
+  addEventListener(){ }
+  closest(){return null}
+}
+const selectors=['#start-screen','#game-screen','#dialogue','#line','#speaker','#choices','#character','#toast','#scene-bg','#scene-tint','#chapter','#date','#hotspots','#phone-badge','#dossier-count','#modal-title','#modal-kicker','#modal-body','#modal','#new-game','#continue-game','#start-sources','#phone-btn','#inventory-btn','#dossier-btn','#menu-btn','#modal-close','#scene','#dialogue-hint'];
+const elements=Object.fromEntries(selectors.map(s=>[s,new Element(s==='#dialogue'||s==='#modal'?'hidden':'')]));
+elements['#start-screen'].classList.add('active');
+const document={querySelector:s=>elements[s]||new Element(),querySelectorAll:()=>[],createElement:()=>new Element(),addEventListener:()=>{}};
+const storage=new Map();
+const sandbox={document,localStorage:{setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k)||null,removeItem:k=>storage.delete(k)},matchMedia:()=>({matches:true}),setTimeout:fn=>{fn();return 1},clearTimeout:()=>{},setInterval:fn=>{fn();return 1},clearInterval:()=>{},console};
+vm.createContext(sandbox);
+const source=fs.readFileSync('app.js','utf8')+'\n;this.__game={getState:()=>state,getQueue:()=>queue,scenes,begin,reset,nextLine,openPhone,openInventory,openDossier,save,load};';
+vm.runInContext(source,sandbox,{filename:'app.js'});
+const g=sandbox.__game;
+
+function drain(){let guard=0;while(!elements['#dialogue'].classList.contains('hidden')&&elements['#choices'].children.length===0&&guard++<80)g.nextLine();if(guard>=80)throw new Error('Diálogo não encerrou')}
+function clickHotspot(index,choice=0){const button=elements['#hotspots'].children[index];if(!button)throw new Error(`Hotspot ${index} ausente na cena ${g.getState().scene}`);button.onclick({stopPropagation(){}});drain();if(elements['#choices'].children.length){elements['#choices'].children[choice].onclick({stopPropagation(){}});drain()}}
+
+function runRoute(requiredChoices,sceneThreeChoice=0,checkSave=false){
+  g.reset();drain();
+  for(let scene=0;scene<5;scene++){
+    if(g.getState().scene!==scene)throw new Error(`Esperava cena ${scene}, recebeu ${g.getState().scene}`);
+    clickHotspot(0,scene===2?sceneThreeChoice:0);
+    if(scene===2&&checkSave){g.openPhone();g.openInventory();g.openDossier();g.save();if(g.load().scene!==2)throw new Error('Autosave não retomou a cena 3')}
+    clickHotspot(3,requiredChoices[scene]);
+  }
+  if(!g.getState().finished)throw new Error('Playthrough não chegou ao final');
+  return elements['#modal-title'].textContent;
+}
+
+const endings=new Set([
+  runRoute([0,0,0,0,0],0,true),
+  runRoute([1,0,1,1,2],1),
+  runRoute([1,2,0,2,0],2)
+]);
+const end=g.getState();
+if(end.dossier.length!==9)throw new Error(`Dossiê final incompleto: ${end.dossier.length}`);
+if(!storage.has('master-ultima-chamada-v1'))throw new Error('Autosave não foi persistido');
+if(endings.size!==3)throw new Error(`Ramificação produziu apenas ${endings.size} finais: ${[...endings].join(', ')}`);
+console.log(`PASS: 3 playthroughs; 5 cenas; finais ${[...endings].join(' / ')}; Dossiê e save/continue verificados.`);

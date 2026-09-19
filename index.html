@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#080b16" />
+    <meta name="description" content="MASTER — jogo narrativo point-and-click sobre a crise do Banco Master." />
+    <title>MASTER — Última Chamada</title>
+    <link rel="preload" as="image" href="assets/office.webp" />
+    <link rel="preload" as="image" href="assets/characters.webp" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="rotate" aria-hidden="true">
+      <div class="rotate-mark">↻</div>
+      <strong>Gire o celular</strong>
+      <span>Esta história foi enquadrada para a horizontal.</span>
+    </div>
+
+    <main id="app">
+      <section id="start-screen" class="screen active">
+        <div class="start-art"></div>
+        <div class="start-shade"></div>
+        <div class="start-copy">
+          <p class="eyebrow">UM JOGO DE FICÇÃO BASEADO EM FATOS PÚBLICOS</p>
+          <h1>MASTER</h1>
+          <h2>ÚLTIMA CHAMADA</h2>
+          <p class="start-note">Brasília fecha uma porta. São Paulo procura outra. Em Guarulhos, o relógio não negocia.</p>
+          <div class="start-actions">
+            <button id="new-game" class="primary">Novo jogo</button>
+            <button id="continue-game" class="secondary" hidden>Continuar</button>
+          </div>
+          <button id="start-sources" class="text-button">Sobre fatos e dramatização</button>
+        </div>
+      </section>
+
+      <section id="game-screen" class="screen" aria-live="polite">
+        <div id="scene" class="scene">
+          <img id="scene-bg" alt="" />
+          <div id="scene-tint"></div>
+          <div id="scene-header">
+            <span id="chapter"></span>
+            <span id="date"></span>
+          </div>
+          <div id="hotspots" aria-label="Objetos interativos"></div>
+          <div id="character" aria-hidden="true"><div class="sprite"></div></div>
+          <div id="toast" role="status"></div>
+        </div>
+
+        <div id="dialogue" class="dialogue hidden">
+          <div class="speaker-row">
+            <span id="speaker"></span>
+            <span id="dialogue-hint">toque para continuar</span>
+          </div>
+          <p id="line"></p>
+          <div id="choices"></div>
+        </div>
+
+        <nav id="game-nav" aria-label="Ferramentas">
+          <button id="phone-btn" aria-label="Abrir celular"><span>▣</span> Celular <b id="phone-badge"></b></button>
+          <button id="inventory-btn" aria-label="Abrir inventário"><span>◇</span> Inventário</button>
+          <button id="dossier-btn" aria-label="Abrir dossiê"><span>≡</span> Dossiê <b id="dossier-count"></b></button>
+          <button id="menu-btn" aria-label="Abrir menu"><span>•••</span></button>
+        </nav>
+      </section>
+
+      <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-panel">
+          <header><div><p id="modal-kicker"></p><h2 id="modal-title"></h2></div><button id="modal-close" aria-label="Fechar">×</button></header>
+          <div id="modal-body"></div>
+        </div>
+      </div>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "master-ultima-chamada",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx --yes serve . -l 4173",
+    "test": "node scripts/validate.mjs && node scripts/playthrough.mjs"
+  }
+}
