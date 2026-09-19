@@ -4,17 +4,23 @@ import fs from 'node:fs/promises';
 const APP_URL=process.env.APP_URL||'http://127.0.0.1:4173/';
 const CHROME=process.env.CHROME_BIN||'/usr/bin/google-chrome';
 const DEBUG='http://127.0.0.1:9222';
+let chromeStderr='';
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
 async function waitForChrome(){
-  for(let i=0;i<50;i++){
-    try{
-      const pages=await fetch(DEBUG+'/json').then(r=>r.json());
-      if(pages.length)return pages[0];
-    }catch{}
+  let lastError='';
+  for(let i=0;i<100;i++){
+    for(const endpoint of ['/json/list','/json']){
+      try{
+        const response=await fetch(DEBUG+endpoint);
+        if(!response.ok){lastError='HTTP '+response.status;continue}
+        const pages=await response.json();
+        if(pages.length)return pages[0];
+      }catch(error){lastError=error?.message||String(error)}
+    }
     await sleep(100);
   }
-  throw new Error('Chrome headless não iniciou');
+  throw new Error('Chrome headless não expôs CDP: '+lastError+'\n'+chromeStderr.slice(-4000));
 }
 
 async function connect(url){
@@ -48,10 +54,16 @@ async function capture(send,file){
 
 await fs.mkdir('artifacts',{recursive:true});
 const chrome=spawn(CHROME,[
-  '--headless=new','--no-sandbox','--disable-gpu','--hide-scrollbars',
-  '--remote-debugging-port=9222','--user-data-dir=/tmp/master-chrome',
-  '--window-size=915,412',APP_URL
-],{stdio:'ignore'});
+  '--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--hide-scrollbars',
+  '--no-first-run','--no-default-browser-check','--no-proxy-server',
+  '--remote-debugging-address=127.0.0.1','--remote-debugging-port=9222',
+  '--user-data-dir=/tmp/master-chrome-'+process.pid,
+  '--window-size=915,412','about:blank'
+],{stdio:['ignore','ignore','pipe']});
+chrome.stderr.setEncoding('utf8');
+chrome.stderr.on('data',chunk=>{chromeStderr+=chunk});
+chrome.on('exit',(code,signal)=>{chromeStderr+='\nChrome exited code='+code+' signal='+signal});
+
 
 try{
   const page=await waitForChrome();
