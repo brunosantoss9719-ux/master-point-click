@@ -1,4 +1,4 @@
-const CACHE='master-shell-v3';
+const CACHE='master-shell-v4';
 const SHELL=[
   './',
   './index.html',
@@ -10,6 +10,7 @@ const SHELL=[
   './assets/hangar.webp',
   './assets/interview.webp',
   './assets/characters.webp',
+  './assets/daniel-vorcaro.webp',
   './assets/icon-192.svg',
   './assets/icon-512.svg'
 ];
