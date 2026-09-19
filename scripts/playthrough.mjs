@@ -26,7 +26,7 @@ const document={querySelector:s=>elements[s]||new Element(),querySelectorAll:()=
 const storage=new Map();
 const sandbox={document,localStorage:{setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k)||null,removeItem:k=>storage.delete(k)},matchMedia:()=>({matches:true}),setTimeout:fn=>{fn();return 1},clearTimeout:()=>{},setInterval:fn=>{fn();return 1},clearInterval:()=>{},console};
 vm.createContext(sandbox);
-const source=fs.readFileSync('app.js','utf8')+'\n;this.__game={getState:()=>state,getQueue:()=>queue,scenes,begin,reset,nextLine,openPhone,openInventory,openDossier,save,load};';
+const source=fs.readFileSync('app.js','utf8')+'\n;this.__game={getState:()=>state,getQueue:()=>queue,scenes,begin,reset,enterScene,nextLine,openPhone,openInventory,openDossier,save,load};';
 vm.runInContext(source,sandbox,{filename:'app.js'});
 const g=sandbox.__game;
 
@@ -57,8 +57,19 @@ const endings=new Set([
   runRoute([1,0,1,1,2],1),
   runRoute([1,2,0,2,0],2)
 ]);
+if(g.getState().dossier.length!==9)throw new Error(`Dossiê do arco Vorcaro incompleto: ${g.getState().dossier.length}`);
+g.enterScene(5);drain();
+for(let scene=5;scene<8;scene++){
+  if(g.getState().scene!==scene)throw new Error(`Esperava cena Toffolinho ${scene}, recebeu ${g.getState().scene}`);
+  const sceneData=g.scenes[scene];
+  const optional=sceneData.hotspots.findIndex(h=>!h.required);
+  const required=sceneData.hotspots.findIndex(h=>h.required);
+  clickHotspot(optional);
+  clickHotspot(required,0);
+}
 const end=g.getState();
-if(end.dossier.length!==9)throw new Error(`Dossiê final incompleto: ${end.dossier.length}`);
+if(elements['#modal-title'].textContent!=='A CHAVE MUDA DE MÃO')throw new Error('Arco Toffolinho não terminou em André Mendonça');
+if(end.dossier.length!==13)throw new Error(`Dossiê final incompleto: ${end.dossier.length}`);
 if(!storage.has('master-ultima-chamada-v1'))throw new Error('Autosave não foi persistido');
 if(endings.size!==3)throw new Error(`Ramificação produziu apenas ${endings.size} finais: ${[...endings].join(', ')}`);
-console.log(`PASS: 3 playthroughs; 5 cenas; finais ${[...endings].join(' / ')}; Dossiê e save/continue verificados.`);
+console.log(`PASS: 3 rotas Vorcaro + arco Toffolinho; 8 cenas; finais ${[...endings].join(' / ')} / A CHAVE MUDA DE MÃO; Dossiê e save/continue verificados.`);

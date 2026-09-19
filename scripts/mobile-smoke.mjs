@@ -113,6 +113,18 @@ try{
   if(!daniel||daniel.person!=='daniel'||!daniel.show||!daniel.background.includes('daniel-vorcaro.webp'))throw new Error('Retrato novo do Daniel não apareceu: '+JSON.stringify(daniel));
   await capture(send,'artifacts/mobile-landscape.png');
 
+  await evaluate(send,"enterScene(5); true");
+  await sleep(300);
+  let toffoli=null;
+  for(let i=0;i<8;i++){
+    toffoli=await evaluate(send,"(()=>{const el=document.querySelector('#character');const sprite=el?.querySelector('.sprite');return {person:el?.dataset.person||'',show:!!el?.classList.contains('show'),background:sprite?getComputedStyle(sprite).backgroundImage:'',scene:document.querySelector('#scene-bg')?.getAttribute('src')||''}})()");
+    if(toffoli.person==='toffoli'&&toffoli.show&&toffoli.background.includes('toffoli.webp')&&toffoli.scene.includes('stf-office.webp'))break;
+    await evaluate(send,"document.querySelector('#dialogue').click(); true");
+    await sleep(160);
+  }
+  if(!toffoli||toffoli.person!=='toffoli'||!toffoli.show||!toffoli.background.includes('toffoli.webp')||!toffoli.scene.includes('stf-office.webp'))throw new Error('Arco Toffolinho não apareceu: '+JSON.stringify(toffoli));
+  await capture(send,'artifacts/mobile-toffolinho.png');
+
   await send('Emulation.setDeviceMetricsOverride',{
     width:412,height:915,deviceScaleFactor:1,mobile:true,
     screenWidth:412,screenHeight:915,
@@ -127,7 +139,7 @@ try{
   const swReady=await evaluate(send,"Promise.race([navigator.serviceWorker?.ready.then(()=>true).catch(()=>false),new Promise(resolve=>setTimeout(()=>resolve(false),5000))])");
   if(!swReady)throw new Error('Service worker não ficou pronto em 5s');
 
-  console.log('PASS mobile smoke:',JSON.stringify({landscape,portrait,swReady}));
+  console.log('PASS mobile smoke:',JSON.stringify({landscape,toffoli,portrait,swReady}));
   ws.close();
 }finally{
   chrome.kill('SIGTERM');

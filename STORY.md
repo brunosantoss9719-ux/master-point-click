@@ -7,3 +7,11 @@
 5. **A Manhã:** interrogatório dramatizado; cooperar, declarar ou silenciar.
 
 Consequências ocultas: pressão, exposição e confiança. Finais: **A Pasta Aberta**, **A Fortaleza Vazia**, **O Homem no Vidro**.
+
+## Arco II — Toffolinho
+
+6. **A Chave (fim de nov/2025):** Toffoli recebe a relatoria e decide o alcance do sigilo.
+7. **A Caixa (jan/2026):** segunda fase da operação; disputa sobre custódia, lacre e perícia das provas.
+8. **O Espelho (12/02/2026):** revelações sobre o Tayayá aumentam a pressão; o caso vai à livre redistribuição e termina sorteado para André Mendonça.
+
+Toffolinho é uma caricatura satírica controlável. A intenção de “ferrar tudo” estrutura as escolhas e o humor, mas não é apresentada como fato. Decisões, datas e relações documentadas aparecem no Dossiê; pensamentos e diálogos de gabinete são dramatização.

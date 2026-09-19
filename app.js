@@ -10,7 +10,11 @@ const dossier = [
   {id:'fictor',tag:'REPORTADO',title:'Uma saída anunciada na última hora',text:'A defesa afirmou que a viagem aos Emirados estava ligada à assinatura de venda para o Grupo Fictor e investidores estrangeiros. Investigadores suspeitaram de fuga; a defesa negou.',source:'Folha, 25 nov. 2025',url:'https://www1.folha.uol.com.br/mercado/2025/11/defesa-de-daniel-vorcaro-diz-a-justica-que-banco-central-sabia-de-viagem-a-dubai.shtml'},
   {id:'operacao',tag:'DOCUMENTADO',title:'Operação Compliance Zero',text:'Vorcaro foi preso no aeroporto de Guarulhos na noite de 17 de novembro de 2025. A operação investigava emissão de títulos de crédito falsos e outros crimes financeiros.',source:'CNN Brasil, 18 nov. 2025',url:'https://www.cnnbrasil.com.br/economia/money/macroeconomia/dono-do-banco-master-estava-a-caminho-de-dubai-e-foi-preso-em-guarulhos/'},
   {id:'liquidacao',tag:'DOCUMENTADO',title:'Liquidação',text:'Em 18 de novembro de 2025, o Banco Central decretou a liquidação extrajudicial do Banco Master e de empresas do conglomerado.',source:'Banco Master — comunicado da liquidação',url:'https://www.bancomaster.com.br/'},
-  {id:'carteiras',tag:'ALEGADO',title:'Carteiras sob suspeita',text:'As investigações apontaram supostas carteiras de consignado forjadas vendidas ao BRB. As defesas contestaram a fraude e alegaram substituição de ativos.',source:'Folha, 25 nov. 2025',url:'https://www1.folha.uol.com.br/mercado/2025/11/defesa-de-daniel-vorcaro-diz-a-justica-que-banco-central-sabia-de-viagem-a-dubai.shtml'}
+  {id:'carteiras',tag:'ALEGADO',title:'Carteiras sob suspeita',text:'As investigações apontaram supostas carteiras de consignado forjadas vendidas ao BRB. As defesas contestaram a fraude e alegaram substituição de ativos.',source:'Folha, 25 nov. 2025',url:'https://www1.folha.uol.com.br/mercado/2025/11/defesa-de-daniel-vorcaro-diz-a-justica-que-banco-central-sabia-de-viagem-a-dubai.shtml'},
+  {id:'sigilo_stf',arc:'toffoli',tag:'REPORTADO',title:'O processo sob sigilo máximo',text:'Ao assumir o caso no fim de 2025, Dias Toffoli impôs ao processo o nível mais alto de sigilo usado no STF. A condução e o acesso aos autos passaram a ser alvo de críticas públicas.',source:'CartaCapital, 13 fev. 2026',url:'https://www.cartacapital.com.br/politica/a-dimensao-do-sigilo-sob-o-qual-andre-mendonca-assume-o-caso-master/'},
+  {id:'provas_lacradas',arc:'toffoli',tag:'DOCUMENTADO',title:'A caixa lacrada',text:'Na segunda fase da Compliance Zero, autorizada por Toffoli, materiais apreendidos foram enviados lacrados ao STF antes de sua análise pericial. A ordem virou símbolo da disputa sobre quem controlaria as provas.',source:'STF — Petição 15.556',url:'https://digital.stf.jus.br/'},
+  {id:'tayaya',arc:'toffoli',tag:'REPORTADO',title:'O resort entrou nos autos',text:'Reportagens revelaram que empresa ligada à família Toffoli teve participação no resort Tayayá e que um fundo ligado ao cunhado de Vorcaro entrou no empreendimento. Toffoli negou favorecimento e irregularidade.',source:'Folha, 12 mar. 2026',url:'https://www1.folha.uol.com.br/mercado/2026/03/toffoli-deve-se-afastar-de-todos-os-julgamentos-do-caso-master.shtml'},
+  {id:'redistribuicao',arc:'toffoli',tag:'DOCUMENTADO',title:'Livre redistribuição',text:'Em 12 de fevereiro de 2026, após reunião dos ministros, Toffoli pediu o envio dos feitos à Presidência do STF. Os atos anteriores foram declarados válidos e o sorteio eletrônico levou o caso a André Mendonça.',source:'Nota do STF reproduzida pelo PlatôBR, 12 fev. 2026',url:'https://platobr.com.br/em-reuniao-dos-ministros-do-stf-toffoli-deixa-relatoria-do-processo-sobre-o-master'}
 ];
 
 const inventoryCatalog = {
@@ -132,6 +136,56 @@ const scenes = [
         {text:'Permanecer em silêncio.',effects:{trust:-2,exposure:-1,pressure:1},flag:'silencio_final',reply:[['DANIEL','Vou exercer meu direito ao silêncio.'],['INVESTIGADORA','Registrado. O resto da manhã não fará o mesmo.']]}
       ],ending:true}
     ]
+  },
+  {
+    chapter:'TOFFOLINHO I · A CHAVE', date:'FIM DE NOV 2025 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(20,8,34,.18)',
+    intro:[
+      ['NARRADOR','O processo sobe ao Supremo por causa de uma autoridade citada. O sorteio acende uma luz no gabinete de Dias Toffoli.'],
+      ['TOFFOLI','Um caso grande demais para andar solto.'],
+      ['ASSESSORA','E barulhento demais para ficar aberto.'],
+      ['NARRADOR','A partir daqui, o jogador controla Toffolinho — caricatura satírica. As decisões públicas são reais; as falas privadas são dramatização.']
+    ],
+    hotspots:[
+      {id:'janela_stf',label:'Praça dos Três Poderes',x:45,y:19,lines:[['TOFFOLI','Brasília é bonita vista de cima. Os problemas também parecem menores.'],['ASSESSORA','Até subirem de elevador.']]},
+      {id:'telefone_stf',label:'Telefone preto',x:88,y:52,lines:[['ASSESSORA','A imprensa quer saber quem pode consultar os autos.'],['TOFFOLI','Diga que a resposta está nos autos.'],['ASSESSORA','Que estão em sigilo.'],['TOFFOLI','Exatamente.']]},
+      {id:'pasta_sigilo',label:'Pasta do Master',x:73,y:51,required:true,dossier:'sigilo_stf',lines:[['ASSESSORA','O processo chegou com anexos, pedidos e gente demais olhando. Como organizamos o acesso?']],choices:[
+        {text:'Aplicar o nível máximo de sigilo.',effects:{pressure:-1,exposure:-2,trust:-1},flag:'sigilo_maximo',reply:[['TOFFOLI','Nível três. Se todo mundo lê, ninguém controla.'],['NARRADOR','DOCUMENTADO: o caso tramitou sob o grau mais alto de sigilo do STF. A justificativa formal era proteger a investigação.']]},
+        {text:'Restringir só as peças sensíveis.',effects:{pressure:1,exposure:1,trust:1},flag:'sigilo_parcial',reply:[['TOFFOLI','Segredo cirúrgico. O resto respira.'],['ASSESSORA','Isso dá mais trabalho.'],['TOFFOLI','Transparência costuma dar.']]}
+      ],advance:true}
+    ]
+  },
+  {
+    chapter:'TOFFOLINHO II · A CAIXA', date:'JAN 2026 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(45,0,18,.22)',
+    intro:[
+      ['NARRADOR','A segunda fase da operação chega ao gabinete antes do café. Busca, apreensão, celulares e uma pergunta simples: quem abre a caixa?'],
+      ['ASSESSORA','A Polícia Federal pede perícia imediata.'],
+      ['TOFFOLI','Imediata é uma palavra perigosa. Parece que o tempo manda no tribunal.']
+    ],
+    hotspots:[
+      {id:'tv_operacao',label:'Noticiário sem som',x:61,y:28,lines:[['NARRADOR','Na televisão, agentes carregam caixas. No gabinete, a imagem chega antes do conteúdo.'],['TOFFOLI','A operação sempre tem trilha sonora. O processo, não.']]},
+      {id:'pilha_autos',label:'Pilha de autos',x:66,y:48,lines:[['ASSESSORA','Há pedidos da PF, da PGR, das defesas e do Congresso.'],['TOFFOLI','Ótimo. Quando todos pedem ao mesmo tempo, decidir devagar parece equilíbrio.']]},
+      {id:'caixa_lacrada',label:'Caixa de evidências',x:16,y:43,required:true,dossier:'provas_lacradas',lines:[['ASSESSORA','Os aparelhos apreendidos estão a caminho. A PF quer começar a extração dos dados.']],choices:[
+        {text:'Mandar tudo lacrado para o STF.',effects:{pressure:2,exposure:-1,trust:-2},flag:'lacrou_provas',reply:[['TOFFOLI','Primeiro a custódia. Depois a curiosidade. Tudo lacrado para cá.'],['NARRADOR','DOCUMENTADO: o material foi remetido lacrado ao STF. A decisão e seus efeitos foram contestados no debate público.']]},
+        {text:'Permitir perícia com cópia preservada.',effects:{pressure:-1,exposure:2,trust:2},flag:'pericia_controlada',reply:[['TOFFOLI','Periciem. Uma cópia fica preservada e cada acesso, registrado.'],['ASSESSORA','Menos controle direto. Mais rastreabilidade.']]}
+      ],advance:true}
+    ]
+  },
+  {
+    chapter:'TOFFOLINHO III · O ESPELHO', date:'12 FEV 2026 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(70,8,0,.22)',
+    intro:[
+      ['NARRADOR','O processo que deveria investigar o Master começa a iluminar o próprio relator.'],
+      ['ASSESSORA','Publicaram a ligação do fundo com o Tayayá. E o relatório da PF menciona conversas encontradas no celular de Vorcaro.'],
+      ['TOFFOLI','Um relator não entra nos autos.'],
+      ['ASSESSORA','Às vezes os autos entram no relator. Os ministros estão esperando.']
+    ],
+    hotspots:[
+      {id:'retrato_resort',label:'Fotografia do resort',x:10,y:13,dossier:'tayaya',lines:[['NARRADOR','REPORTADO: empresa da família Toffoli teve participação no resort. Um fundo ligado ao cunhado de Vorcaro entrou no negócio. Toffoli negou favorecimento.'],['TOFFOLI','Uma fotografia não conhece contrato.'],['ASSESSORA','Mas conhece manchete.']]},
+      {id:'nota_colegas',label:'Nota dos ministros',x:78,y:45,lines:[['ASSESSORA','A nota preserva a validade de todos os seus atos e diz que PF e PGR tiveram seus pedidos atendidos.'],['TOFFOLI','Uma saída com firma reconhecida.']]},
+      {id:'chave_final',label:'Chave da relatoria',x:86,y:58,required:true,dossier:'redistribuicao',lines:[['ASSESSORA','Há três horas de reunião atrás desta porta. A Presidência pergunta o que o senhor quer fazer.']],choices:[
+        {text:'Pedir a livre redistribuição.',effects:{pressure:-2,exposure:2,trust:0},flag:'redistribuiu',reply:[['TOFFOLI','Envie tudo à Presidência. Livre redistribuição.'],['NARRADOR','12 de fevereiro de 2026. O sorteio eletrônico gira.'],['SISTEMA','Relator sorteado: André Mendonça.'],['TOFFOLI','A chave mudou de bolso. A caixa, não.']]},
+        {text:'Insistir em permanecer — até a reunião decidir.',effects:{pressure:3,exposure:3,trust:-2},flag:'resistiu_saida',reply:[['TOFFOLI','Não há impedimento. Os atos são válidos.'],['NARRADOR','Os colegas concordam com a validade dos atos — e a noite termina com o envio do caso para livre redistribuição.'],['SISTEMA','Relator sorteado: André Mendonça.'],['TOFFOLI','Então chamem de decisão institucional.']]}
+      ],ending:'toffoli'}
+    ]
   }
 ];
 
@@ -140,7 +194,10 @@ const messagesByScene = [
   [{from:'Caio',time:'20:03',text:'BC rejeitou.'},{from:'Otávio',time:'20:05',text:'Não responda a ninguém antes de nos vermos.'},{from:'Helena',time:'20:07',text:'A liquidez amanhã não vai esperar nosso texto.'}],
   [{from:'Caio',time:'17:46',text:'Fictor aceita anúncio conjunto hoje.'},{from:'Helena',time:'18:02',text:'Ainda não temos assinatura.'},{from:'Tripulação',time:'19:31',text:'Plano de voo confirmado. Aguardando no hangar.'},{mine:true,time:'19:44',text:'Estou online. Avisem quando todos entrarem.'}],
   [{from:'Tripulação',time:'21:54',text:'Aeronave pronta.'},{from:'Caio',time:'21:57',text:'Tem movimento estranho na entrada.'},{from:'Otávio',time:'21:59',text:'Não tome nenhuma decisão sem me ouvir.'}],
-  [{from:'Sistema',time:'06:12',text:'Aparelho recolhido para perícia.'}]
+  [{from:'Sistema',time:'06:12',text:'Aparelho recolhido para perícia.'}],
+  [{from:'Secretaria',time:'18:42',text:'Distribuição concluída. Autos recebidos no gabinete.'},{from:'Assessoria',time:'19:03',text:'Imprensa solicita informação sobre o grau de sigilo.'}],
+  [{from:'PF',time:'08:11',text:'Solicitada autorização para início imediato das perícias.'},{from:'Secretaria',time:'08:37',text:'Material apreendido em deslocamento para Brasília.'}],
+  [{from:'Presidência',time:'18:06',text:'Reunião presencial confirmada. Todos os ministros presentes.'},{from:'Assessoria',time:'18:19',text:'Nova reportagem sobre o Tayayá publicada.'}]
 ];
 
 function freshState(){return {scene:0,seen:{},flags:{},metrics:{pressure:0,exposure:0,trust:0},inventory:[],dossier:['brb'],selected:null,started:false,unread:0,finished:false,playStarted:Date.now()}}
@@ -160,7 +217,7 @@ const audio=(()=>{
     [62,65,69,72],
     [55,59,62,65]
   ];
-  const speakerPitch={DANIEL:168,HELENA:214,'OTÁVIO':148,CAIO:244,INVESTIGADORA:184,NARRADOR:126};
+  const speakerPitch={DANIEL:168,HELENA:214,'OTÁVIO':148,CAIO:244,INVESTIGADORA:184,TOFFOLI:142,ASSESSORA:206,SISTEMA:118,NARRADOR:126};
 
   function ensure(){
     if(ctx)return true;
@@ -367,7 +424,7 @@ function interact(h){
   renderHotspots();
   const finish=()=>{
     if(h.advance||h.ending){
-      if(h.ending)return showEnding();
+      if(h.ending)return h.ending==='toffoli'?showToffoliEnding():showEnding();
       setTimeout(()=>enterScene(Math.min(state.scene+1,scenes.length-1)),500)
     }
     save()
@@ -395,7 +452,7 @@ function nextLine(){
 }
 function typeText(text){clearInterval(typeTimer);typing=true;currentFullText=text;lineEl.textContent='';choicesEl.innerHTML='';$('#dialogue-hint').textContent='toque para continuar';let i=0;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;if(reduced){finishTyping();return}typeTimer=setInterval(()=>{lineEl.textContent=text.slice(0,++i);const char=text[i-1];if(i%3===0&&char&&/\S/.test(char))audio.blip(speakerEl.textContent,char.charCodeAt(0));if(i>=text.length)finishTyping()},15)}
 function finishTyping(){clearInterval(typeTimer);lineEl.textContent=currentFullText;typing=false}
-function showCharacter(speaker){const map={DANIEL:'daniel',HELENA:'helena',OTÁVIO:'otavio',CAIO:'caio',INVESTIGADORA:'investigadora'};const person=map[speaker];if(!person){hideCharacter();return}character.dataset.person=person;character.className='show '+(person==='daniel'?'':'right')}
+function showCharacter(speaker){const map={DANIEL:'daniel',HELENA:'helena',OTÁVIO:'otavio',CAIO:'caio',INVESTIGADORA:'investigadora',TOFFOLI:'toffoli'};const person=map[speaker];if(!person){hideCharacter();return}character.dataset.person=person;character.className='show '+(person==='daniel'||person==='toffoli'?'':'right')}
 function hideCharacter(){character.className='';}
 
 function updateBadges(){
@@ -417,7 +474,13 @@ function showEnding(){
   if(state.flags.cooperou&&(m.trust>=m.exposure||state.flags.abriu_dados))e={title:'A PASTA ABERTA',stamp:'A versão que aceita perguntas.',text:'Você escolheu deixar rastros organizados e falar. Isso não muda a prisão nem a liquidação, mas muda a disputa pelo contexto: a defesa ganha coerência; os documentos ganham inimigos; cada resposta abre três novas perguntas.'};
   else if(state.flags.silencio_final||m.trust<0)e={title:'A FORTALEZA VAZIA',stamp:'O silêncio protege. E isola.',text:'Você reduziu as palavras disponíveis contra você. Do lado de fora, o espaço vazio foi ocupado por manchetes, fontes, relatórios e antigos aliados. A estratégia contém danos imediatos, mas ninguém sabe mais onde termina prudência e começa abandono.'};
   else e={title:'O HOMEM NO VIDRO',stamp:'Toda saída virou imagem.',text:'Você tentou controlar a narrativa com movimento: anúncio, confronto, embarque. A imagem venceu o argumento. O aeroporto se tornou o enquadramento definitivo, e tudo o que veio antes passou a ser relido como preparação para aquela noite.'};
-  save();openModal(e.title,'FINAL',`<div class="ending"><div class="ending-stamp">${e.stamp}</div><div><h3>${e.title}</h3><p>${e.text}</p><p><b>18 de novembro de 2025:</b> o Banco Central decretou a liquidação extrajudicial do Banco Master. As investigações e disputas judiciais continuaram.</p><div class="menu-actions"><button id="ending-dossier">Abrir Dossiê completo</button><button id="ending-restart">Jogar outra rota</button></div></div></div>`);state.dossier=dossier.map(d=>d.id);save();$('#ending-dossier').onclick=openDossier;$('#ending-restart').onclick=()=>{closeModal();reset()}
+  state.dossier=dossier.filter(d=>!d.arc).map(d=>d.id);save();openModal(e.title,'FIM DO ARCO I',`<div class="ending"><div class="ending-stamp">${e.stamp}</div><div><h3>${e.title}</h3><p>${e.text}</p><p><b>18 de novembro de 2025:</b> o Banco Central decretou a liquidação extrajudicial do Banco Master. As investigações e disputas judiciais continuaram.</p><div class="menu-actions"><button id="ending-next">Continuar: Toffolinho</button><button id="ending-dossier">Abrir Dossiê</button><button id="ending-restart">Jogar outra rota</button></div></div></div>`);$('#ending-next').onclick=()=>{closeModal();state.finished=false;state.flags.arc_toffoli=true;enterScene(5)};$('#ending-dossier').onclick=openDossier;$('#ending-restart').onclick=()=>{closeModal();reset()}
+}
+
+function showToffoliEnding(){
+  state.finished=true;state.dossier=dossier.map(d=>d.id);save();
+  openModal('A CHAVE MUDA DE MÃO','FIM DO ARCO II',`<div class="ending"><div class="ending-stamp">O sigilo permanece. O relator, não.</div><div><h3>A CHAVE MUDA DE MÃO</h3><p>Toffolinho deixa a relatoria com os atos preservados pelo tribunal. O processo atravessa o corredor, entra novamente no sorteio e para no gabinete de André Mendonça.</p><p><b>Documentado:</b> a redistribuição ocorreu em 12 de fevereiro de 2026. A intenção de “ferrar tudo” é a lente satírica do jogo, não um fato atribuído ao ministro.</p><div class="menu-actions"><button id="ending-dossier">Abrir Dossiê completo</button><button id="ending-restart">Jogar desde o início</button></div></div></div>`);
+  $('#ending-dossier').onclick=openDossier;$('#ending-restart').onclick=()=>{closeModal();reset()}
 }
 
 dialogue.addEventListener('click',e=>{if(!e.target.closest('.choice'))nextLine()});$('#scene').addEventListener('click',()=>{if(!dialogue.classList.contains('hidden'))nextLine()});
