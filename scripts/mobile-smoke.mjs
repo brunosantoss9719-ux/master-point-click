@@ -1,0 +1,122 @@
+import {spawn} from 'node:child_process';
+import fs from 'node:fs/promises';
+
+const APP_URL=process.env.APP_URL||'http://127.0.0.1:4173/';
+const CHROME=process.env.CHROME_BIN||'/usr/bin/google-chrome';
+const DEBUG='http://127.0.0.1:9222';
+let chromeStderr='';
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+
+async function waitForChrome(){
+  let lastError='';
+  for(let i=0;i<180;i++){
+    for(const endpoint of ['/json/list','/json']){
+      try{
+        const response=await fetch(DEBUG+endpoint);
+        if(!response.ok){lastError='HTTP '+response.status;continue}
+        const pages=await response.json();
+        const page=pages.find(item=>item.type==='page'&&!String(item.url||'').startsWith('chrome-extension://'));
+        if(page)return page;
+      }catch(error){lastError=error?.message||String(error)}
+    }
+    await sleep(100);
+  }
+  throw new Error('Chrome headless não expôs CDP: '+lastError+'\n'+chromeStderr.slice(-4000));
+}
+
+async function connect(url){
+  const ws=new WebSocket(url);
+  await new Promise((resolve,reject)=>{ws.onopen=resolve;ws.onerror=reject});
+  let id=0;
+  const pending=new Map();
+  ws.onmessage=event=>{
+    const msg=JSON.parse(event.data);
+    if(!msg.id)return;
+    const task=pending.get(msg.id);if(!task)return;
+    pending.delete(msg.id);
+    if(msg.error)task.reject(new Error(msg.error.message));else task.resolve(msg.result);
+  };
+  const send=(method,params={})=>new Promise((resolve,reject)=>{
+    const callId=++id;pending.set(callId,{resolve,reject});ws.send(JSON.stringify({id:callId,method,params}));
+  });
+  return {ws,send};
+}
+
+async function evaluate(send,expression){
+  const result=await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});
+  if(result.exceptionDetails)throw new Error(result.exceptionDetails.text||'Falha em Runtime.evaluate');
+  return result.result?.value;
+}
+
+async function capture(send,file){
+  const shot=await send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false});
+  await fs.writeFile(file,Buffer.from(shot.data,'base64'));
+}
+
+async function waitForDom(send){
+  for(let i=0;i<80;i++){
+    const ready=await evaluate(send,"document.readyState!=='loading' && !!document.querySelector('#new-game')");
+    if(ready)return;
+    await sleep(100);
+  }
+  const state=await evaluate(send,"JSON.stringify({href:location.href,state:document.readyState,title:document.title,body:document.body?.innerText?.slice(0,300)})");
+  throw new Error('App não carregou no Chrome: '+state);
+}
+
+await fs.mkdir('artifacts',{recursive:true});
+const serverProbe=await fetch(APP_URL);
+if(!serverProbe.ok)throw new Error('Servidor local indisponível: HTTP '+serverProbe.status);
+const chrome=spawn(CHROME,[
+  '--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--hide-scrollbars',
+  '--disable-extensions','--disable-background-networking','--disable-component-update',
+  '--no-first-run','--no-default-browser-check','--no-proxy-server',
+  '--remote-debugging-address=127.0.0.1','--remote-debugging-port=9222',
+  '--user-data-dir=/tmp/master-chrome-'+process.pid,
+  '--window-size=915,412','about:blank'
+],{stdio:['ignore','ignore','pipe']});
+chrome.stderr.setEncoding('utf8');
+chrome.stderr.on('data',chunk=>{chromeStderr+=chunk});
+chrome.on('exit',(code,signal)=>{chromeStderr+='\nChrome exited code='+code+' signal='+signal});
+
+
+try{
+  const page=await waitForChrome();
+  const {ws,send}=await connect(page.webSocketDebuggerUrl);
+  await send('Page.enable');await send('Runtime.enable');
+  await send('Emulation.setDeviceMetricsOverride',{
+    width:915,height:412,deviceScaleFactor:1,mobile:true,
+    screenWidth:915,screenHeight:412,
+    screenOrientation:{type:'landscapePrimary',angle:90}
+  });
+  const navigation=await send('Page.navigate',{url:APP_URL});
+  if(navigation.errorText&&navigation.errorText!=='net::ERR_ABORTED')throw new Error('Falha de navegação: '+navigation.errorText);
+  await waitForDom(send);
+  const manifestLink=await evaluate(send,"document.querySelector('link[rel=manifest]')?.getAttribute('href')||''");
+  if(manifestLink!=='manifest.webmanifest')throw new Error('Link do manifesto ausente');
+
+  await evaluate(send,"document.querySelector('#new-game').click(); true");
+  await sleep(650);
+  const landscape=await evaluate(send,"(()=>({width:innerWidth,height:innerHeight,rotate:!!document.querySelector('#rotate'),game:getComputedStyle(document.querySelector('#game-screen')).display,appHeight:Math.round(document.querySelector('#app').getBoundingClientRect().height),dialogue:!document.querySelector('#dialogue').classList.contains('hidden'),audioButton:!!document.querySelector('#audio-btn')}))()");
+  if(landscape.rotate||landscape.game==='none'||!landscape.dialogue||!landscape.audioButton)throw new Error('Fluxo landscape não entrou no jogo: '+JSON.stringify(landscape));
+  if(Math.abs(landscape.appHeight-landscape.height)>2)throw new Error('Viewport cortado: app='+landscape.appHeight+', viewport='+landscape.height);
+  await capture(send,'artifacts/mobile-landscape.png');
+
+  await send('Emulation.setDeviceMetricsOverride',{
+    width:412,height:915,deviceScaleFactor:1,mobile:true,
+    screenWidth:412,screenHeight:915,
+    screenOrientation:{type:'portraitPrimary',angle:0}
+  });
+  await sleep(350);
+  const portrait=await evaluate(send,"(()=>({width:innerWidth,height:innerHeight,rotate:!!document.querySelector('#rotate'),appVisibility:getComputedStyle(document.querySelector('#app')).visibility,appHeight:Math.round(document.querySelector('#app').getBoundingClientRect().height)}))()");
+  if(portrait.rotate||portrait.appVisibility==='hidden')throw new Error('Retrato ainda bloqueia o jogo');
+  if(Math.abs(portrait.appHeight-portrait.height)>2)throw new Error('Viewport retrato cortado: app='+portrait.appHeight+', viewport='+portrait.height);
+  await capture(send,'artifacts/mobile-portrait-fallback.png');
+
+  const swReady=await evaluate(send,"Promise.race([navigator.serviceWorker?.ready.then(()=>true).catch(()=>false),new Promise(resolve=>setTimeout(()=>resolve(false),5000))])");
+  if(!swReady)throw new Error('Service worker não ficou pronto em 5s');
+
+  console.log('PASS mobile smoke:',JSON.stringify({landscape,portrait,swReady}));
+  ws.close();
+}finally{
+  chrome.kill('SIGTERM');
+}

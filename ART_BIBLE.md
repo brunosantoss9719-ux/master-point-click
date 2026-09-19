@@ -8,3 +8,4 @@
 - `assets/characters.webp` é a referência mestra; manter rostos, roupa, proporções e luz em novas expressões.
 - Fundos: `office.webp`, `boardroom.webp`, `hangar.webp`, `interview.webp`. Arte original gerada para o jogo.
 - Alexandre de Moraes aparece apenas como caricatura satírica muda na TV de `boardroom.webp`; nenhuma fala histórica é atribuída a ele.
+- Áudio: trilha procedural original de lo-fi noturno, acordes suaves, baixo discreto e ambiência de chuva/ruído filtrado. Texto usa blips curtos por personagem durante a digitação. Referência apenas de atmosfera; não reproduzir melodias, gravações ou efeitos de Coffee Talk.
