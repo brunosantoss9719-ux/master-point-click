@@ -168,7 +168,8 @@ const audio=(()=>{
     if(!AudioCtor)return false;
     ctx=new AudioCtor();
     master=ctx.createGain();musicGain=ctx.createGain();fxGain=ctx.createGain();ambienceGain=ctx.createGain();
-    master.gain.value=muted?0:.72;musicGain.gain.value=.23;fxGain.gain.value=.8;ambienceGain.gain.value=.16;
+    // Mix pensado para o alto-falante pequeno do celular, sem estourar fones.
+    master.gain.value=muted?0:.82;musicGain.gain.value=.62;fxGain.gain.value=.92;ambienceGain.gain.value=.28;
     musicGain.connect(master);fxGain.connect(master);ambienceGain.connect(master);master.connect(ctx.destination);
     return true;
   }
@@ -205,11 +206,12 @@ const audio=(()=>{
   function scheduleChord(){
     if(!ctx||muted)return;
     const when=ctx.currentTime+.035,chord=progression[chordIndex++%progression.length],duration=4.05;
-    chord.forEach((note,i)=>softNote(note,when,duration,.013-(i*.0012)));
-    softNote(chord[0]-12,when+.05,2.7,.019,'sine');
-    softNote(chord[1]-12,when+2.03,1.65,.012,'sine');
-    softKick(when+.04);softKick(when+2.04,.017);
-    [0.55,1.55,2.55,3.55].forEach(offset=>softBrush(when+offset));
+    chord.forEach((note,i)=>softNote(note,when,duration,.021-(i*.0015)));
+    softNote(chord[0]-12,when+.05,2.7,.032,'sine');
+    softNote(chord[1]-12,when+2.03,1.65,.021,'sine');
+    softNote(chord[2]+12,when+.48,.62,.012,'sine');
+    softKick(when+.04,.038);softKick(when+2.04,.029);
+    [0.55,1.55,2.55,3.55].forEach(offset=>softBrush(when+offset,.011));
   }
 
   function startAmbience(){
@@ -219,7 +221,7 @@ const audio=(()=>{
       data[i]=(Math.random()*2-1)*(.38+drift);
     }
     const noise=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();
-    noise.buffer=buffer;noise.loop=true;filter.type='lowpass';filter.frequency.value=1200;filter.Q.value=.2;gain.gain.value=.035;
+    noise.buffer=buffer;noise.loop=true;filter.type='lowpass';filter.frequency.value=1150;filter.Q.value=.2;gain.gain.value=.052;
     noise.connect(filter);filter.connect(gain);gain.connect(ambienceGain);noise.start();
   }
 
@@ -235,7 +237,7 @@ const audio=(()=>{
     if(!ctx||muted||ctx.state==='suspended')return;
     const now=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain(),base=speakerPitch[speaker]||198;
     osc.type='triangle';osc.frequency.setValueAtTime(base+(charCode%7)*3,now);
-    gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.017,now+.004);gain.gain.exponentialRampToValueAtTime(.0001,now+.028);
+    gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.043,now+.004);gain.gain.exponentialRampToValueAtTime(.0001,now+.032);
     osc.connect(gain);gain.connect(fxGain);osc.start(now);osc.stop(now+.032);
   }
 
@@ -245,15 +247,16 @@ const audio=(()=>{
     if(master){
       const now=ctx.currentTime;
       master.gain.cancelScheduledValues(now);
-      master.gain.setTargetAtTime(muted?0:.72,now,.025);
+      master.gain.setTargetAtTime(muted?0:.82,now,.025);
       if(!muted&&!started)start();
       if(!muted&&started)scheduleChord();
     }
     return muted;
   }
 
+  function resume(){if(ctx&&!muted)ctx.resume?.().catch?.(()=>{})}
   function isMuted(){return muted}
-  return {start,blip,toggle,isMuted};
+  return {start,blip,toggle,resume,isMuted};
 })();
 
 function updateAudioButton(){
@@ -299,6 +302,7 @@ globalThis.addEventListener?.('orientationchange',()=>setTimeout(syncViewport,80
 syncViewport();
 
 let deferredInstallPrompt=null;
+const isInstalled=()=>globalThis.matchMedia?.('(display-mode: standalone)')?.matches||globalThis.navigator?.standalone===true;
 globalThis.addEventListener?.('beforeinstallprompt',event=>{
   event.preventDefault();
   deferredInstallPrompt=event;
@@ -310,11 +314,14 @@ globalThis.addEventListener?.('appinstalled',()=>{
 });
 const installButton=$('#install-app');
 if(installButton)installButton.onclick=async()=>{
-  if(!deferredInstallPrompt)return;
-  deferredInstallPrompt.prompt();
-  try{await deferredInstallPrompt.userChoice}catch{}
-  deferredInstallPrompt=null;installButton.hidden=true;
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    try{await deferredInstallPrompt.userChoice}catch{}
+    deferredInstallPrompt=null;installButton.hidden=true;return;
+  }
+  openModal('Instalar o jogo','TELA CHEIA',`<p class="fact-note">Abra este link no Chrome. Toque em <b>⋮</b> e depois em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>. Ao abrir pelo ícone, o jogo usa a tela inteira como um app.</p>`);
 };
+if(installButton&&isInstalled())installButton.hidden=true;
 
 if(globalThis.navigator?.serviceWorker){
   globalThis.addEventListener?.('load',()=>globalThis.navigator.serviceWorker.register('./sw.js').catch(()=>{}));
@@ -326,6 +333,8 @@ function launchGame(action){
   action();
   updateAudioButton();
 }
+
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)audio.resume()});
 
 function save(){localStorage.setItem(SAVE_KEY,JSON.stringify(state)); updateBadges()}
 function load(){try{return JSON.parse(localStorage.getItem(SAVE_KEY))}catch{return null}}

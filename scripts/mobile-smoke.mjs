@@ -93,6 +93,9 @@ try{
   await waitForDom(send);
   const manifestLink=await evaluate(send,"document.querySelector('link[rel=manifest]')?.getAttribute('href')||''");
   if(manifestLink!=='manifest.webmanifest')throw new Error('Link do manifesto ausente');
+  const manifest=await (await fetch(new URL('manifest.webmanifest',APP_URL))).json();
+  const pngSizes=new Set((manifest.icons||[]).filter(icon=>icon.type==='image/png').map(icon=>icon.sizes));
+  if(!pngSizes.has('192x192')||!pngSizes.has('512x512'))throw new Error('Manifesto sem ícones PNG instaláveis');
 
   await evaluate(send,"document.querySelector('#new-game').click(); true");
   await sleep(650);

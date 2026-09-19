@@ -1,9 +1,9 @@
-const CACHE='master-shell-v4';
+const CACHE='master-shell-v5';
 const SHELL=[
   './',
   './index.html',
-  './styles.css',
-  './app.js',
+  './styles.css?v=immersive-audio-2',
+  './app.js?v=immersive-audio-2',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',
@@ -11,6 +11,8 @@ const SHELL=[
   './assets/interview.webp',
   './assets/characters.webp',
   './assets/daniel-vorcaro.webp',
+  './assets/icon-192.png',
+  './assets/icon-512.png',
   './assets/icon-192.svg',
   './assets/icon-512.svg'
 ];
