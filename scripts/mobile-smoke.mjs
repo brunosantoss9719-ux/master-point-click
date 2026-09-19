@@ -9,7 +9,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 
 async function waitForChrome(){
   let lastError='';
-  for(let i=0;i<100;i++){
+  for(let i=0;i<180;i++){
     for(const endpoint of ['/json/list','/json']){
       try{
         const response=await fetch(DEBUG+endpoint);
@@ -68,6 +68,7 @@ const serverProbe=await fetch(APP_URL);
 if(!serverProbe.ok)throw new Error('Servidor local indisponível: HTTP '+serverProbe.status);
 const chrome=spawn(CHROME,[
   '--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--hide-scrollbars',
+  '--disable-extensions','--disable-background-networking','--disable-component-update',
   '--no-first-run','--no-default-browser-check','--no-proxy-server',
   '--remote-debugging-address=127.0.0.1','--remote-debugging-port=9222',
   '--user-data-dir=/tmp/master-chrome-'+process.pid,
