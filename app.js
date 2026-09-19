@@ -187,12 +187,29 @@ const audio=(()=>{
     osc.start(when);osc.stop(when+duration+.04);
   }
 
+  function softKick(when,level=.022){
+    const osc=ctx.createOscillator(),gain=ctx.createGain();
+    osc.type='sine';osc.frequency.setValueAtTime(72,when);osc.frequency.exponentialRampToValueAtTime(43,when+.16);
+    gain.gain.setValueAtTime(level,when);gain.gain.exponentialRampToValueAtTime(.0001,when+.18);
+    osc.connect(gain);gain.connect(musicGain);osc.start(when);osc.stop(when+.2);
+  }
+
+  function softBrush(when,level=.006){
+    const length=Math.max(80,Math.floor(ctx.sampleRate*.045)),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
+    for(let i=0;i<length;i++)data[i]=(Math.random()*2-1)*(1-i/length);
+    const noise=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();
+    noise.buffer=buffer;filter.type='highpass';filter.frequency.value=2800;gain.gain.value=level;
+    noise.connect(filter);filter.connect(gain);gain.connect(musicGain);noise.start(when);
+  }
+
   function scheduleChord(){
     if(!ctx||muted)return;
     const when=ctx.currentTime+.035,chord=progression[chordIndex++%progression.length],duration=4.05;
     chord.forEach((note,i)=>softNote(note,when,duration,.013-(i*.0012)));
     softNote(chord[0]-12,when+.05,2.7,.019,'sine');
     softNote(chord[1]-12,when+2.03,1.65,.012,'sine');
+    softKick(when+.04);softKick(when+2.04,.017);
+    [0.55,1.55,2.55,3.55].forEach(offset=>softBrush(when+offset));
   }
 
   function startAmbience(){
