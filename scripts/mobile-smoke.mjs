@@ -15,7 +15,8 @@ async function waitForChrome(){
         const response=await fetch(DEBUG+endpoint);
         if(!response.ok){lastError='HTTP '+response.status;continue}
         const pages=await response.json();
-        if(pages.length)return pages[0];
+        const page=pages.find(item=>item.type==='page'&&!String(item.url||'').startsWith('chrome-extension://'));
+        if(page)return page;
       }catch(error){lastError=error?.message||String(error)}
     }
     await sleep(100);
