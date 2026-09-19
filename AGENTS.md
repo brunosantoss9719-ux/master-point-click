@@ -6,3 +6,6 @@
 - Não apresentar dramatização como fato. Atualizar `SOURCES.md` ao mudar fatos.
 - Validar mudanças visuais em landscape móvel e testar Continuar após recarga.
 - GitHub é o cânone. Atualizar `PROJECT_STATE.md` no mesmo commit de handoff.
+- PWA: `manifest.webmanifest` usa `display: fullscreen` e `orientation: landscape`; `sw.js` mantém o shell disponível offline.
+- No primeiro toque em Novo jogo/Continuar, tentar Fullscreen API + Screen Orientation API; nunca bloquear o jogador se o navegador negar.
+- Áudio é original e procedural via Web Audio API em `app.js`: cama lo-fi/ambiente e blips de texto; não copiar faixas ou efeitos de Coffee Talk.
