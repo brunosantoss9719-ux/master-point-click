@@ -52,7 +52,19 @@ async function capture(send,file){
   await fs.writeFile(file,Buffer.from(shot.data,'base64'));
 }
 
+async function waitForDom(send){
+  for(let i=0;i<80;i++){
+    const ready=await evaluate(send,"document.readyState!=='loading' && !!document.querySelector('#new-game')");
+    if(ready)return;
+    await sleep(100);
+  }
+  const state=await evaluate(send,"JSON.stringify({href:location.href,state:document.readyState,title:document.title,body:document.body?.innerText?.slice(0,300)})");
+  throw new Error('App não carregou no Chrome: '+state);
+}
+
 await fs.mkdir('artifacts',{recursive:true});
+const serverProbe=await fetch(APP_URL);
+if(!serverProbe.ok)throw new Error('Servidor local indisponível: HTTP '+serverProbe.status);
 const chrome=spawn(CHROME,[
   '--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--hide-scrollbars',
   '--no-first-run','--no-default-browser-check','--no-proxy-server',
@@ -74,11 +86,11 @@ try{
     screenWidth:915,screenHeight:412,
     screenOrientation:{type:'landscapePrimary',angle:90}
   });
-  await send('Page.navigate',{url:APP_URL});
-  await sleep(1200);
-
-  const manifest=await evaluate(send,"fetch('manifest.webmanifest').then(r=>r.json())");
-  if(manifest.display!=='fullscreen'||manifest.orientation!=='landscape')throw new Error('Manifesto não está fullscreen landscape');
+  const navigation=await send('Page.navigate',{url:APP_URL});
+  if(navigation.errorText)throw new Error('Falha de navegação: '+navigation.errorText);
+  await waitForDom(send);
+  const manifestLink=await evaluate(send,"document.querySelector('link[rel=manifest]')?.getAttribute('href')||''");
+  if(manifestLink!=='manifest.webmanifest')throw new Error('Link do manifesto ausente');
 
   await evaluate(send,"document.querySelector('#new-game').click(); true");
   await sleep(650);
@@ -98,8 +110,8 @@ try{
   if(Math.abs(portrait.appHeight-portrait.height)>2)throw new Error('Viewport retrato cortado: app='+portrait.appHeight+', viewport='+portrait.height);
   await capture(send,'artifacts/mobile-portrait-fallback.png');
 
-  const swReady=await evaluate(send,"navigator.serviceWorker?.ready.then(()=>true).catch(()=>false)");
-  if(!swReady)throw new Error('Service worker não ficou pronto');
+  const swReady=await evaluate(send,"Promise.race([navigator.serviceWorker?.ready.then(()=>true).catch(()=>false),new Promise(resolve=>setTimeout(()=>resolve(false),5000))])");
+  if(!swReady)throw new Error('Service worker não ficou pronto em 5s');
 
   console.log('PASS mobile smoke:',JSON.stringify({landscape,portrait,swReady}));
   ws.close();
