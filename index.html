@@ -3,20 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-    <meta name="theme-color" content="#080b16" />
+    <meta name="theme-color" content="#050711" />
     <meta name="description" content="MASTER — jogo narrativo point-and-click sobre a crise do Banco Master." />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MASTER" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icon-192.svg" type="image/svg+xml" />
     <title>MASTER — Última Chamada</title>
     <link rel="preload" as="image" href="assets/office.webp" />
     <link rel="preload" as="image" href="assets/characters.webp" />
-    <link rel="stylesheet" href="styles.css?v=pixel-noir-2" />
+    <link rel="stylesheet" href="styles.css?v=immersive-audio-1" />
   </head>
   <body>
-    <div id="rotate" aria-hidden="true">
-      <div class="rotate-mark">↻</div>
-      <strong>Gire o celular</strong>
-      <span>Esta história foi enquadrada para a horizontal.</span>
-    </div>
-
     <main id="app">
       <section id="start-screen" class="screen active">
         <div class="start-art"></div>
@@ -29,6 +29,7 @@
           <div class="start-actions">
             <button id="new-game" class="primary">Novo jogo</button>
             <button id="continue-game" class="secondary" hidden>Continuar</button>
+            <button id="install-app" class="secondary install" hidden>Instalar app</button>
           </div>
           <button id="start-sources" class="text-button">Sobre fatos e dramatização</button>
         </div>
@@ -60,6 +61,7 @@
           <button id="phone-btn" aria-label="Abrir celular"><span>▣</span> Celular <b id="phone-badge"></b></button>
           <button id="inventory-btn" aria-label="Abrir inventário"><span>◇</span> Inventário</button>
           <button id="dossier-btn" aria-label="Abrir dossiê"><span>≡</span> Dossiê <b id="dossier-count"></b></button>
+          <button id="audio-btn" aria-label="Desligar som" aria-pressed="false"><span>♪</span> Som</button>
           <button id="menu-btn" aria-label="Abrir menu"><span>•••</span></button>
         </nav>
       </section>
@@ -71,6 +73,6 @@
         </div>
       </div>
     </main>
-    <script src="app.js?v=pixel-noir-2" defer></script>
+    <script src="app.js?v=immersive-audio-1" defer></script>
   </body>
 </html>
