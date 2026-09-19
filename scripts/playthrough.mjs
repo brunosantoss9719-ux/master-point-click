@@ -26,12 +26,29 @@ const document={querySelector:s=>elements[s]||new Element(),querySelectorAll:()=
 const storage=new Map();
 const sandbox={document,localStorage:{setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k)||null,removeItem:k=>storage.delete(k)},matchMedia:()=>({matches:true}),setTimeout:fn=>{fn();return 1},clearTimeout:()=>{},setInterval:fn=>{fn();return 1},clearInterval:()=>{},console};
 vm.createContext(sandbox);
-const source=fs.readFileSync('app.js','utf8')+'\n;this.__game={getState:()=>state,getQueue:()=>queue,scenes,begin,reset,enterScene,nextLine,openPhone,openInventory,openDossier,save,load};';
+const source=fs.readFileSync('app.js','utf8')+'\n;this.__game={getState:()=>state,getQueue:()=>queue,getActivePuzzle:()=>activePuzzle,selectPuzzleCard,checkActivePuzzle,scenes,begin,reset,enterScene,nextLine,openPhone,openInventory,openDossier,save,load};';
 vm.runInContext(source,sandbox,{filename:'app.js'});
 const g=sandbox.__game;
 
 function drain(){let guard=0;while(!elements['#dialogue'].classList.contains('hidden')&&elements['#choices'].children.length===0&&guard++<80)g.nextLine();if(guard>=80)throw new Error('Diálogo não encerrou')}
-function clickHotspot(index,choice=0){const button=elements['#hotspots'].children[index];if(!button)throw new Error(`Hotspot ${index} ausente na cena ${g.getState().scene}`);button.onclick({stopPropagation(){}});drain();if(elements['#choices'].children.length){elements['#choices'].children[choice].onclick({stopPropagation(){}});drain()}}
+function solvePuzzle(){
+  const active=g.getActivePuzzle();if(!active)return;
+  if(active.puzzle.type==='select'){
+    active.cards.filter(card=>card.correct).forEach(card=>g.selectPuzzleCard(card.token));
+    if(!g.checkActivePuzzle())throw new Error('Puzzle de seleção rejeitou a solução correta');
+  }else if(active.puzzle.type==='order'){
+    active.puzzle.solution.forEach(id=>g.selectPuzzleCard(active.cards.find(card=>card.id===id).token));
+    if(!g.checkActivePuzzle())throw new Error('Puzzle de ordem rejeitou a solução correta');
+  }else{
+    active.puzzle.pairs.forEach((_,group)=>{
+      const pair=active.cards.filter(card=>card.group===group);
+      pair.forEach(card=>g.selectPuzzleCard(card.token));
+    });
+  }
+  if(g.getActivePuzzle())throw new Error('Puzzle permaneceu aberto após a solução');
+  drain();
+}
+function clickHotspot(index,choice=0){const button=elements['#hotspots'].children[index];if(!button)throw new Error(`Hotspot ${index} ausente na cena ${g.getState().scene}`);button.onclick({stopPropagation(){}});drain();solvePuzzle();if(elements['#choices'].children.length){elements['#choices'].children[choice].onclick({stopPropagation(){}});drain()}}
 
 function runRoute(requiredChoices,sceneThreeChoice=0,checkSave=false){
   g.reset();drain();
@@ -70,6 +87,7 @@ for(let scene=5;scene<8;scene++){
 const end=g.getState();
 if(elements['#modal-title'].textContent!=='A CHAVE MUDA DE MÃO')throw new Error('Arco Toffolinho não terminou em André Mendonça');
 if(end.dossier.length!==13)throw new Error(`Dossiê final incompleto: ${end.dossier.length}`);
+if(Object.keys(end.flags).filter(flag=>flag.startsWith('puzzle_')&&!flag.startsWith('puzzle_clean_')).length!==6)throw new Error('Os 6 puzzles narrativos não foram concluídos');
 if(!storage.has('master-ultima-chamada-v1'))throw new Error('Autosave não foi persistido');
 if(endings.size!==3)throw new Error(`Ramificação produziu apenas ${endings.size} finais: ${[...endings].join(', ')}`);
-console.log(`PASS: 3 rotas Vorcaro + arco Toffolinho; 8 cenas; finais ${[...endings].join(' / ')} / A CHAVE MUDA DE MÃO; Dossiê e save/continue verificados.`);
+console.log(`PASS: 3 rotas Vorcaro + arco Toffolinho; 8 cenas; 6 puzzles; finais ${[...endings].join(' / ')} / A CHAVE MUDA DE MÃO; Dossiê e save/continue verificados.`);

@@ -7,11 +7,12 @@ const html=fs.readFileSync('index.html','utf8');
 const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
 const scenes=(js.match(/chapter:'(?:CAPÍTULO|TOFFOLINHO)/g)||[]).length;
 const endings=(js.match(/title:'(?:A PASTA ABERTA|A FORTALEZA VAZIA|O HOMEM NO VIDRO)'/g)||[]).length;
-if(scenes!==8||endings!==3||!js.includes('showToffoliEnding')){console.error({scenes,endings,toffoliEnding:js.includes('showToffoliEnding')});process.exit(1)}
+const puzzles=(js.match(/puzzle:\{type:/g)||[]).length;
+if(scenes!==8||endings!==3||puzzles!==6||!js.includes('showToffoliEnding')||!js.includes('finishActivePuzzle')){console.error({scenes,endings,puzzles,toffoliEnding:js.includes('showToffoliEnding')});process.exit(1)}
 if(manifest.display!=='fullscreen'||manifest.orientation!=='landscape'){console.error('PWA não está configurada para fullscreen landscape');process.exit(1)}
 const iconSizes=new Set((manifest.icons||[]).map(icon=>icon.sizes));
 if(!iconSizes.has('192x192')||!iconSizes.has('512x512')){console.error('Ícones PWA obrigatórios ausentes');process.exit(1)}
 if(!html.includes('rel="manifest"')||html.includes('id="rotate"')){console.error('Entrada PWA/rotação inválida');process.exit(1)}
 if(!js.includes('requestFullscreen')||!js.includes("orientation.lock('landscape')")||!js.includes('serviceWorker.register')){console.error('Modo imersivo incompleto');process.exit(1)}
 if(!js.includes('audio.blip')||!js.includes('scheduleChord')){console.error('Camada de áudio ausente');process.exit(1)}
-console.log(`OK: ${scenes} cenas, ${endings} finais, PWA fullscreen landscape, áudio e ${required.length} arquivos essenciais.`);
+console.log(`OK: ${scenes} cenas, ${puzzles} puzzles, ${endings} finais, PWA fullscreen landscape, áudio e ${required.length} arquivos essenciais.`);

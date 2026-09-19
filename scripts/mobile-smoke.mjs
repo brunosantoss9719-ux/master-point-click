@@ -125,6 +125,21 @@ try{
   if(!toffoli||toffoli.person!=='toffoli'||!toffoli.show||!toffoli.background.includes('toffoli.webp')||!toffoli.scene.includes('stf-office.webp'))throw new Error('Arco Toffolinho não apareceu: '+JSON.stringify(toffoli));
   await capture(send,'artifacts/mobile-toffolinho.png');
 
+  for(let i=0;i<14;i++){
+    const hidden=await evaluate(send,"document.querySelector('#dialogue').classList.contains('hidden')");
+    if(hidden)break;
+    await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(80);
+  }
+  await evaluate(send,"document.querySelector('.hotspot.required').click(); true");
+  for(let i=0;i<8;i++){
+    const open=await evaluate(send,"!document.querySelector('#modal').classList.contains('hidden') && document.querySelectorAll('.puzzle-card').length>0");
+    if(open)break;
+    await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(80);
+  }
+  const puzzle=await evaluate(send,"(()=>({open:!document.querySelector('#modal').classList.contains('hidden'),cards:document.querySelectorAll('.puzzle-card').length,title:document.querySelector('#modal-title').textContent,overflow:document.querySelector('.modal-panel').scrollHeight>document.querySelector('.modal-panel').clientHeight}))()");
+  if(!puzzle.open||puzzle.cards<3||puzzle.title!=='Três voltas da chave')throw new Error('Puzzle mobile não abriu corretamente: '+JSON.stringify(puzzle));
+  await capture(send,'artifacts/mobile-puzzle.png');
+
   await send('Emulation.setDeviceMetricsOverride',{
     width:412,height:915,deviceScaleFactor:1,mobile:true,
     screenWidth:412,screenHeight:915,

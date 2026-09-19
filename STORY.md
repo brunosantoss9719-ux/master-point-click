@@ -8,6 +8,8 @@
 
 Consequências ocultas: pressão, exposição e confiança. Finais: **A Pasta Aberta**, **A Fortaleza Vazia**, **O Homem no Vidro**.
 
+Puzzles do arco: separar condições pendentes do acordo BRB, reconstruir a cronologia anúncio–liminar–veto e ligar cada versão do interrogatório ao vestígio correspondente.
+
 ## Arco II — Toffolinho
 
 6. **A Chave (fim de nov/2025):** Toffoli recebe a relatoria e decide o alcance do sigilo.
@@ -15,3 +17,5 @@ Consequências ocultas: pressão, exposição e confiança. Finais: **A Pasta Ab
 8. **O Espelho (12/02/2026):** revelações sobre o Tayayá aumentam a pressão; o caso vai à livre redistribuição e termina sorteado para André Mendonça.
 
 Toffolinho é uma caricatura satírica controlável. A intenção de “ferrar tudo” estrutura as escolhas e o humor, mas não é apresentada como fato. Decisões, datas e relações documentadas aparecem no Dossiê; pensamentos e diálogos de gabinete são dramatização.
+
+Puzzles do arco: ordenar níveis de acesso aos autos, montar uma cadeia de custódia rastreável e cruzar as relações reportadas do Tayayá. Falhar nunca bloqueia a história, mas aumenta a pressão; resolver sem erro melhora a confiança.
