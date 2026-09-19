@@ -37,9 +37,16 @@ function runRoute(requiredChoices,sceneThreeChoice=0,checkSave=false){
   g.reset();drain();
   for(let scene=0;scene<5;scene++){
     if(g.getState().scene!==scene)throw new Error(`Esperava cena ${scene}, recebeu ${g.getState().scene}`);
-    clickHotspot(0,scene===2?sceneThreeChoice:0);
+    const sceneData=g.scenes[scene];
+    const requiredIndex=sceneData.hotspots.findIndex(h=>h.required);
+    const firstOptional=sceneData.hotspots.findIndex(h=>!h.required);
+    clickHotspot(firstOptional,scene===2?sceneThreeChoice:0);
     if(scene===2&&checkSave){g.openPhone();g.openInventory();g.openDossier();g.save();if(g.load().scene!==2)throw new Error('Autosave não retomou a cena 3')}
-    clickHotspot(3,requiredChoices[scene]);
+    if(scene===1){
+      const xandaoIndex=sceneData.hotspots.findIndex(h=>h.id==='xandao_tv');
+      clickHotspot(xandaoIndex);
+    }
+    clickHotspot(requiredIndex,requiredChoices[scene]);
   }
   if(!g.getState().finished)throw new Error('Playthrough não chegou ao final');
   return elements['#modal-title'].textContent;
