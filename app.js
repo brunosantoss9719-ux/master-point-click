@@ -62,7 +62,7 @@ function renderScene(replay=true){
   const b=document.createElement('button'),seen=state.inspected.includes(`${s.id}:${id}`);
   b.className=`scene-object ${seen?'seen':''}`;b.style.left=x+'%';b.style.top=y+'%';b.dataset.evidence=id;
   b.innerHTML=`<span class="object-corner"></span><strong>${seen?'REVER':'EXAMINAR'}</strong><small>${label}</small>`;$('#objects').append(b);
-  b.onclick=event=>{event.stopPropagation();inspect(id)};
+  b.addEventListener('click',event=>{event.stopPropagation();inspect(id)});
  });
  closePanel();if(replay&&!state.completedBeats.includes(`intro:${s.id}`)){state.completedBeats.push(`intro:${s.id}`);playDialogue(s.intro)}
  save();
