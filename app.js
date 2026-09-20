@@ -749,4 +749,4 @@ $('#new-game').onclick=()=>launchGame(()=>reset('master'));$('#bonus-game').oncl
 $('#phone-btn').onclick=openPhone;$('#inventory-btn').onclick=openInventory;$('#dossier-btn').onclick=openDossier;$('#audio-btn').onclick=()=>{try{audio.start();audio.toggle()}catch{}updateAudioButton()};$('#menu-btn').onclick=openMenu;$('#modal-close').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if((e.key===' '||e.key==='Enter')&&!dialogue.classList.contains('hidden'))nextLine()});
 
-updateAudioButton();const saved=load();if(saved?.started){$('#continue-game').hidden=false
+updateAudioButton();const saved=load();if(saved?.started){$('#continue-game').hidden=false}
