@@ -1,9 +1,9 @@
-const CACHE='master-shell-v17';
+const CACHE='master-shell-v18';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=audio-5',
-  './app.js?v=audio-5',
+  './styles.css?v=audio-6',
+  './app.js?v=audio-6',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',
@@ -19,13 +19,6 @@ const SHELL=[
   './assets/copa-residence-street.webp',
   './assets/copa-civic-avenue.webp',
   './assets/copa-abort-road.webp',
-  './assets/audio/wake.mp3',
-  './assets/audio/ui.mp3',
-  './assets/audio/interact.mp3',
-  './assets/audio/advance.mp3',
-  './assets/audio/blip.mp3',
-  './assets/audio/success.mp3',
-  './assets/audio/error.mp3',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/icon-192.svg',

@@ -7,6 +7,8 @@ const invalidAudio=audioFiles.filter(file=>fs.statSync(file).size<1000||fs.readF
 if(invalidAudio.length){console.error('Arquivos MP3 inválidos:',invalidAudio.join(', '));process.exit(1)}
 const js=fs.readFileSync('app.js','utf8');
 const html=fs.readFileSync('index.html','utf8');
+const embeddedAudio=[...js.matchAll(/data:audio\/mpeg;base64,([A-Za-z0-9+/=]+)/g)].map(match=>Buffer.from(match[1],'base64'));
+if(embeddedAudio.length!==7||embeddedAudio.some(buffer=>buffer.length<1000||buffer.subarray(0,3).toString()!=='ID3')){console.error('Os sete efeitos MP3 não foram embutidos integralmente');process.exit(1)}
 const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
 const scenes=(js.match(/chapter:'(?:CAPÍTULO|TOFFOLINHO|MENDONÇA|BÔNUS)/g)||[]).length;
 const endings=(js.match(/title:'(?:A PASTA ABERTA|A FORTALEZA VAZIA|O HOMEM NO VIDRO)'/g)||[]).length;
@@ -18,6 +20,6 @@ const iconSizes=new Set((manifest.icons||[]).map(icon=>icon.sizes));
 if(!iconSizes.has('192x192')||!iconSizes.has('512x512')){console.error('Ícones PWA obrigatórios ausentes');process.exit(1)}
 if(!html.includes('rel="manifest"')||!html.includes('id="bonus-game"')||html.includes('id="rotate"')){console.error('Entrada PWA/bônus/rotação inválida');process.exit(1)}
 if(!js.includes('requestFullscreen')||!js.includes("orientation.lock('landscape')")||!js.includes('serviceWorker.register')){console.error('Modo imersivo incompleto');process.exit(1)}
-if(!js.includes('audio.blip')||!js.includes('audio.interact')||!js.includes('audio.puzzleTick')||!js.includes('audio.success')||!js.includes('wakeSound')||!js.includes("new globalThis.Audio(mediaFiles[name])")||!html.includes('assets/audio/wake.mp3')||js.includes('scheduleChord')||js.includes('startAmbience')){console.error('Efeitos pontuais/arquivos reais/desbloqueio de áudio ausentes ou música contínua ainda presente');process.exit(1)}
+if(!js.includes('audio.blip')||!js.includes('audio.interact')||!js.includes('audio.puzzleTick')||!js.includes('audio.success')||!js.includes('wakeSound')||!js.includes("new globalThis.Audio(mediaFiles[name])")||!js.includes('data:audio/mpeg;base64,')||html.includes('preload\" as=\"audio')||js.includes('scheduleChord')||js.includes('startAmbience')){console.error('Efeitos embutidos/desbloqueio de áudio ausentes, pré-carga externa presente ou música contínua ainda ativa');process.exit(1)}
 if(js.includes('data-puzzle-tool')||js.includes('data-puzzle-target')||js.includes('Ligue cada')){console.error('Interface antiga de ferramenta/alvo ainda está ativa');process.exit(1)}
 console.log(`OK: ${scenes} cenas, ${puzzles} puzzles em ${mechanisms.length} mecanismos, campanha bônus Copa 2022, ${endings} finais principais, PWA fullscreen landscape e áudio desbloqueável.`);
