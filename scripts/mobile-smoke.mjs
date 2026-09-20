@@ -106,7 +106,7 @@ try{
   await tap(send,'#new-game');
   await sleep(650);
   const landscape=await evaluate(send,"(()=>({width:innerWidth,height:innerHeight,rotate:!!document.querySelector('#rotate'),game:getComputedStyle(document.querySelector('#game-screen')).display,appHeight:Math.round(document.querySelector('#app').getBoundingClientRect().height),dialogue:!document.querySelector('#dialogue').classList.contains('hidden'),audioButton:!!document.querySelector('#audio-btn'),audio:audio.debug()}))()");
-  if(landscape.rotate||landscape.game==='none'||!landscape.dialogue||!landscape.audioButton||!landscape.audio.supported||landscape.audio.state!=='running'||!landscape.audio.wakePlayed)throw new Error('Fluxo landscape/áudio não entrou no jogo: '+JSON.stringify(landscape));
+  if(landscape.rotate||landscape.game==='none'||!landscape.dialogue||!landscape.audioButton||!landscape.audio.supported||landscape.audio.state!=='running'||!landscape.audio.wakePlayed||landscape.audio.mediaPlays<1||landscape.audio.mediaFailures>0)throw new Error('Fluxo landscape/áudio real não entrou no jogo: '+JSON.stringify(landscape));
   if(Math.abs(landscape.appHeight-landscape.height)>2)throw new Error('Viewport cortado: app='+landscape.appHeight+', viewport='+landscape.height);
 
   let daniel=null;

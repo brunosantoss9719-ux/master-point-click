@@ -16,7 +16,9 @@
     <link rel="preload" as="image" href="assets/office.webp" />
     <link rel="preload" as="image" href="assets/characters.webp" />
     <link rel="preload" as="image" href="assets/daniel-vorcaro.webp" />
-    <link rel="stylesheet" href="styles.css?v=mechanisms-3" />
+    <link rel="preload" as="audio" href="assets/audio/wake.wav" />
+    <link rel="preload" as="audio" href="assets/audio/blip.wav" />
+    <link rel="stylesheet" href="styles.css?v=audio-4" />
   </head>
   <body>
     <main id="app">
@@ -64,7 +66,7 @@
           <button id="phone-btn" aria-label="Abrir celular"><span>▣</span> Celular <b id="phone-badge"></b></button>
           <button id="inventory-btn" aria-label="Abrir inventário"><span>◇</span> Inventário</button>
           <button id="dossier-btn" aria-label="Abrir dossiê"><span>≡</span> Dossiê <b id="dossier-count"></b></button>
-          <button id="audio-btn" aria-label="Desligar efeitos" aria-pressed="false"><span>◌</span> Efeitos</button>
+          <button id="audio-btn" aria-label="Desligar efeitos" aria-pressed="false"><span>🔊</span> Efeitos</button>
           <button id="menu-btn" aria-label="Abrir menu"><span>•••</span></button>
         </nav>
       </section>
@@ -76,6 +78,6 @@
         </div>
       </div>
     </main>
-    <script src="app.js?v=mechanisms-3" defer></script>
+    <script src="app.js?v=audio-4" defer></script>
   </body>
 </html>
