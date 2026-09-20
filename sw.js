@@ -1,9 +1,11 @@
-const CACHE='master-shell-v19';
+const CACHE='master-investigation-v1';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=puzzle-7',
-  './app.js?v=puzzle-7',
+  './styles.css?v=investigation-1',
+  './app.js?v=investigation-1',
+  './content/sources.js?v=investigation-1',
+  './content/master-case.js?v=investigation-1',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',

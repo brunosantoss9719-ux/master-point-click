@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "MASTER — Última Chamada",
+  "name": "MASTER — Linha de Custódia",
   "short_name": "MASTER",
-  "description": "Jogo narrativo point-and-click sobre o caso Banco Master, com o bônus Copa 2022.",
+  "description": "Thriller investigativo point-and-click sobre o caso Banco Master.",
   "lang": "pt-BR",
   "start_url": "./",
   "scope": "./",

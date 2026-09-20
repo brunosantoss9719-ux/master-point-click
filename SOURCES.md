@@ -1,30 +1,29 @@
-# Fontes usadas
+# Ledger factual — Caso Master
 
-- [Reuters, 29/04/2025](https://www.reuters.com/business/finance/brazils-brb-close-completing-due-diligence-acquire-banco-master-2025-04-29/) — termos anunciados da compra pelo BRB, aprovações e modelo de captação.
-- [Reuters, 07/05/2025](https://www.reuters.com/markets/deals/brazil-judge-blocks-lender-brb-signing-purchase-banco-master-2025-05-07/) — decisão judicial que travou a assinatura definitiva.
-- [Reuters, 04/09/2025](https://www.reuters.com/business/finance/brb-weighs-new-bid-master-after-brazil-central-bank-blocks-deal-source-says-2025-09-04/) — rejeição do BC, possível nova proposta e perímetro do negócio.
-- [Reuters, 10/04/2025](https://www.reuters.com/markets/deals/brazilian-lender-brb-expects-lower-banco-master-price-with-deal-adjustment-ceo-2025-04-10/) — ativos excluídos e due diligence.
-- [CNN Brasil, 18/11/2025](https://www.cnnbrasil.com.br/economia/money/macroeconomia/dono-do-banco-master-estava-a-caminho-de-dubai-e-foi-preso-em-guarulhos/) — prisão em Guarulhos e escopo divulgado da Operação Compliance Zero.
-- [Folha, 25/11/2025](https://www1.folha.uol.com.br/mercado/2025/11/defesa-de-daniel-vorcaro-diz-a-justica-que-banco-central-sabia-de-viagem-a-dubai.shtml) — versão da defesa sobre reunião com BC, venda, viagem e controvérsia das carteiras.
-- [Banco Master](https://www.bancomaster.com.br/) — estado de liquidação extrajudicial desde 18/11/2025.
-- [CartaCapital, 13/02/2026](https://www.cartacapital.com.br/politica/a-dimensao-do-sigilo-sob-o-qual-andre-mendonca-assume-o-caso-master/) — grau de sigilo imposto ao processo e contexto recebido pelo novo relator.
-- [STF, Petição 15.556](https://digital.stf.jus.br/) — segunda fase da Compliance Zero autorizada por Toffoli e registro da custódia de aparelhos apreendidos.
-- [Folha, 12/03/2026](https://www1.folha.uol.com.br/mercado/2026/03/toffoli-deve-se-afastar-de-todos-os-julgamentos-do-caso-master.shtml) — pressão pela saída, participação da empresa familiar no Tayayá e ligação reportada do fundo com o entorno de Vorcaro.
-- [PlatôBR, 12/02/2026](https://platobr.com.br/em-reuniao-dos-ministros-do-stf-toffoli-deixa-relatoria-do-processo-sobre-o-master) — íntegra da nota conjunta do STF, validade dos atos, pedido de livre redistribuição e sorteio para André Mendonça.
-- [CartaCapital, 19/02/2026](https://www.cartacapital.com.br/justica/mendonca-reduz-sigilo-e-da-mais-autonomia-a-pf-no-caso-master/) — redução do sigilo, perícia de cerca de 100 aparelhos pelo fluxo ordinário e autorização prévia para novas investigações.
-- [Folha, 15/09/2026](https://www1.folha.uol.com.br/poder/2026/09/mendonca-reage-a-moraes-e-diz-que-nao-ha-irregularidade-em-relatorio-da-pf.shtml) — versão de Mendonça sobre a reunião com delegados, menções a Andrei Rodrigues e Paulo Gonet e produção do relatório da PF.
-- [UOL, 15/09/2026](https://noticias.uol.com.br/politica/ultimas-noticias/2026/09/15/gilmar-critica-afastamento-de-chefe-da-pf-como-afastar-diretor-da-nasa.htm) — afastamento de Andrei Rodrigues, retorno determinado por Fachin e reação no STF.
-- [UOL, 19/09/2026](https://noticias.uol.com.br/politica/ultimas-noticias/2026/09/19/mendonca-e-fux-pedem-ajuda-a-pf-para-acessar-copia-de-celular-de-vorcaro.ghtm) — cópia criptografada de cerca de 500 GB, custódia do original e pedido de auxílio técnico à PF.
-- [CNN Brasil, 26/11/2024](https://www.cnnbrasil.com.br/politica/plano-do-punhal-verde-e-amarelo-para-golpe-foi-impresso-no-palacio-do-planalto-diz-pf/) — relatório da PF sobre a impressão do documento “Punhal Verde e Amarelo” em 9/11/2022 e sua cronologia posterior.
-- [Congresso em Foco, 19/11/2024](https://www.congressoemfoco.com.br/noticia/5730/operacao-contragolpe-veja-as-mensagens-de-militares-no-grupo-copa-2022) — grupo no Signal “Copa 2022”, integrantes em campo e mensagens reportadas sobre o “cancelamento do jogo”.
-- [Relatório final da PF, parte 4, reproduzido pelo Poder360](https://static.poder360.com.br/2024/11/relatorio-PF-golpe-de-estado-2024-parte-4.pdf) — capítulo sobre a Operação Copa 2022, cruzamento de mensagens, sinais e movimentos e conexão alegada com o plano Punhal Verde e Amarelo.
-- [SBT News, 30/11/2024](https://sbtnews.sbt.com.br/noticia/brasil/pf-mapeou-movimentacao-de-kids-pretos-em-brasilia-em-missao-contra-moraes) — seis aparelhos e codinomes; aproximadamente um mês de monitoramento; posições amplas em 15/12; pergunta das 20h57, ordem de abortar das 20h59 e versões das defesas.
-- [Decisão do STF reunida pelo Poder360, 19/11/2024](https://www.poder360.com.br/poder-justica/leia-a-integra-da-decisao-de-moraes-sobre-operacao-contragolpe-da-pf/) — decisão que embasou a Operação Contragolpe e tornou públicos elementos da investigação.
-- [STF, 18/11/2025](https://noticias.stf.jus.br/postsnoticias/ap-2696-penas-do-nucleo-3-variam-de-um-ano-e-11-meses-a-24-anos-de-prisao/) — julgamento da AP 2696: nove condenações e uma absolvição no Núcleo 3, com penas e enquadramentos distintos.
+O código usa os mesmos IDs em `content/sources.js`. Relatório policial é tratado como alegação investigativa; decisão judicial prova a existência/efeito da medida, não culpa material.
 
-## Referências de design dos puzzles
+| ID | Afirmação usada | Status | Fato/documento/publicação | Fonte e contraditório | Cenas |
+|---|---|---|---|---|---|
+| bc_comunicacao | Inconsistências em cessões Master/BRB tiveram origem institucional e comunicação competente. | DOCUMENTADO | 2024 / registros institucionais / divulgação posterior | Banco Central e registros públicos; o jogo não atribui descoberta individual à protagonista. | mau |
+| prisao1 | Primeira prisão em Guarulhos; viagem a Dubai programada. | DOCUMENTADO/REPORTADO | 17/11/2025 / 18/11/2025 | CNN Brasil; intenção não é tratada como fato. | cold, retorno |
+| defesa_viagem | Defesa vinculou a viagem a negociação comercial/venda do banco. | CONTESTADO | 17/11/2025 / 25/11/2025 | Folha; preservada como versão da defesa. | cold, retorno |
+| liquidacao | Liquidação extrajudicial no dia seguinte. | DOCUMENTADO | 18/11/2025 | Banco Central; jogo não afirma causalidade com a prisão/viagem. | retorno |
+| oitiva1 | Oitiva e acareação sobre origem dos créditos. | DOCUMENTADO/CONTESTADO | 30/12/2025 / vídeo publicado 29/01/2026 | Poder360, vídeo integral; divergências permanecem divergências. | fantasma |
+| stf_nota | Nota preservou atos, registrou inexistência de suspeição/impedimento e livre redistribuição a pedido de Toffoli. | DOCUMENTADO | 12/02/2026 | Registro público do STF/íntegra da nota. | vidro |
+| mendonca_fluxo | Perícia de cerca de cem dispositivos segue fluxo ordinário em 19/02. | DOCUMENTADO/REPORTADO | 19/02/2026 | Decisão e cobertura jornalística. | vidro |
+| quatro_nucleos | PF descreveu quatro núcleos; houve segunda prisão preventiva em nova fase. | ALEGADO + MEDIDA DOCUMENTADA | 04/03/2026 | STF/PF; Reuters, Agência Brasil e cobertura profissional. | genero |
+| turma_meninos | PF associou A Turma e Os Meninos a rastros presenciais e digitais. | ALEGADO | decisão/representação de maio de 2026 / 14/05/2026 | Documentos e jornalismo; funções e pagamentos sempre atribuídos. | turma, meninos |
+| oitiva2 | Oitiva de quatro horas por videoconferência. | DOCUMENTADO | 28/08/2026 | Agência Brasil e vídeo integral. | base de voz |
+| plenaria | Em 15/09 houve vista durante questão de ordem; mérito da Pet 16662 não foi julgado. | DOCUMENTADO/PENDENTE | 15/09/2026 | Sessão pública do STF. | final |
+| copia500 | Gabinetes pediram auxílio técnico à PF para cópia de aproximadamente 500 GB. | REPORTADO/PENDENTE | 19/09/2026 | UOL e registros públicos subsequentes. | final |
 
-- [Rusty Lake — press kit oficial](https://press.rustylake.com/) — point-and-click surrealista, suspense, atmosfera de sala de fuga e mistérios conectados entre capítulos. A reformulação usa narrativa ambiental e mecanismos curtos, não copia arte, personagens ou soluções.
-- [Lost Lands: Dark Overlord — análise de mecânicas](https://acasualreview.wordpress.com/2015/07/18/lost-lands-dark-overlord/) — variedade entre quebra-cabeça deslizante, troca e rearranjo, reparo de mecanismos e criação de itens. A referência levou à substituição da bancada repetida por seis famílias de interação.
+## Referências de design
 
-Personagens compostos e conversas privadas são dramatização. A leitura de que Toffoli buscava “ferrar” a investigação é sátira jogável, não fato documentado. No arco Mendonça, ordens e datas públicas são separadas das conversas inventadas; citações a autoridades são apresentadas como conteúdo reportado e contestado, nunca como culpa estabelecida. No bônus Copa 2022, os seis personagens são composições ficcionais associadas apenas aos codinomes publicados; o jogo não afirma correspondências individuais não confirmadas e omite locais, meios e procedimentos operacionais. Acusações aparecem com atribuição à investigação e com registro das contestações das defesas.
+- The Case of the Golden Idol: dedução por conjuntos de fatos e mistérios locais.
+- Her Story / Telling Lies: descoberta fora de ordem e recontextualização.
+- Return of the Obra Dinn: observação de relações, identidade e contexto.
+- Ace Attorney Investigations: pressão, contradição e apresentação de evidência.
+- Overboard! / Expelled!: conhecimento por personagem e mudança de interação.
+- Pentiment / Paradise Killer: incerteza, caminhos válidos paralelos e teoria sustentada por evidência.
+
+Somente princípios são usados; não há cópia de interface, texto, arte, personagem ou solução.

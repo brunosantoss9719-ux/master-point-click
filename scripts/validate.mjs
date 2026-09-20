@@ -1,26 +1,9 @@
-import fs from 'node:fs';
-const audioFiles=['assets/audio/wake.mp3','assets/audio/ui.mp3','assets/audio/interact.mp3','assets/audio/advance.mp3','assets/audio/blip.mp3','assets/audio/success.mp3','assets/audio/error.mp3'];
-const required=['index.html','styles.css','app.js','manifest.webmanifest','sw.js','assets/icon-192.svg','assets/icon-512.svg','assets/office.webp','assets/boardroom.webp','assets/hangar.webp','assets/interview.webp','assets/characters.webp','assets/toffoli.webp','assets/stf-office.webp','assets/andre-mendonca.webp','assets/pf-lab.webp','assets/copa-2022-operatives.webp','assets/copa-residence-street.webp','assets/copa-civic-avenue.webp','assets/copa-abort-road.webp',...audioFiles,'AGENTS.md','PROJECT_STATE.md','SOURCES.md','STORY.md','ART_BIBLE.md'];
-const missing=required.filter(f=>!fs.existsSync(f));
-if(missing.length){console.error('Arquivos ausentes:',missing.join(', '));process.exit(1)}
-const invalidAudio=audioFiles.filter(file=>fs.statSync(file).size<1000||fs.readFileSync(file).subarray(0,3).toString()!=='ID3');
-if(invalidAudio.length){console.error('Arquivos MP3 inválidos:',invalidAudio.join(', '));process.exit(1)}
-const js=fs.readFileSync('app.js','utf8');
-const html=fs.readFileSync('index.html','utf8');
-const embeddedAudio=[...js.matchAll(/data:audio\/mpeg;base64,([A-Za-z0-9+/=]+)/g)].map(match=>Buffer.from(match[1],'base64'));
-if(embeddedAudio.length!==7||embeddedAudio.some(buffer=>buffer.length<1000||buffer.subarray(0,3).toString()!=='ID3')){console.error('Os sete efeitos MP3 não foram embutidos integralmente');process.exit(1)}
-const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
-const scenes=(js.match(/chapter:'(?:CAPÍTULO|TOFFOLINHO|MENDONÇA|BÔNUS)/g)||[]).length;
-const endings=(js.match(/title:'(?:A PASTA ABERTA|A FORTALEZA VAZIA|O HOMEM NO VIDRO)'/g)||[]).length;
-const puzzles=(js.match(/puzzle:\{type:/g)||[]).length;
-const mechanisms=['mosaic','slider','dials','circuit','switches','cipher'];
-if(scenes!==17||endings!==3||puzzles!==15||!js.includes('showToffoliEnding')||!js.includes('showMendoncaEnding')||!js.includes('showCopaEnding')||!js.includes('solveAdventurePuzzle')||mechanisms.some(mode=>!js.includes(`mode:'${mode}'`))){console.error({scenes,endings,puzzles,toffoliEnding:js.includes('showToffoliEnding'),mendoncaEnding:js.includes('showMendoncaEnding'),copaEnding:js.includes('showCopaEnding'),mechanisms});process.exit(1)}
-if(manifest.display!=='fullscreen'||manifest.orientation!=='landscape'){console.error('PWA não está configurada para fullscreen landscape');process.exit(1)}
-const iconSizes=new Set((manifest.icons||[]).map(icon=>icon.sizes));
-if(!iconSizes.has('192x192')||!iconSizes.has('512x512')){console.error('Ícones PWA obrigatórios ausentes');process.exit(1)}
-if(!html.includes('rel="manifest"')||!html.includes('id="bonus-game"')||html.includes('id="rotate"')){console.error('Entrada PWA/bônus/rotação inválida');process.exit(1)}
-if(!js.includes('requestFullscreen')||!js.includes("orientation.lock('landscape')")||!js.includes('serviceWorker.register')){console.error('Modo imersivo incompleto');process.exit(1)}
-if(!js.includes('audio.blip')||!js.includes('audio.interact')||!js.includes('audio.puzzleTick')||!js.includes('audio.success')||!js.includes('wakeSound')||!js.includes("new globalThis.Audio(mediaFiles[name])")||!js.includes('data:audio/mpeg;base64,')||html.includes('preload\" as=\"audio')||js.includes('scheduleChord')||js.includes('startAmbience')){console.error('Efeitos embutidos/desbloqueio de áudio ausentes, pré-carga externa presente ou música contínua ainda ativa');process.exit(1)}
-if(js.includes('data-puzzle-tool')||js.includes('data-puzzle-target')||js.includes('Ligue cada')){console.error('Interface antiga de ferramenta/alvo ainda está ativa');process.exit(1)}
-if(!js.includes('mosaicConnections')||!js.includes('mosaicArtwork')||!js.includes('Junções alinhadas')||!js.includes("art:'document'")||!js.includes("art:'resort'")||!js.includes("art:'carbon'")||!fs.readFileSync('styles.css','utf8').includes('.fragment-art')){console.error('Mosaicos sem pistas visuais contínuas ou resposta de encaixe');process.exit(1)}
-console.log(`OK: ${scenes} cenas, ${puzzles} puzzles em ${mechanisms.length} mecanismos, campanha bônus Copa 2022, ${endings} finais principais, PWA fullscreen landscape e áudio desbloqueável.`);
+import fs from 'node:fs';import vm from 'node:vm';
+for(const f of ['index.html','styles.css','app.js','content/sources.js','content/master-case.js','manifest.webmanifest','sw.js','STORY.md','SOURCES.md','ART_BIBLE.md','PROJECT_STATE.md'])if(!fs.existsSync(f))throw new Error(`${f} ausente`);
+const context={window:{}};vm.createContext(context);vm.runInContext(fs.readFileSync('content/sources.js','utf8'),context);vm.runInContext(fs.readFileSync('content/master-case.js','utf8'),context);
+const C=context.window.MASTER_CASE,S=context.window.MASTER_SOURCES;if(C.scenes.length!==9)throw new Error('Campanha deve ter 9 cenas');
+for(const [id,e] of Object.entries(C.evidence)){for(const key of ['title','summary','eventDate','documentDate','knownToPFDate','publishedDate','status','sourceId'])if(!(key in e))throw new Error(`${id}.${key} ausente`);if(!S[e.sourceId])throw new Error(`Fonte ${e.sourceId} ausente`)}
+for(const s of C.scenes){if(!s.question||!s.answers||!s.sets?.length)throw new Error(`Mistério incompleto: ${s.id}`);for(const set of s.sets)for(const id of set)if(!C.evidence[id])throw new Error(`${s.id}: evidência ${id} ausente`)}
+const html=fs.readFileSync('index.html','utf8');for(const id of ['new','continue','dossier','infer','dialogue','panel'])if(!html.includes(`id="${id}"`))throw new Error(`DOM ${id} ausente`);
+const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest'));if(manifest.display!=='fullscreen'||manifest.orientation!=='landscape')throw new Error('PWA não mantém fullscreen landscape');
+console.log(`PASS: ${C.scenes.length} cenas, ${Object.keys(C.evidence).length} evidências temporais, fontes, PWA e DOM validados.`);

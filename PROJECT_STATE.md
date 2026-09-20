@@ -1,25 +1,29 @@
 # Estado do projeto
 
 ## LAST VERIFIED STATE
-Jogo com três arcos principais e o bônus **Punhal Verde e Amarelo / Copa 2022**, somando 17 cenas e 15 puzzles. A antiga bancada repetida de selecionar ferramenta e alvo não é mais renderizada. Os desafios agora usam seis mecanismos: mosaico de fragmentos, documento deslizante, anéis/cilindros, circuito rotativo, matriz lógica de luzes e decodificador.
 
-No bônus, envelope, folha de carbono, matriz de sinais, acetato de zonas e fita de rádio atravessam os cinco capítulos como uma cadeia de inventário. O roteiro acontece na rua por cenário, voz, reflexos e objetos. Não há retratos sobrepostos, TV, futebol, sala inventada, endereço legível nem rota operacional.
+Campanha principal reestruturada como **MASTER — Linha de Custódia**, thriller investigativo point-and-click com protagonista ficcional e composita da PF. O jogador percorre 9 cenas, encontra 21 evidências com datas e proveniência, seleciona conjuntos aceitos, formula hipóteses, confronta uma afirmação em oitiva e escolhe a ordem de **A Turma** / **Os Meninos** antes da convergência.
 
-Daniel continua usando o retrato aprovado em `assets/daniel-vorcaro.webp` (blob `4c192cf6fbc292ddadffb502f52fb266a99986a5`), pré-carregado no HTML e referenciado explicitamente pelo CSS.
+O fluxo anterior controlado por Vorcaro, Toffoli e Mendonça foi removido da campanha principal. As decisões de ministros aparecem pelos efeitos institucionais. Os 15 puzzles mecânicos foram substituídos por investigação de cena, cruzamento, hipótese e confronto. O bônus Copa 2022 e seus assets foram preservados fora do fluxo principal enquanto aguarda adaptação ao novo motor.
 
-A PWA permanece em tela cheia e landscape preferencial, com fallback jogável em retrato. Não há música nem ambiência contínua. O Web Audio espera o `AudioContext` entrar em execução após o primeiro toque, toca dois tons de confirmação e mantém efeitos procedurais audíveis para interface, diálogo, mecanismos, item, erro e conclusão. O shell offline é `master-shell-v15`; JS e CSS usam a revisão `mechanisms-3`.
-
-Preview fixo verificado:
-https://raw.githack.com/brunosantoss9719-ux/master-point-click/72d79954a3e11c94f5fb72d8ae50b5551cccdc40/index.html
+Arquitetura simples: `app.js` contém o motor e UI; `content/master-case.js` contém cenas/evidências; `content/sources.js` contém o ledger usado pela interface. Save em `localStorage` (`master-investigation-v1`), PWA fullscreen/landscape e áudio procedural após gesto permanecem.
 
 ## LAST TEST
-2026-09-20: GitHub Actions QA run 37 (`35490743848`) passou no commit `72d79954a3e11c94f5fb72d8ae50b5551cccdc40`. O teste percorreu as rotas e resolveu os 15 puzzles em seis mecânicas, verificou a cadeia de itens do bônus, save/Continuar, PWA e service worker. No Chrome móvel 915×412, um gesto real deixou o áudio em estado `running` e disparou a confirmação sonora. As capturas de landscape, retrato, bônus, mosaico e circuito foram revisadas; o circuito cabe inteiro e o bônus abre sem retrato ou fala herdada de outro arco.
+
+2026-09-20: `node --check` passou em motor e conteúdo. `npm test` passou: 9 cenas, 21 evidências temporais, fontes, PWA, DOM, rota principal, duas ordens de leads, caminhos alternativos e fail forward. O teste visual local ficou bloqueado porque este executor não possui Chrome/Chromium; não está marcado como PASS visual.
 
 ## LAST COMMIT
-`72d79954a3e11c94f5fb72d8ae50b5551cccdc40` — puzzles visuais ligados à história, roteiro ambiental do bônus, áudio móvel desbloqueável e shell PWA v15.
+
+`feat: rebuild Master as investigative thriller` — campanha principal reconstruída com conteúdo separado, Dossiê temporal, hipótese, confronto, fail forward e ramificação convergente.
 
 ## CURRENT BLOCKERS
-Nenhum bloqueador funcional conhecido. A audição em um aparelho Android físico ainda depende do volume de mídia e da configuração silenciosa do próprio aparelho.
+
+- QA visual em navegador real ainda precisa ser concluído em 915×412, landscape menor e retrato.
+- Playtest humano cego de dificuldade ainda não foi realizado; testes automatizados comprovam lógica, não diversão.
+- O bônus Copa 2022 está preservado, mas temporariamente fora do fluxo jogável principal até adaptação ao novo motor.
 
 ## NEXT REAL
-Prosseguir deste checkpoint. Preservar o retrato aprovado de Daniel, manter música/ambiência contínua fora do jogo e não reintroduzir bancadas de associação entre listas. Novos puzzles devem alterar visualmente um mecanismo ou o cenário e nascer de documento, objeto ou conflito da história.
+
+1. Publicar preview da campanha nova e executar QA visual real nos três viewports.
+2. Fazer playtest humano cego, observando se cada AHA nasce do cruzamento e se as dicas não entregam a resposta.
+3. Adaptar o bônus Copa 2022 ao motor investigativo sem reintroduzir puzzles abstratos.
