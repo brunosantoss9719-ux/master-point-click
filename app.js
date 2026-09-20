@@ -62,6 +62,7 @@ function renderScene(replay=true){
   const b=document.createElement('button'),seen=state.inspected.includes(`${s.id}:${id}`);
   b.className=`scene-object ${seen?'seen':''}`;b.style.left=x+'%';b.style.top=y+'%';b.dataset.evidence=id;
   b.innerHTML=`<span class="object-corner"></span><strong>${seen?'REVER':'EXAMINAR'}</strong><small>${label}</small>`;$('#objects').append(b);
+  b.onclick=event=>{event.stopPropagation();inspect(id)};
  });
  closePanel();if(replay&&!state.completedBeats.includes(`intro:${s.id}`)){state.completedBeats.push(`intro:${s.id}`);playDialogue(s.intro)}
  save();
@@ -185,7 +186,6 @@ function about(){openPanel('TRANSPARÊNCIA','Fatos, alegações e dramatização
 $('#new').onclick=start;$('#continue').onclick=()=>{state=load();showGame()};$('#about').onclick=about;$('#close-panel').onclick=closePanel;$('#dialogue').onclick=nextLine;$('#casework').onclick=openCasework;$('#scene-view').onclick=closePanel;$('#dossier').onclick=openDossier;$('#hint').onclick=hint;
 $('#audio').onclick=async()=>{muted=!muted;$('#audio').textContent=muted?'Som · desligado':'Som · ligado';$('#audio').setAttribute('aria-label',muted?'Som desligado':'Som ligado');if(!muted){await unlockAudio();playSound('wake');notice('SOM LIGADO')}};
 $('#bonus').onclick=()=>openPanel('EXTRA PRESERVADO','Punhal Verde e Amarelo','<p>O bônus continua preservado, fora da campanha principal enquanto é adaptado ao novo motor.</p>');
-$('#objects').addEventListener('click',e=>{const b=e.target.closest('[data-evidence]');if(b)inspect(b.dataset.evidence)});
 window.__MASTER_TEST__={fresh,getState:()=>state,setState:x=>state=x,scene,renderScene,openCasework,load,save,scenes:C.scenes,evidence:C.evidence};
 syncContinue();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 })();
