@@ -306,17 +306,17 @@ const scenes = [
 // dirigem mais a interação. Cada chave abaixo substitui a antiga bancada de
 // associações por um mecanismo visual com regra própria.
 const adventurePuzzles = {
-  '0_telefone':{mode:'mosaic',title:'A minuta rasgada',kicker:'DOCUMENTO FÍSICO',prompt:'Recomponha a página. Bordas, carimbos e linhas precisam continuar de um fragmento para o outro.',pieces:['58% DO CAPITAL','49% DAS ORDINÁRIAS','100% DAS PREFERENCIAIS','APROVAÇÃO SOCIETÁRIA','APROVAÇÃO LEGISLATIVA','BANCO CENTRAL'],start:[3,0,5,2,1,4],success:'A página recomposta mostra que anúncio e conclusão eram coisas diferentes.'},
+  '0_telefone':{mode:'mosaic',art:'document',title:'A minuta rasgada',kicker:'DOCUMENTO FÍSICO',prompt:'Monte a folha pelo selo vermelho, pela faixa dourada e pelas linhas da tabela. Bordas verdes indicam encaixes verdadeiros.',pieces:['BANCO CENTRAL','ANÁLISE DA OPERAÇÃO','SUJEITO À APROVAÇÃO','49% DAS ORDINÁRIAS','100% DAS PREFERENCIAIS','58% DO CAPITAL TOTAL'],start:[0,4,5,3,1,2],success:'A página recomposta mostra que anúncio e conclusão eram coisas diferentes.'},
   '1_envelope':{mode:'slider',title:'O veto no triturador',kicker:'DOCUMENTO DESLIZANTE',prompt:'Há um espaço vazio no triturador. Deslize os oito fragmentos até o texto voltar a correr sem saltos.',pieces:['3 SET','BANCO CENTRAL','REJEITA','A OPERAÇÃO','ESTRUTURA','DO NEGÓCIO','SEM EFEITO','PROTOCOLO'],scramble:[7,6,3,4,5,2,1],success:'O veto volta a existir como documento — não como resumo de reunião.'},
   '4_gravador':{mode:'dials',title:'Três relógios, uma versão',kicker:'CONTRADIÇÃO TEMPORAL',prompt:'Ajuste os três mostradores usando o celular, a minuta e o plano de voo. A declaração só abre quando os horários não contradizem os documentos.',clue:'Mensagem “sem assinatura”: 18h02 · plano de voo: 19h31 · estado da venda: ainda sem assinatura.',wheels:[{label:'MENSAGEM',values:['17:46','18:02','18:20'],answer:'18:02'},{label:'PLANO DE VOO',values:['18:31','19:03','19:31'],answer:'19:31'},{label:'CONTRATO',values:['ASSINADO','SEM ASSINATURA','CANCELADO'],answer:'SEM ASSINATURA'}],success:'A versão agora respeita os três registros em vez de costurá-los à força.'},
   '5_pasta_sigilo':{mode:'dials',title:'A fechadura do sigilo',kicker:'TRÊS ANÉIS CONCÊNTRICOS',prompt:'Gire os anéis. O índice deve continuar visível, os anexos sensíveis ficam isolados e o núcleo permanece sob a chave do relator.',clue:'Do lado de fora para dentro: acesso público → restrição seletiva → controle do gabinete.',wheels:[{label:'ÍNDICE',values:['FECHADO','PÚBLICO','VAZIO'],answer:'PÚBLICO'},{label:'ANEXOS',values:['PÚBLICOS','DESTRUÍDOS','RESTRITOS'],answer:'RESTRITOS'},{label:'NÚCLEO',values:['PF','RELATOR','IMPRENSA'],answer:'RELATOR'}],success:'A pasta abre por camadas. O custo do mecanismo fica visível.'},
   '6_caixa_lacrada':{mode:'circuit',title:'Cadeia sem atalho',kicker:'CIRCUITO DE CUSTÓDIA',prompt:'Gire as peças até formar um único caminho contínuo entre APREENSÃO e PERÍCIA. Qualquer ramificação solta invalida o circuito.',cols:4,pieces:[['line',1,0],['corner',2,1],['corner',1,2],['line',0,1],['corner',3,0],['line',1,0],['corner',0,3],['line',0,1]],success:'Identificação, lacre, transporte e extração agora formam um rastro auditável.'},
-  '7_chave_final':{mode:'mosaic',title:'O resort sob três camadas',kicker:'ACETATOS SOBREPOSTOS',prompt:'Troque as placas até planta, registro societário e documento do fundo alinharem datas e lotes. A negativa pública deve permanecer na margem.',pieces:['PLANTA · LOTE A','REGISTRO · FAMÍLIA','DATA · ENTRADA','FUNDO · VÍNCULO REPORTADO','NOTA · NEGATIVA','MARGEM · CONTESTAÇÃO'],start:[4,1,5,0,3,2],success:'A convergência aparece sem apagar a negativa pública de favorecimento.'},
+  '7_chave_final':{mode:'mosaic',art:'resort',title:'O resort sob três camadas',kicker:'ACETATOS SOBREPOSTOS',prompt:'Continue o contorno azul do lago, as divisas dos lotes e o selo laranja. Bordas verdes indicam sobreposições corretas.',pieces:['PLANTA · LOTE A','REGISTRO · FAMÍLIA','DATA · ENTRADA','FUNDO · VÍNCULO REPORTADO','NOTA · NEGATIVA','MARGEM · CONTESTAÇÃO'],start:[3,4,2,0,1,5],success:'A convergência aparece sem apagar a negativa pública de favorecimento.'},
   '8_despacho_fluxo':{mode:'circuit',title:'A fronteira do fluxo',kicker:'CIRCUITO DE PERMISSÕES',prompt:'Reconecte a perícia aos cem aparelhos. O caminho precisa passar por equipe direta, autorização do relator e bloqueio de exportação.',cols:4,pieces:[['line',1,0],['corner',0,1],['corner',3,2],['line',0,1],['corner',2,3],['line',1,0],['corner',1,0],['line',0,1]],success:'A perícia volta a andar sem transformar acesso técnico em porta irrestrita.'},
   '9_relatorio_nomes':{mode:'switches',title:'Ruído de contexto',kicker:'MATRIZ FORENSE',prompt:'Apague os blocos de ruído. Cada toque altera também os quatro blocos vizinhos; só restará a janela de conversa preservada.',cols:3,rows:3,seedMoves:[0,4,7],success:'O trecho relevante emerge com mensagens adjacentes, horário e metadados.'},
   '10_ordem_afastamento':{mode:'slider',title:'A ordem que perdeu efeito',kicker:'PROTOCOLO DESLIZANTE',prompt:'Reorganize o circuito documental até descobrir qual ato ainda produzia efeito após o pedido de vista.',pieces:['RELATÓRIO','ORDEM 8/9','AFASTAMENTO','SUSPENSÃO 9/9','RETORNO','2 VOTOS','PEDIDO DE VISTA','SUSPENSÃO VIGENTE'],scramble:[7,6,3,4,5,2,1],success:'O afastamento termina suspenso; o julgamento colegiado não chegou ao fim.'},
   '11_terminal_cripto':{mode:'switches',title:'O volume que não monta',kicker:'BLOCOS DE INTEGRIDADE',prompt:'Normalize os nove blocos do volume. Se todos apagarem e o arquivo continuar fechado, o defeito não está na cópia.',cols:3,rows:3,seedMoves:[1,3,5,8],success:'Hash íntegro. A cópia existe; a chave de descriptografia, não.'},
-  '12_cronologia_reuniao':{mode:'mosaic',title:'O verso da folha',kicker:'IMPRESSÃO DE 9 DE NOVEMBRO',prompt:'A chuva separou a folha de carbono em seis partes. Refaça as fibras, carimbos e marcas de pressão — a cronologia aparece no verso.',pieces:['8 NOV · RASCUNHO','9 NOV · IMPRESSÃO','10 NOV · CONTATO','11 NOV · HORÁRIO','12 NOV · REUNIÃO ALEGADA','DEFESAS CONTESTAM'],start:[2,5,0,4,1,3],rewardItem:'folha_carbono',success:'O papel recomposto liga preparação, impressão e reunião sem converter acusação em fato incontroverso.'},
+  '12_cronologia_reuniao':{mode:'mosaic',art:'carbon',title:'O verso da folha',kicker:'IMPRESSÃO DE 9 DE NOVEMBRO',prompt:'Continue as marcas brancas de pressão, a dobra azul-clara e o carimbo vermelho. Bordas verdes indicam encaixes verdadeiros.',pieces:['8 NOV · RASCUNHO','9 NOV · IMPRESSÃO','10 NOV · CONTATO','11 NOV · HORÁRIO','12 NOV · REUNIÃO ALEGADA','DEFESAS CONTESTAM'],start:[3,4,2,0,1,5],rewardItem:'folha_carbono',success:'O papel recomposto liga preparação, impressão e reunião sem converter acusação em fato incontroverso.'},
   '13_quadro_linhas':{mode:'circuit',title:'A caixa dos seis aparelhos',kicker:'PLACA DE ATIVAÇÃO',prompt:'A folha de carbono revela o desenho da placa. Gire os contatos para energizar seis saídas e preserve dois encaixes de identidade deliberadamente vazios.',requiresItem:'folha_carbono',cols:3,pieces:[['corner',2,1],['tee',1,0],['corner',0,3],['line',1,0],['tee',2,1],['line',0,1],['corner',3,0],['tee',0,3],['corner',1,2]],rewardItem:'matriz_sinais',success:'As seis linhas entram no mesmo circuito; as duas identidades não confirmadas continuam vazias.'},
   '14_rastro_urbano':{mode:'switches',title:'Brasília em camadas',kicker:'MAPA DE SINAIS',prompt:'A matriz dos aparelhos acende zonas conflitantes. Toque nos quadrantes até eliminar o ruído e conservar apenas a continuidade entre novembro e 14 de dezembro.',requiresItem:'matriz_sinais',cols:4,rows:3,seedMoves:[0,3,5,10],rewardItem:'acetato_zonas',success:'O acetato mostra continuidade em áreas amplas, sem revelar rotas ou endereços.'},
   '15_painel_posicoes':{mode:'dials',title:'A noite mudou de forma',kicker:'PAINEL MECÂNICO DE CAMPO',prompt:'Use o acetato para ajustar os estados publicados. Posição não é autorização: o último mostrador decide se existe ordem de avanço.',requiresItem:'acetato_zonas',clue:'Sessão encerrada · um sinal perto do STF · outro em deslocamento · outro na região residencial · nenhuma nova ordem.',wheels:[{label:'CONTEXTO',values:['SESSÃO ATIVA','SESSÃO ENCERRADA','SEM SESSÃO'],answer:'SESSÃO ENCERRADA'},{label:'PONTO A',values:['STF','AEROPORTO','PLANALTO'],answer:'STF'},{label:'PONTO B',values:['PARADO','DESLOCAMENTO','SEM SINAL'],answer:'DESLOCAMENTO'},{label:'PONTO C',values:['COMERCIAL','RESIDENCIAL','RURAL'],answer:'RESIDENCIAL'},{label:'ORDEM',values:['AVANÇAR','AGUARDAR','ENCERRAR CANAL'],answer:'AGUARDAR'}],rewardItem:'fita_2057',success:'Três posições aparecem no painel. Nenhuma delas, sozinha, vira ordem.'},
@@ -640,9 +640,50 @@ function toggleLogicCell(cells,index,cols,rows){
   [[x,y],[x-1,y],[x+1,y],[x,y-1],[x,y+1]].forEach(([cx,cy])=>{if(cx>=0&&cx<cols&&cy>=0&&cy<rows){const i=cy*cols+cx;cells[i]=!cells[i]}})
 }
 function circuitGlyph(shape){return shape==='corner'?'┗':shape==='tee'?'┻':'━'}
+function mosaicConnections(order,cols=3){
+  let matches=0;
+  for(let cell=0;cell<order.length;cell++){
+    const piece=order[cell],x=cell%cols;
+    if(x<cols-1&&Math.floor(piece/cols)===Math.floor(order[cell+1]/cols)&&order[cell+1]===piece+1)matches++;
+    if(cell+cols<order.length&&order[cell+cols]===piece+cols)matches++;
+  }
+  return matches;
+}
+function mosaicMatchClasses(order,cell,cols=3){
+  const piece=order[cell],classes=[];
+  if(cell%cols<cols-1&&Math.floor(piece/cols)===Math.floor(order[cell+1]/cols)&&order[cell+1]===piece+1)classes.push('match-right');
+  if(cell%cols>0&&Math.floor(piece/cols)===Math.floor(order[cell-1]/cols)&&order[cell-1]===piece-1)classes.push('match-left');
+  if(cell+cols<order.length&&order[cell+cols]===piece+cols)classes.push('match-bottom');
+  if(cell>=cols&&order[cell-cols]===piece-cols)classes.push('match-top');
+  return classes.join(' ');
+}
+function mosaicArtwork(kind,piece){
+  const col=piece%3,row=Math.floor(piece/3),view=`${col*300} ${row*180} 300 180`;
+  const art=kind==='resort'?`
+    <rect width="900" height="360" fill="#dbe7df"/><path d="M22 68 C150 12 250 124 354 83 S555 20 645 88 S770 160 886 66" fill="none" stroke="#267a91" stroke-width="18" opacity=".78"/>
+    <path d="M18 286 C155 220 238 315 370 255 S605 186 882 292" fill="none" stroke="#267a91" stroke-width="8"/>
+    <path d="M60 26 L250 334 M214 18 L388 342 M405 16 L520 344 M596 20 L690 340 M760 18 L842 338 M24 125 H876 M24 235 H876" fill="none" stroke="#53685e" stroke-width="5"/>
+    <path d="M78 296 L310 88 L622 278 L830 82" fill="none" stroke="#9b5e22" stroke-width="13" stroke-dasharray="26 12"/>
+    <circle cx="450" cy="180" r="104" fill="none" stroke="#c66c28" stroke-width="18"/><circle cx="450" cy="180" r="78" fill="none" stroke="#c66c28" stroke-width="5"/>
+    <path d="M370 198 L530 156" stroke="#c66c28" stroke-width="17"/>`:
+  kind==='carbon'?`
+    <rect width="900" height="360" fill="#263e64"/><path d="M18 92 C130 25 252 144 354 78 S560 31 688 112 S806 70 888 36" fill="none" stroke="#dceaff" stroke-width="9" opacity=".78"/>
+    <path d="M30 260 C170 184 286 326 430 238 S704 170 878 280" fill="none" stroke="#dceaff" stroke-width="7" opacity=".7"/>
+    <path d="M40 54 H862 M38 142 H864 M38 226 H864 M38 314 H864" stroke="#86aad0" stroke-width="4" stroke-dasharray="22 12" opacity=".8"/>
+    <path d="M300 12 V348 M600 12 V348" stroke="#b5d1ed" stroke-width="6" opacity=".55"/>
+    <circle cx="452" cy="181" r="106" fill="none" stroke="#bd4c55" stroke-width="19"/><circle cx="452" cy="181" r="72" fill="none" stroke="#bd4c55" stroke-width="6"/>
+    <path d="M365 210 L540 148" stroke="#bd4c55" stroke-width="18"/>`:`
+    <rect width="900" height="360" fill="#d8c9a8"/><path d="M34 54 H866 M34 112 H866 M34 178 H866 M34 244 H866 M34 310 H866" stroke="#756850" stroke-width="6" opacity=".58"/>
+    <path d="M282 22 V338 M612 22 V338" stroke="#756850" stroke-width="5" opacity=".46"/>
+    <path d="M18 308 C170 252 255 64 420 104 S690 312 882 48" fill="none" stroke="#a77a28" stroke-width="14"/>
+    <circle cx="450" cy="180" r="108" fill="none" stroke="#a43e36" stroke-width="20"/><circle cx="450" cy="180" r="76" fill="none" stroke="#a43e36" stroke-width="6"/>
+    <path d="M360 214 L542 146" stroke="#a43e36" stroke-width="18"/><circle cx="82" cy="76" r="34" fill="none" stroke="#4d5b61" stroke-width="10"/>`;
+  return `<svg class="fragment-art" viewBox="${view}" preserveAspectRatio="none" aria-hidden="true">${art}</svg>`;
+}
+function mosaicFeedback(a){const total=(3-1)*2+3;return `Junções alinhadas: ${mosaicConnections(a.model.order)} de ${total}. Siga os traços e as bordas verdes.`}
 function puzzleBody(a){
   const p=a.puzzle;
-  if(p.mode==='mosaic')return `<div class="mosaic-board" style="--cols:3">${a.model.order.map((piece,cell)=>`<button class="mosaic-piece ${a.selected===cell?'selected':''}" data-puzzle-action="mosaic" data-index="${cell}"><span>${p.pieces[piece]}</span></button>`).join('')}</div><p class="mechanic-note">Toque em dois fragmentos para trocar suas posições.</p>`;
+  if(p.mode==='mosaic')return `<div class="mosaic-meter"><span>ENCAIXES CONFIRMADOS</span><b>${mosaicConnections(a.model.order)} / 7</b></div><div class="mosaic-board" style="--cols:3">${a.model.order.map((piece,cell)=>`<button class="mosaic-piece ${a.selected===cell?'selected':''} ${mosaicMatchClasses(a.model.order,cell)}" data-puzzle-action="mosaic" data-index="${cell}">${mosaicArtwork(p.art,piece)}<span>${p.pieces[piece]}</span></button>`).join('')}</div><p class="mechanic-note">Toque em dois fragmentos para trocá-los. Linhas e selos atravessam as emendas corretas.</p>`;
   if(p.mode==='slider')return `<div class="slider-board">${a.model.order.map((piece,cell)=>piece===null?'<span class="slider-blank"></span>':`<button class="slider-piece" data-puzzle-action="slide" data-index="${cell}"><small>${String(piece+1).padStart(2,'0')}</small><span>${p.pieces[piece]}</span></button>`).join('')}</div><p class="mechanic-note">Só o fragmento ao lado do espaço vazio pode deslizar.</p>`;
   if(p.mode==='dials'||p.mode==='cipher')return `<div class="dial-machine ${p.mode}">${p.wheels.map((wheel,i)=>`<div class="dial-column"><small>${wheel.label}</small><button data-puzzle-action="wheel" data-index="${i}"><i>▲</i><strong>${wheel.values[a.model.positions[i]]}</strong><i>▼</i></button></div>`).join('')}</div>${p.clue?`<div class="puzzle-clue">${p.clue}</div>`:''}<button class="puzzle-check" data-puzzle-action="check">TESTAR MECANISMO</button>`;
   if(p.mode==='circuit')return `<div class="circuit-shell"><span class="circuit-port in">ENTRADA</span><div class="circuit-board" style="--cols:${p.cols}">${p.pieces.map((piece,i)=>`<button data-puzzle-action="rotate" data-index="${i}" aria-label="Girar conexão ${i+1}"><span style="transform:rotate(${a.model.rotations[i]*90}deg)">${circuitGlyph(piece[0])}</span></button>`).join('')}</div><span class="circuit-port out">SAÍDA</span></div><p class="mechanic-note">Cada toque gira uma conexão em 90°. Não pode sobrar ponta aberta.</p>`;
@@ -650,10 +691,11 @@ function puzzleBody(a){
   return '';
 }
 
-function renderPuzzle(feedback=activePuzzle?.feedback||'Observe o mecanismo antes de tocar.'){
+function renderPuzzle(feedback){
   if(!activePuzzle)return;
   const a=activePuzzle,p=a.puzzle;
-  openModal(p.title,p.kicker,`<section class="puzzle mechanism" data-mode="${p.mode}"><div class="puzzle-head"><p class="puzzle-prompt">${p.prompt}</p><b>${a.moves} movimentos</b></div>${puzzleBody(a)}<p class="puzzle-feedback" aria-live="polite">${feedback}</p></section>`);
+  const message=feedback||a.feedback||(p.mode==='mosaic'?mosaicFeedback(a):'Observe o mecanismo antes de tocar.');
+  openModal(p.title,p.kicker,`<section class="puzzle mechanism" data-mode="${p.mode}"><div class="puzzle-head"><p class="puzzle-prompt">${p.prompt}</p><b>${a.moves} movimentos</b></div>${puzzleBody(a)}<p class="puzzle-feedback" aria-live="polite">${message}</p></section>`);
   document.querySelectorAll('[data-puzzle-action]').forEach(button=>button.onclick=()=>handlePuzzleAction(button.dataset.puzzleAction,Number(button.dataset.index)));
 }
 
@@ -661,9 +703,9 @@ function handlePuzzleAction(action,index){
   if(!activePuzzle)return false;
   const a=activePuzzle,p=a.puzzle;a.moves++;audio.puzzleTick?.();
   if(action==='mosaic'){
-    if(a.selected===null)a.selected=index;
+    if(a.selected===null){a.selected=index;a.feedback='Primeiro fragmento marcado. Agora escolha onde colocá-lo.'}
     else if(a.selected===index)a.selected=null;
-    else{[a.model.order[a.selected],a.model.order[index]]=[a.model.order[index],a.model.order[a.selected]];a.selected=null}
+    else{[a.model.order[a.selected],a.model.order[index]]=[a.model.order[index],a.model.order[a.selected]];a.selected=null;a.feedback=mosaicFeedback(a)}
   }
   if(action==='slide'){
     const blank=a.model.order.indexOf(null);

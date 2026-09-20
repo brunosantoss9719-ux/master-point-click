@@ -1,9 +1,9 @@
-const CACHE='master-shell-v18';
+const CACHE='master-shell-v19';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=audio-6',
-  './app.js?v=audio-6',
+  './styles.css?v=puzzle-7',
+  './app.js?v=puzzle-7',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',

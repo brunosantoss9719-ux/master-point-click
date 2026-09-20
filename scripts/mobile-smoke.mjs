@@ -159,8 +159,8 @@ try{
     if(open)break;
     await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(60);
   }
-  const copaPuzzle=await evaluate(send,"(()=>({mode:document.querySelector('.mechanism')?.dataset.mode||'',pieces:document.querySelectorAll('.mosaic-piece').length,portrait:document.querySelector('#character')?.classList.contains('show')}))()");
-  if(copaPuzzle.mode!=='mosaic'||copaPuzzle.pieces!==6||copaPuzzle.portrait)throw new Error('Primeiro puzzle do bônus inválido: '+JSON.stringify(copaPuzzle));
+  const copaPuzzle=await evaluate(send,"(()=>({mode:document.querySelector('.mechanism')?.dataset.mode||'',pieces:document.querySelectorAll('.mosaic-piece').length,arts:document.querySelectorAll('.fragment-art').length,meter:document.querySelector('.mosaic-meter')?.textContent||'',portrait:document.querySelector('#character')?.classList.contains('show')}))()");
+  if(copaPuzzle.mode!=='mosaic'||copaPuzzle.pieces!==6||copaPuzzle.arts!==6||!copaPuzzle.meter.includes('/ 7')||copaPuzzle.portrait)throw new Error('Primeiro puzzle do bônus inválido: '+JSON.stringify(copaPuzzle));
   await capture(send,'artifacts/mobile-copa-puzzle.png');
   await evaluate(send,"closeModal(); true");
 
