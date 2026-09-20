@@ -1,11 +1,11 @@
-const CACHE='master-audio-comfort-v1';
+const CACHE='master-casework-v2';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=investigation-1',
-  './app.js?v=audio-comfort-1',
-  './content/sources.js?v=investigation-1',
-  './content/master-case.js?v=investigation-1',
+  './styles.css?v=casework-2',
+  './app.js?v=casework-2',
+  './content/sources.js?v=casework-2',
+  './content/master-case.js?v=casework-2',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',

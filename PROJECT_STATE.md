@@ -1,29 +1,49 @@
-# Estado do projeto
+# PROJECT STATE
+
+## Estado atual
+
+MASTER é uma campanha point-and-click em HTML/CSS/JavaScript. A identidade visual foi preservada; o loop “círculo → cartões → resposta binária” foi removido.
+
+O motor oferece oito ações: termo operacional, comparação de documentos, confronto com evidência, cronologia, classificação, conexões independentes, teto de conclusão digital e termo de custódia. Marcadores circulares viraram etiquetas discretas ligadas a objetos. A Mesa do Caso abre após inspeção, sem pixel hunting.
+
+## Áudio
+
+Áudio procedural em 92–196 Hz, passa-baixa e envelopes curtos. Fala digitada caractere a caractere com blips discretos por personagem. O primeiro `pointerdown/touchend` retoma o AudioContext; pedidos durante o desbloqueio ficam em fila. O botão mostra estado. Sem música contínua.
+
+## Persistência
+
+Chave `master-investigation-v2`: cena, evidências, inspeções, conclusões, falhas, conhecimento, ordem das linhas, beats, recontextualização, dicas, fontes, progresso de puzzle e término. Save v1 é ignorado porque o modelo mudou.
+
+## Conteúdo
+
+- 9 cenas, 26 evidências e firewall temporal.
+- Documentos compostos marcados DRAMATIZAÇÃO.
+- Autoridades reais somente por atos públicos.
+- Segunda prisão separada da primeira.
+- Ordem A Turma/Os Meninos livre e convergente.
+- Final em 19/09/2026 PENDENTE.
+
+## Validação honesta
+
+`npm test` cobre schema, fontes, PWA, ausência de rodas, oito mecânicas, alternativas, simultaneidade, fail forward, duas ordens e limite digital. Automação não certifica diversão ou dificuldade humana.
 
 ## LAST VERIFIED STATE
 
-Campanha principal reestruturada como **MASTER — Linha de Custódia**, thriller investigativo point-and-click com protagonista ficcional e composita da PF. O jogador percorre 9 cenas, encontra 21 evidências com datas e proveniência, seleciona conjuntos aceitos, formula hipóteses, confronta uma afirmação em oitiva e escolhe a ordem de **A Turma** / **Os Meninos** antes da convergência.
-
-O fluxo anterior controlado por Vorcaro, Toffoli e Mendonça foi removido da campanha principal. As decisões de ministros aparecem pelos efeitos institucionais. Os 15 puzzles mecânicos foram substituídos por investigação de cena, cruzamento, hipótese e confronto. O bônus Copa 2022 e seus assets foram preservados fora do fluxo principal enquanto aguarda adaptação ao novo motor.
-
-Arquitetura simples: `app.js` contém o motor e UI; `content/master-case.js` contém cenas/evidências; `content/sources.js` contém o ledger usado pela interface. Save em `localStorage` (`master-investigation-v1`), PWA fullscreen/landscape e áudio procedural após gesto permanecem.
+20/09/2026 — campanha v2 implementada; fluxo e dados validados. Passe final no preview publicado pendente.
 
 ## LAST TEST
 
-2026-09-20: `node --check` e `npm test` passaram após a troca sonora. A validação confirma filtro passa-baixas, efeitos distintos e ausência dos antigos disparos agudos. As 9 cenas, 21 evidências, PWA, rotas alternativas e fail forward continuam íntegros. O cache foi alterado para `master-audio-comfort-v1`, evitando que a PWA mantenha o `app.js` sonoro anterior.
+`npm test` — PASS: 9 cenas, 26 evidências, 8 mecânicas, firewall temporal, áudio/PWA, rotas alternativas e convergência.
 
 ## LAST COMMIT
 
-`fix: soften procedural audio palette` — paleta procedural grave e filtrada, com atualização do cache PWA.
+A preencher após checkpoint desta reformulação.
 
 ## CURRENT BLOCKERS
 
-- QA visual em navegador real ainda precisa ser concluído em 915×412, landscape menor e retrato; a captura desktop já foi revisada.
-- Playtest humano cego de dificuldade ainda não foi realizado; testes automatizados comprovam lógica, não diversão.
-- O bônus Copa 2022 está preservado, mas temporariamente fora do fluxo jogável principal até adaptação ao novo motor.
+- Playtest humano cego ainda necessário.
+- Bônus Copa 2022 preservado fora do fluxo principal.
 
 ## NEXT REAL
 
-1. Publicar preview da campanha nova e executar QA visual real nos três viewports.
-2. Fazer playtest humano cego, observando se cada AHA nasce do cruzamento e se as dicas não entregam a resposta.
-3. Adaptar o bônus Copa 2022 ao motor investigativo sem reintroduzir puzzles abstratos.
+Publicar checkpoint, executar no preview em landscape 915×412, landscape menor e retrato, corrigir falhas e registrar commit final.

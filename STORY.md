@@ -1,114 +1,117 @@
-# MASTER — Linha de Custódia
+# STORY — MASTER: LINHA DE CUSTÓDIA
 
-Campanha principal: thriller investigativo point-and-click. A protagonista é uma investigadora ficcional e composita da Polícia Federal. O jogador descobre relações por inspeção, cruzamento, hipótese e confronto. Pessoas reais não recebem pensamentos privados inventados.
+Campanha point-and-click de aproximadamente 20 minutos. O jogador controla Mara, investigadora ficcional composta. O progresso vem de preencher lacunas com registros. O motor usa oito verbos: inspecionar, preencher, comparar, ordenar, pressionar, classificar, conectar e limitar.
 
-## Regras de conhecimento
+Cada evidência em `content/master-case.js` registra data do fato, documento, conhecimento pela PF, disponibilidade ao jogador, publicação e personagens que a conhecem. A defesa da viagem, por exemplo, não existe no cold open de 17/11; entra apenas na recontextualização posterior.
 
-Cada evidência jogável mantém `eventDate`, `documentDate`, `knownToPFDate`, `publishedDate`, status e fonte em `content/master-case.js`. A interface só oferece evidência descoberta. Conhecimento posterior não entra em diálogo anterior. Estados de conclusão: `INCOMPLETE`, `SUPPORTED`, `CONTRADICTED`, `CONTESTED` e `PENDING`.
+## PRÓLOGO / cold
 
-## SCENE cold — 22H04
+- **Data / pergunta:** 17/11/2025, 22h04, Guarulhos. O que entra no registro?
+- **Conhecimento de entrada:** Mara e Lia conhecem a ordem e o embarque; não a defesa posterior nem a liquidação.
+- **Personagens / objetivos:** Lia quer executar sem contaminar o registro; Mara quer saber o alcance da medida.
+- **Evidências:** `mandado`, `voo`.
+- **Inferência / thought path:** ordem → medida; cartão → situação; ausência de motivo → intenção não demonstrada.
+- **Misdirection:** “fuga confirmada” cabe no termo, mas excede a prova.
+- **Caminhos alternativos:** campos podem ser preenchidos em qualquer ordem.
+- **Consequência / pergunta de saída:** prisão executada; que divergência levou a essa noite?
+- **Fontes / status:** `prisao1`; DOCUMENTADO / REPORTADO.
 
-- DATA: 17/11/2025.
-- PERGUNTA: o que os registros permitem afirmar sobre a viagem?
-- ENTRADA: a equipe conhece o mandado e confirma o embarque; não conhece intenção subjetiva como fato.
-- PERSONAGENS/OBJETIVOS: investigadora quer delimitar o que prova; coordenadora quer executar sem extrapolar.
-- EVIDÊNCIAS: mandado, registro de embarque, versão posterior da defesa.
-- INFERÊNCIA: viagem programada é fato; finalidade permanece disputada.
-- THOUGHT PATH: voo + mandado ou voo + defesa. “Viagem = fuga” é interpretação excessiva.
-- CONSEQUÊNCIA: prisão executada; corte para a origem da apuração.
-- SAÍDA: como a investigação chegou ao aeroporto?
-- FONTES: prisao1, defesa_viagem.
-- STATUS: DOCUMENTADO / REPORTADO / DRAMATIZAÇÃO.
+## CAPÍTULO 1 / mau
 
-## SCENE mau — O mau cheiro
+- **Data / pergunta:** 2024. Onde dois arquivos deixam de contar a mesma história?
+- **Conhecimento:** a apuração veio de comunicação institucional; ninguém “descobre a fraude” sozinho.
+- **Personagens / objetivos:** Bia isola a divergência; Mara evita que o valor alto substitua análise.
+- **Evidências:** `planilha`, `origem`, `oficioBC`.
+- **Inferência / thought path:** ID e total coincidem → origem diverge → data reforça → linha aberta.
+- **Misdirection:** o total chama atenção, mas coincide.
+- **Alternativas:** origem basta; origem + data também é aceita.
+- **Consequência / saída:** abre Tirreno–Master–BRB; quem sustentava a origem na cessão?
+- **Fontes / status:** `bc_comunicacao`; o fato institucional é DOCUMENTADO. IDs, valores e datas do puzzle são DRAMATIZAÇÃO COMPOSTA explícita.
 
-- DATA: 2024.
-- PERGUNTA: dois registros descrevem a mesma carteira da mesma forma?
-- ENTRADA: a origem da apuração é institucional; a protagonista recebe um recorte.
-- PERSONAGENS/OBJETIVOS: analista quer reconciliar registros; investigadora quer formular uma divergência testável.
-- EVIDÊNCIAS: planilha de cessão, arquivo de origem, comunicação institucional.
-- INFERÊNCIA: identificador coincide; origem e cronologia divergem.
-- THOUGHT PATH: lote A + lote B; o ofício é caminho redundante. O valor alto é misdirection insuficiente.
-- CONSEQUÊNCIA: abre linha sobre origem documental.
-- SAÍDA: quem podia afirmar a origem na data da cessão?
-- FONTE: bc_comunicacao.
-- STATUS: DOCUMENTADO / DRAMATIZAÇÃO.
+## CAPÍTULO 2 / fantasma
 
-## SCENE fantasma — A carteira fantasma
+- **Data / pergunta:** 30/12/2025. Qual resposta não alcança a cadeia documental?
+- **Conhecimento:** Mara tem origem declarada, cessão e arquivo anterior; o depoente conhece sua atuação, mas declara memória desigual.
+- **Objetivos:** Mara fixa origem e sequência; o depoente contesta a premissa e desloca execução para equipes; Lia quer uma pergunta por vez.
+- **Evidências:** `tirreno`, `brb`, `fala`, `origem`.
+- **Inferência / thought path:** pressionar contestação de premissa → apresentar documento da cadeia → resposta se estreita sem resolver origem.
+- **Misdirection:** memória incompleta e função macro parecem contradições, mas não respondem à origem.
+- **Alternativas / fail forward:** três evidências aceitas; linha ruim recebe réplica específica e a oitiva continua.
+- **Consequência / saída:** aeroporto ganha contexto; como separar fatos posteriores de causalidade?
+- **Fontes / status:** `oitiva1`, corpus `oitiva2`; DEPOIMENTO CONTESTADO / DRAMATIZAÇÃO de padrões, nunca citação literal.
 
-- DATA: 30/12/2025.
-- PERGUNTA: qual contradição deve ser levada à oitiva?
-- ENTRADA: a equipe conhece os registros; o jogador ainda precisa cruzá-los.
-- PERSONAGENS/OBJETIVOS: investigadora quer origem; coordenadora quer pergunta auditável; depoente dramatizado contesta premissas amplas.
-- EVIDÊNCIAS: documento Tirreno, cessão ao BRB, trecho da oitiva.
-- INFERÊNCIA: a origem declarada não fecha com a sequência documental.
-- THOUGHT PATH: Tirreno + BRB ou arquivo anterior + BRB.
-- CONFRONTO: pressionar a contestação de premissa e apresentar um registro de origem. Evidência inadequada gera resistência e permite continuar.
-- CONSEQUÊNCIA: divergência permanece registrada, sem converter depoimento em confissão.
-- SAÍDA: o que o aeroporto significa depois de conhecer a cadeia documental?
-- FONTE: oitiva1.
-- STATUS: DOCUMENTADO / CONTESTADO / DRAMATIZAÇÃO.
+## CAPÍTULO 3 / retorno
 
-## SCENE retorno — 22H04, pela segunda vez
+- **Data / pergunta:** 17–25/11/2025. O que mudou nos dias seguintes?
+- **Conhecimento:** o jogador revê o aeroporto com liquidação e versão da defesa agora disponíveis.
+- **Objetivos:** Bia quer datas absolutas; Mara separa acontecimento e interpretação.
+- **Evidências:** `mandado`, `voo`, `liquidacao`, `defesa`.
+- **Inferência / thought path:** prisão/embarque (17) → liquidação (18) → manifestação (25).
+- **Misdirection:** transformar proximidade em causa.
+- **Alternativas:** prisão e embarque aceitam ordem trocada por ocorrerem na mesma noite.
+- **Consequência / saída:** caso muda de ambiente; qual decisão muda a perícia?
+- **Fontes / status:** `prisao1`, `defesa_viagem`, `liquidacao`; DOCUMENTADO / REPORTADO / CONTESTADO.
 
-- DATA: 17–18/11/2025.
-- PERGUNTA: como registrar prisão, viagem e liquidação sem fabricar causalidade?
-- EVIDÊNCIAS: as mesmas do prólogo, agora recontextualizadas.
-- INFERÊNCIA: prisão, viagem e liquidação são fatos distintos; versões e receios devem ser atribuídos.
-- CONSEQUÊNCIA: payoff do cold open; abre a mudança de foro e custódia.
-- STATUS: DOCUMENTADO / REPORTADO.
+## CAPÍTULO 4 / vidro
 
-## SCENE vidro — A caixa de vidro
+- **Data / pergunta:** 12–19/02/2026. Qual sequência alterou o trabalho da perícia?
+- **Conhecimento:** atos mantidos, feitos redistribuídos e cerca de cem dispositivos aguardam fluxo.
+- **Objetivos:** Jo quer regra executável; Lia protege procedimento; Mara procura efeito prático.
+- **Evidências:** `notaSTF`, `redistribuicao`, `fluxo`.
+- **Inferência / thought path:** atos mantidos → redistribuição → fluxo de 19/02.
+- **Misdirection:** fluxo ordinário como fim do controle judicial.
+- **Alternativas:** ordem derivada de função e data, sem clique arbitrário.
+- **Consequência / saída:** perícia avança; por que nova prisão não é repetição?
+- **Fontes / status:** `stf_nota`, `mendonca_fluxo`; DOCUMENTADO.
 
-- DATA: 28/11/2025 a 19/02/2026.
-- PERGUNTA: o que mudou operacionalmente em 19/02?
-- ENTRADA: Toffoli foi relator; atos anteriores são preservados; ocorre livre redistribuição.
-- PERSONAGENS/OBJETIVOS: perita quer regra operacional; coordenadora quer respeitar autorização e sigilo.
-- EVIDÊNCIAS: nota dos dez ministros, despacho de 19/02.
-- INFERÊNCIA: perícia segue fluxo ordinário; outras frentes permanecem submetidas às regras processuais.
-- CONSEQUÊNCIA: cerca de cem dispositivos voltam a andar.
-- STATUS: DOCUMENTADO / REPORTADO / DRAMATIZAÇÃO.
+## CAPÍTULO 5 / genero
 
-## SCENE genero — O caso muda de gênero
+- **Data / pergunta:** 04/03/2026. Como o material ampliou a hipótese?
+- **Conhecimento:** a equipe conhecia a frente financeira; os quatro núcleos entram agora.
+- **Objetivos:** Bia organiza escala; Jo separa logs de interpretação; Lia exige “segundo a PF”.
+- **Evidências:** `financeiro`, `institucional`, `ocultacao`, `intimidacao`, `prisao2`.
+- **Inferência / thought path:** classificar rastros por função → perceber mudança de gênero do caso.
+- **Misdirection:** quatro núcleos como quatro culpas estabelecidas.
+- **Alternativas:** pastas preenchidas em qualquer ordem.
+- **Consequência / saída:** escolha A Turma ou Os Meninos; um nó liga as linhas?
+- **Fontes / status:** `quatro_nucleos`; ALEGADO segundo PF; medida judicial DOCUMENTADA.
 
-- DATA: 04/03/2026.
-- PERGUNTA: por que a segunda prisão não repete a primeira?
-- EVIDÊNCIAS: representação dos quatro núcleos; nova ordem preventiva.
-- INFERÊNCIA: nova fase amplia o objeto para além do crime financeiro.
-- MISDIRECTION: tratar a prisão como mera repetição.
-- CONSEQUÊNCIA: escolha de ordem entre A Turma e Os Meninos.
-- STATUS: DOCUMENTADO / ALEGADO / DRAMATIZAÇÃO.
+## CAPÍTULO 6A / turma
 
-## SCENE turma — A Turma
+- **Data / pergunta:** 14/05/2026. Quais registros justificam tratar o codinome como o mesmo nó?
+- **Conhecimento:** varia pela ordem; se Os Meninos veio antes, Mara procura um contato fora da tela.
+- **Objetivos:** Bia quer data/nome/local; Mara recusa que apelido baste.
+- **Evidências:** `pagamentos`, `visitas`, `sictag`.
+- **Inferência / thought path:** codinome ↔ pagamento; codinome ↔ visita; contexto cruza registros.
+- **Misdirection:** conectar tudo pela mera presença do apelido.
+- **Alternativas:** três pares válidos; conclusão exige duas conexões independentes passando pelo codinome.
+- **Consequência / saída:** nó reaparece na linha digital; o que um arquivo demonstra?
+- **Fontes / status:** `turma_meninos`; registro DOCUMENTADO, função/pagamentos ALEGADOS.
 
-- DATA: maio de 2026.
-- PERGUNTA: o que conecta legitimamente os rastros?
-- EVIDÊNCIAS: mensagens sobre pagamentos alegados, registro de visitante, codinome Sicário.
-- INFERÊNCIA: nome, contexto, datas e registros convergem; funções criminosas continuam alegação da PF.
-- CAMINHOS: pagamentos + visita; codinome + visita; pagamentos + codinome.
-- CONSEQUÊNCIA: nó presencial/informacional pronto para convergir com a linha digital.
-- STATUS: DOCUMENTADO / ALEGADO.
+## CAPÍTULO 6B / meninos
 
-## SCENE meninos — Os Meninos
+- **Data / pergunta:** maio de 2026. Até onde a evidência permite ir?
+- **Conhecimento:** captura, metadados e resposta institucional; ordem anterior altera falas de entrada.
+- **Objetivos:** Mara testa a hipótese forte; Jo impede salto técnico.
+- **Evidências:** `captura`, `metadata`, `respostaInterpol`.
+- **Inferência / thought path:** arquivo existe → metadados situam → resposta exclui interface direta → informação relacionada é o teto.
+- **Misdirection:** logomarca e familiaridade visual.
+- **Alternativas:** descoberta livre; a escada inclui afirmação verdadeira porém incompleta.
+- **Consequência / saída:** linhas convergem por precisão; quem examina o material?
+- **Fontes / status:** `turma_meninos`; DOCUMENTADO / ALEGADO / CONTESTADO.
 
-- DATA: maio de 2026.
-- PERGUNTA: qual conclusão digital é precisa?
-- EVIDÊNCIAS: captura, metadados, resposta institucional sobre a interface.
-- INFERÊNCIA: material sugere acesso a informação relacionada; não demonstra automaticamente invasão direta da Interpol.
-- MISDIRECTION JUSTA: identidade visual convincente.
-- CAMINHOS: captura + resposta; captura + metadados + resposta.
-- CONSEQUÊNCIA: linha digital converge sem exagerar a prova.
-- STATUS: DOCUMENTADO / ALEGADO / CONTESTADO.
+## FINAL / final
 
-## SCENE final — O relatório vira o caso
+- **Data / pergunta:** 15–19/09/2026. O que fazer sem fingir que o conflito terminou?
+- **Conhecimento:** pedido de vista sem mérito; auxílio técnico solicitado para cópia de cerca de 500 GB.
+- **Objetivos:** Jo preserva integridade; Lia recusa destino sem decisão; Mara fecha o termo no limite factual.
+- **Evidências:** `pet`, `drive`.
+- **Inferência / thought path:** cópia preservada + vista + ausência de mérito → destino pendente.
+- **Misdirection:** pedido de vista como decisão final.
+- **Alternativas:** campos preenchidos em qualquer ordem.
+- **Consequência:** mídia lacrada, LED e campo em branco; nenhuma fala final.
+- **Fontes / status:** `plenaria`, `copia500`; DOCUMENTADO / REPORTADO / PENDENTE.
 
-- DATA: 15–19/09/2026.
-- PERGUNTA: qual estado institucional está demonstrado?
-- EVIDÊNCIAS: questão de ordem na Pet 16662; cópia de aproximadamente 500 GB.
-- INFERÊNCIA: tramitação e tratamento permanecem em disputa; houve vista, não mérito final.
-- CONSEQUÊNCIA: estado `PENDING`. Última imagem: mídia forense, cursor e campo de destino vazio.
-- STATUS: DOCUMENTADO / REPORTADO / PENDENTE.
+## Passe de diálogo
 
-## Voz de Vorcaro — análise de corpus
-
-As oitivas públicas de 30/12/2025 e 28/08/2026 foram usadas apenas para padrões gerais: respostas binárias por vezes curtas, respostas contextuais longas, memória declaradamente incompleta, autocorreção, contestação de premissa, distinção entre atuação macro e execução e retorno da PF à pergunta. As falas no jogo são dramatizadas e não imitam fraseologia distintiva.
+Lia fala procedimento; Bia fala campos e datas; Jo corrige alcance técnico; Mara pergunta e corta. Foram removidos aforismos, metáforas de tabuleiro/engrenagem, antíteses recorrentes e recapitulações. A digitação possui blips discretos por personagem e pode ser completada por toque.
