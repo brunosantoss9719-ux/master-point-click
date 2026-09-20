@@ -53,6 +53,12 @@ async function capture(send,file){
   await fs.writeFile(file,Buffer.from(shot.data,'base64'));
 }
 
+async function tap(send,selector){
+  const point=await evaluate(send,`(()=>{const r=document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}})()`);
+  await send('Input.dispatchMouseEvent',{type:'mousePressed',x:point.x,y:point.y,button:'left',clickCount:1});
+  await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:point.x,y:point.y,button:'left',clickCount:1});
+}
+
 async function waitForDom(send){
   for(let i=0;i<80;i++){
     const ready=await evaluate(send,"document.readyState==='complete' && !!document.querySelector('#new-game') && !!document.querySelector('#bonus-game')");
@@ -97,10 +103,10 @@ try{
   const pngSizes=new Set((manifest.icons||[]).filter(icon=>icon.type==='image/png').map(icon=>icon.sizes));
   if(!pngSizes.has('192x192')||!pngSizes.has('512x512'))throw new Error('Manifesto sem ícones PNG instaláveis');
 
-  await evaluate(send,"document.querySelector('#new-game').click(); true");
+  await tap(send,'#new-game');
   await sleep(650);
-  const landscape=await evaluate(send,"(()=>({width:innerWidth,height:innerHeight,rotate:!!document.querySelector('#rotate'),game:getComputedStyle(document.querySelector('#game-screen')).display,appHeight:Math.round(document.querySelector('#app').getBoundingClientRect().height),dialogue:!document.querySelector('#dialogue').classList.contains('hidden'),audioButton:!!document.querySelector('#audio-btn')}))()");
-  if(landscape.rotate||landscape.game==='none'||!landscape.dialogue||!landscape.audioButton)throw new Error('Fluxo landscape não entrou no jogo: '+JSON.stringify(landscape));
+  const landscape=await evaluate(send,"(()=>({width:innerWidth,height:innerHeight,rotate:!!document.querySelector('#rotate'),game:getComputedStyle(document.querySelector('#game-screen')).display,appHeight:Math.round(document.querySelector('#app').getBoundingClientRect().height),dialogue:!document.querySelector('#dialogue').classList.contains('hidden'),audioButton:!!document.querySelector('#audio-btn'),audio:audio.debug()}))()");
+  if(landscape.rotate||landscape.game==='none'||!landscape.dialogue||!landscape.audioButton||!landscape.audio.supported||landscape.audio.state!=='running'||!landscape.audio.wakePlayed)throw new Error('Fluxo landscape/áudio não entrou no jogo: '+JSON.stringify(landscape));
   if(Math.abs(landscape.appHeight-landscape.height)>2)throw new Error('Viewport cortado: app='+landscape.appHeight+', viewport='+landscape.height);
 
   let daniel=null;
@@ -138,13 +144,8 @@ try{
 
   await evaluate(send,"enterScene(12); true");
   await sleep(300);
-  let copa=null;
-  for(let i=0;i<8;i++){
-    copa=await evaluate(send,"(()=>{const el=document.querySelector('#character');const sprite=el?.querySelector('.sprite');return {person:el?.dataset.person||'',show:!!el?.classList.contains('show'),background:sprite?getComputedStyle(sprite).backgroundImage:'',scene:document.querySelector('#scene-bg')?.getAttribute('src')||''}})()");
-    if(copa.person==='fe'&&copa.show&&copa.background.includes('copa-2022-operatives.webp')&&copa.scene.includes('copa-residence-street.webp'))break;
-    await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(160);
-  }
-  if(!copa||copa.person!=='fe'||!copa.show||!copa.background.includes('copa-2022-operatives.webp')||!copa.scene.includes('copa-residence-street.webp'))throw new Error('Bônus Copa 2022 não apareceu: '+JSON.stringify(copa));
+  const copa=await evaluate(send,"(()=>{const el=document.querySelector('#character');return {portrait:!!el?.classList.contains('show'),scene:document.querySelector('#scene-bg')?.getAttribute('src')||'',line:document.querySelector('#line')?.textContent||''}})()");
+  if(copa.portrait||!copa.scene.includes('copa-residence-street.webp'))throw new Error('Bônus deveria abrir na rua e sem fila de retratos: '+JSON.stringify(copa));
   await capture(send,'artifacts/mobile-copa-2022.png');
 
   await evaluate(send,"enterScene(8); true");
@@ -157,12 +158,12 @@ try{
   }
   await evaluate(send,"document.querySelector('.hotspot.required').click(); true");
   for(let i=0;i<8;i++){
-    const open=await evaluate(send,"!document.querySelector('#modal').classList.contains('hidden') && document.querySelectorAll('.puzzle-target').length>0");
+    const open=await evaluate(send,"!document.querySelector('#modal').classList.contains('hidden') && document.querySelectorAll('[data-puzzle-action]').length>0");
     if(open)break;
     await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(80);
   }
-  const puzzle=await evaluate(send,"(()=>({open:!document.querySelector('#modal').classList.contains('hidden'),tools:document.querySelectorAll('.puzzle-tool').length,targets:document.querySelectorAll('.puzzle-target').length,title:document.querySelector('#modal-title').textContent,overflow:document.querySelector('.modal-panel').scrollHeight>document.querySelector('.modal-panel').clientHeight}))()");
-  if(!puzzle.open||puzzle.tools<4||puzzle.targets<4||puzzle.title!=='A fronteira do fluxo')throw new Error('Puzzle Mendonça mobile não abriu corretamente: '+JSON.stringify(puzzle));
+  const puzzle=await evaluate(send,"(()=>({open:!document.querySelector('#modal').classList.contains('hidden'),actions:document.querySelectorAll('[data-puzzle-action]').length,mode:document.querySelector('.mechanism')?.dataset.mode||'',title:document.querySelector('#modal-title').textContent,overflow:document.querySelector('.modal-panel').scrollHeight>document.querySelector('.modal-panel').clientHeight}))()");
+  if(!puzzle.open||puzzle.actions<8||puzzle.mode!=='circuit'||puzzle.title!=='A fronteira do fluxo')throw new Error('Puzzle Mendonça mobile não abriu corretamente: '+JSON.stringify(puzzle));
   await capture(send,'artifacts/mobile-puzzle.png');
 
   await send('Emulation.setDeviceMetricsOverride',{

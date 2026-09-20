@@ -8,12 +8,13 @@ const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
 const scenes=(js.match(/chapter:'(?:CAPÍTULO|TOFFOLINHO|MENDONÇA|BÔNUS)/g)||[]).length;
 const endings=(js.match(/title:'(?:A PASTA ABERTA|A FORTALEZA VAZIA|O HOMEM NO VIDRO)'/g)||[]).length;
 const puzzles=(js.match(/puzzle:\{type:/g)||[]).length;
-if(scenes!==17||endings!==3||puzzles!==15||!js.includes('showToffoliEnding')||!js.includes('showMendoncaEnding')||!js.includes('showCopaEnding')||!js.includes('usePuzzleTool')){console.error({scenes,endings,puzzles,toffoliEnding:js.includes('showToffoliEnding'),mendoncaEnding:js.includes('showMendoncaEnding'),copaEnding:js.includes('showCopaEnding')});process.exit(1)}
+const mechanisms=['mosaic','slider','dials','circuit','switches','cipher'];
+if(scenes!==17||endings!==3||puzzles!==15||!js.includes('showToffoliEnding')||!js.includes('showMendoncaEnding')||!js.includes('showCopaEnding')||!js.includes('solveAdventurePuzzle')||mechanisms.some(mode=>!js.includes(`mode:'${mode}'`))){console.error({scenes,endings,puzzles,toffoliEnding:js.includes('showToffoliEnding'),mendoncaEnding:js.includes('showMendoncaEnding'),copaEnding:js.includes('showCopaEnding'),mechanisms});process.exit(1)}
 if(manifest.display!=='fullscreen'||manifest.orientation!=='landscape'){console.error('PWA não está configurada para fullscreen landscape');process.exit(1)}
 const iconSizes=new Set((manifest.icons||[]).map(icon=>icon.sizes));
 if(!iconSizes.has('192x192')||!iconSizes.has('512x512')){console.error('Ícones PWA obrigatórios ausentes');process.exit(1)}
 if(!html.includes('rel="manifest"')||!html.includes('id="bonus-game"')||html.includes('id="rotate"')){console.error('Entrada PWA/bônus/rotação inválida');process.exit(1)}
 if(!js.includes('requestFullscreen')||!js.includes("orientation.lock('landscape')")||!js.includes('serviceWorker.register')){console.error('Modo imersivo incompleto');process.exit(1)}
-if(!js.includes('audio.blip')||!js.includes('audio.interact')||!js.includes('audio.success')||js.includes('scheduleChord')||js.includes('startAmbience')){console.error('Efeitos pontuais ausentes ou música contínua ainda presente');process.exit(1)}
-if(/puzzle:\{type:'(?:select|order|match)'/.test(js)||js.includes('data-puzzle-check')||js.includes('Ligue cada')){console.error('Puzzles antigos de questionário ainda presentes');process.exit(1)}
-console.log(`OK: ${scenes} cenas, ${puzzles} puzzles de aventura, campanha bônus Copa 2022, ${endings} finais principais, PWA fullscreen landscape, efeitos sem música e ${required.length} arquivos essenciais.`);
+if(!js.includes('audio.blip')||!js.includes('audio.interact')||!js.includes('audio.puzzleTick')||!js.includes('audio.success')||!js.includes('wakeSound')||js.includes('scheduleChord')||js.includes('startAmbience')){console.error('Efeitos pontuais/desbloqueio de áudio ausentes ou música contínua ainda presente');process.exit(1)}
+if(js.includes('data-puzzle-tool')||js.includes('data-puzzle-target')||js.includes('Ligue cada')){console.error('Interface antiga de ferramenta/alvo ainda está ativa');process.exit(1)}
+console.log(`OK: ${scenes} cenas, ${puzzles} puzzles em ${mechanisms.length} mecanismos, campanha bônus Copa 2022, ${endings} finais principais, PWA fullscreen landscape e áudio desbloqueável.`);

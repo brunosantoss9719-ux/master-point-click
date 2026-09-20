@@ -1,5 +1,5 @@
-const SAVE_KEY = 'master-ultima-chamada-v1';
-const AUDIO_PREF_KEY = 'master-ultima-chamada-audio-muted-v1';
+const SAVE_KEY = 'master-ultima-chamada-v2';
+const AUDIO_PREF_KEY = 'master-ultima-chamada-audio-muted-v2';
 
 const dossier = [
   {id:'brb',tag:'DOCUMENTADO',title:'O anúncio do BRB',text:'Em março de 2025, o BRB anunciou a aquisição de 49% das ações ordinárias e 100% das preferenciais do Master — 58% do capital total — sujeita a aprovações.',source:'Reuters, 29 abr. 2025',url:'https://www.reuters.com/business/finance/brazils-brb-close-completing-due-diligence-acquire-banco-master-2025-04-29/'},
@@ -37,7 +37,11 @@ const inventoryCatalog = {
   celular:{icon:'▣',name:'Celular',desc:'Tudo chega aqui. Algumas coisas ficam.'},
   cracha:{icon:'◇',name:'Crachá recolhido',desc:'Um retângulo de plástico já sem porta para abrir.'},
   drive:{icon:'▥',name:'Cópia criptografada',desc:'Quinhentos gigabytes. Uma chave ausente.'},
-  seis_telefones:{icon:'▦',name:'Seis aparelhos',desc:'Países como codinomes. Rastros que sobreviveram à noite.'}
+  seis_telefones:{icon:'▦',name:'Seis aparelhos',desc:'Países como codinomes. Rastros que sobreviveram à noite.'},
+  folha_carbono:{icon:'▧',name:'Folha de carbono',desc:'Uma impressão de 9 de novembro deixou marcas no verso.'},
+  matriz_sinais:{icon:'⌘',name:'Matriz de sinais',desc:'Seis aparelhos, uma janela curta de uso e duas identidades em aberto.'},
+  acetato_zonas:{icon:'◇',name:'Acetato de zonas',desc:'Camadas de sinais convertidas apenas em áreas amplas.'},
+  fita_2057:{icon:'▥',name:'Fita de 20h57',desc:'A pergunta que antecede a ordem de abortar.'}
 };
 
 const scenes = [
@@ -253,25 +257,25 @@ const scenes = [
   },
   {
     chapter:'BÔNUS I · A REUNIÃO', date:'8–12 NOV 2022 · BRASÍLIA', bg:'assets/copa-residence-street.webp', tint:'rgba(18,30,24,.22)',
-    intro:[['NARRADOR','Você controla um FE ficcional. A acusação situa aqui o início da sequência chamada “Copa 2022”.'],['FE','A rua está molhada. Do outro lado do portão, uma reunião.'],['NARRADOR','Os diálogos são dramatização. Datas e movimentos vêm de registros públicos e permanecem atribuídos à investigação.']],
+    intro:[['NARRADOR','Meia-noite. Chuva grossa numa rua residencial de Brasília. Você espera no carro sem saber se alguém vai voltar.'],['RÁDIO','Portão abriu. Não saia.'],['NARRADOR','Um envelope molhado desliza por baixo do banco. No verso, marcas de outra página.']],
     hotspots:[
-      {id:'portao',label:'Portão da residência',x:55,y:43,dossier:'reuniao_doze',lines:[['NARRADOR','A acusação aponta uma reunião em 12 de novembro na residência funcional de Braga Netto. As defesas contestaram essa leitura.'],['FE','Por enquanto, só existe o que pode ser colocado na linha do tempo.']]},
-      {id:'carro_reuniao',label:'Carro na calçada',x:18,y:55,lines:[['FE','Chegar é um fato. O que foi dito lá dentro exige prova.']]},
+      {id:'portao',label:'Portão entreaberto',x:55,y:43,dossier:'reuniao_doze',lines:[['NARRADOR','Um homem sai sem olhar para os carros. A acusação situaria a reunião naquela noite; as defesas contestariam a caracterização.']]},
+      {id:'carro_reuniao',label:'Retrovisor embaçado',x:18,y:55,lines:[['NARRADOR','No reflexo, o envelope parece vazio. Contra a luz do poste, aparecem sulcos de impressão.']]},
       {id:'cronologia_reuniao',label:'Registros preparatórios',x:76,y:63,required:true,dossier:'punhal_impresso',lines:[['SISTEMA','Quatro vestígios. Reconstrua a sequência sem converter acusação em certeza.']],puzzle:{type:'chronology-bench',title:'Antes de sair a campo',kicker:'CRONOLOGIA DA ACUSAÇÃO',prompt:'Encaixe os registros públicos na cadeia preparatória que culmina na reunião de 12 de novembro.',tools:[{id:'msg-oito',icon:'▣',label:'Mensagem de 8/11',detail:'Pedido para “rascunhar alguma coisa”, citado na denúncia.'},{id:'impressao-nove',icon:'▤',label:'Impressão de 9/11',detail:'Registro atribuído ao documento Punhal Verde e Amarelo.'},{id:'agenda-dez',icon:'◇',label:'Agenda de 10–11/11',detail:'Mensagens sobre horário e visita.'},{id:'reuniao-doze',icon:'●',label:'Registro de 12/11',detail:'Data da reunião sustentada pela acusação.'}],targets:[{id:'origem',icon:'□',label:'Início documental',detail:'A cadeia começa sem o primeiro pedido registrado.',accept:'msg-oito',result:'8/11: o pedido entra na cronologia.'},{id:'documento',icon:'▤',label:'Documento',detail:'Falta o registro que liga o rascunho ao Punhal.',accept:'impressao-nove',requires:['origem'],result:'9/11: a impressão é inserida com atribuição à PF.'},{id:'convocacao',icon:'◇',label:'Convocação',detail:'A visita ainda não possui janela temporal.',accept:'agenda-dez',requires:['documento'],result:'10–11/11: mensagens situam o agendamento.'},{id:'encontro',icon:'●',label:'Reunião atribuída',detail:'A sequência ainda não alcança o encontro apontado.',accept:'reuniao-doze',requires:['convocacao'],result:'12/11: a reunião fecha a cadeia alegada.'}],success:'A fase preparatória foi reconstruída com datas, atribuição e contestação preservadas.'},choices:[{text:'Entrar sabendo que a ordem ainda não existe.',effects:{trust:2,pressure:1},flag:'copa_entrou_com_lacuna',reply:[['FE','Planejamento não é ordem. E reunião não apaga responsabilidade.']]},{text:'Tratar a reunião como ponto de partida.',effects:{exposure:2,pressure:2,trust:-1},flag:'copa_reuniao_marco',reply:[['FE','Depois desta noite, cada movimento terá um antes.']]}],advance:true}
     ]
   },
   {
     chapter:'BÔNUS II · SEIS LINHAS', date:'8–9 DEZ 2022 · RUAS DE BRASÍLIA', bg:'assets/copa-residence-street.webp', tint:'rgba(4,28,42,.28)',
-    intro:[['GANA','Seis aparelhos. Seis codinomes.'],['ÁUSTRIA','Alemanha, Argentina, Áustria, Brasil, Gana e Japão.'],['NARRADOR','A PF afirmou que as linhas foram ativadas em 8 e 9 de dezembro e usadas até o dia 16.']],onEnter:()=>addItem('seis_telefones'),
+    intro:[['NARRADOR','Quase um mês depois. Uma sacola preta espera no banco traseiro. Dentro, seis aparelhos iguais.'],['RÁDIO','Países no lugar dos nomes. Nada além disso.'],['NARRADOR','Quando o primeiro acende, os outros cinco vibram em sequência.']],onEnter:()=>addItem('seis_telefones'),
     hotspots:[
-      {id:'seis_silhuetas',label:'Os seis FEs',x:34,y:45,dossier:'seis_paises',lines:[['NARRADOR','Os seis rostos do jogo são composições ficcionais. Quatro usuários foram identificados pela investigação; duas correspondências permaneceram sem confirmação pública.'],['FE','Codinome não é identidade.']]},
-      {id:'luzes_carros',label:'Carros separados',x:70,y:55,lines:[['BRASIL','A partir daqui, a história deixa a sala — e fica nas ruas.']]},
+      {id:'seis_silhuetas',label:'Seis reflexos',x:34,y:45,dossier:'seis_paises',lines:[['NARRADOR','No vidro, seis vultos cruzam em direções diferentes. Os rostos não aparecem: parte das correspondências individuais não se tornou pública.']]},
+      {id:'luzes_carros',label:'Sacola no banco',x:70,y:55,lines:[['NARRADOR','Alemanha, Argentina, Áustria, Brasil, Gana e Japão. Os nomes estão riscados na carcaça, não na agenda.']]},
       {id:'quadro_linhas',label:'Seis registros de linha',x:51,y:69,required:true,dossier:'copa_signal',lines:[['SISTEMA','Monte o quadro sem preencher as lacunas que os autos não fecharam.']],puzzle:{type:'evidence-board',title:'Seis aparelhos, seis lacunas',kicker:'QUADRO DE EVIDÊNCIAS',prompt:'Relacione quantidade, período, grupo e codinomes. Pare exatamente onde a prova pública para.',tools:[{id:'ativacoes',icon:'▦',label:'Ativações de 8–9/12',detail:'Seis linhas surgem quase simultaneamente.'},{id:'janela-uso',icon:'↔',label:'Janela de uso',detail:'Registros entre 8 e 16 de dezembro.'},{id:'grupo-signal',icon:'◈',label:'Grupo “Copa 2022”',detail:'Nome citado pela investigação.'},{id:'seis-codinomes',icon:'≡',label:'Seis codinomes',detail:'Alemanha, Argentina, Áustria, Brasil, Gana e Japão.'},{id:'limite-identidade',icon:'?',label:'Limite probatório',detail:'Nem toda correspondência individual é pública.'}],targets:[{id:'quantidade',icon:'▦',label:'Painel de aparelhos',detail:'A quantidade ainda não está demonstrada.',accept:'ativacoes',result:'Seis posições são abertas.'},{id:'periodo',icon:'↔',label:'Faixa temporal',detail:'Os registros ainda não possuem início e fim.',accept:'janela-uso',requires:['quantidade'],result:'8–16/12: a janela de uso é marcada.'},{id:'canal',icon:'◈',label:'Canal comum',detail:'Falta o vínculo entre os seis registros.',accept:'grupo-signal',requires:['periodo'],result:'O grupo “Copa 2022” conecta as linhas.'},{id:'nomes-codigo',icon:'≡',label:'Camada de codinomes',detail:'O quadro ainda não mostra os países publicados.',accept:'seis-codinomes',requires:['canal'],result:'Os seis codinomes entram no quadro.'},{id:'lacunas',icon:'?',label:'Identidades não fechadas',detail:'O sistema tenta completar o que não foi confirmado.',accept:'limite-identidade',requires:['nomes-codigo'],result:'As duas lacunas permanecem visíveis.'}],success:'O grupo foi reconstruído sem inventar os dois usuários não confirmados.'},choices:[{text:'Exigir que toda ordem apareça no canal.',effects:{exposure:3,trust:1},flag:'copa_canal_registrado',reply:[['FE','Se alguém mandar avançar, ficará registrado.']]},{text:'Recusar qualquer movimento sem comando inequívoco.',effects:{pressure:1,trust:2},flag:'copa_ordem_inequivoca',reply:[['FE','Ninguém sai da posição por interpretação.']]}],advance:true}
     ]
   },
   {
     chapter:'BÔNUS III · UM MÊS EM CAMPO', date:'NOV–14 DEZ 2022 · BRASÍLIA', bg:'assets/copa-civic-avenue.webp', tint:'rgba(10,28,44,.25)',
-    intro:[['NARRADOR','A PF descreveu aproximadamente um mês de monitoramento antes de 15 de dezembro.'],['FE','A cidade repete avenidas. Os registros não.'],['NARRADOR','O jogo resume os pontos em zonas abstratas e não reproduz rotas, endereços ou procedimentos.']],
+    intro:[['NARRADOR','A cidade muda de luz, não de desenho. O mesmo carro reaparece em avenidas diferentes.'],['NARRADOR','A matriz dos seis aparelhos pulsa no bolso. Cada pulso deixa um quadrante aceso.'],['NARRADOR','Os pontos são zonas abstratas: nenhum endereço ou trajeto real é reproduzido.']],
     hotspots:[
       {id:'eixo',label:'Eixo cívico',x:57,y:35,dossier:'mes_em_campo',lines:[['NARRADOR','Mensagens, sinais de telefonia, mapas e diligências posteriores foram cruzados pela PF.'],['FE','Separados, parecem ruído. Juntos, contam deslocamento.']]},
       {id:'veiculos',label:'Veículos na avenida',x:77,y:58,lines:[['GANA','Um carro passa. Outro espera. O tabuleiro é a cidade inteira.']]},
@@ -280,7 +284,7 @@ const scenes = [
   },
   {
     chapter:'BÔNUS IV · 15 DE DEZEMBRO', date:'NOITE · EIXO CÍVICO', bg:'assets/copa-civic-avenue.webp', tint:'rgba(48,12,26,.3)',
-    intro:[['NARRADOR','O julgamento no STF termina antes do esperado. A equipe já está nas ruas.'],['ALEMANHA','Um perto do tribunal. Outro em deslocamento. Outro na região residencial.'],['FE','Três pontos. Nenhuma autorização nova.']],
+    intro:[['NARRADOR','15 de dezembro. A sessão termina antes do esperado. Três faróis acendem quase ao mesmo tempo.'],['RÁDIO','Um perto do tribunal. Outro se move. O terceiro está na zona residencial.'],['NARRADOR','O painel ainda marca AGUARDAR. A cidade, porém, já mudou.']],
     hotspots:[
       {id:'predios_civicos',label:'Prédios públicos',x:70,y:30,dossier:'campo_quinze',lines:[['NARRADOR','Segundo a PF, a distribuição dos sinais mostrava integrantes em campo durante a execução.'],['FE','O mapa diz onde o aparelho estava. A acusação diz por quê.']]},
       {id:'avenida_quinze',label:'Avenida molhada',x:45,y:61,lines:[['ÁUSTRIA','Estou em deslocamento.'],['FE','Sem ordem, deslocamento não vira ação.']]},
@@ -289,7 +293,7 @@ const scenes = [
   },
   {
     chapter:'BÔNUS V · 20H59', date:'15 DEZ 2022 · PONTO DE DESEMBARQUE', bg:'assets/copa-abort-road.webp', tint:'rgba(66,8,14,.28)',
-    intro:[['ÁUSTRIA','Tô perto da posição. Vai cancelar?'],['NARRADOR','20h57, segundo as mensagens reproduzidas pela investigação.'],['ALEMANHA','Abortar. Volta para o local de desembarque.'],['NARRADOR','20h59. A operação termina durante a execução.']],
+    intro:[['RÁDIO','20h57. “Tô perto da posição. Vai cancelar?”'],['NARRADOR','A resposta chega cortada por estática. A fita registra quatro fragmentos.'],['RÁDIO','20h59. “Abortar. Volta para o local de desembarque.”']],
     hotspots:[
       {id:'porta_aberta',label:'Veículo no retorno',x:24,y:58,lines:[['FE','A porta está aberta. A ordem, finalmente, não deixa margem.']]},
       {id:'avenida_vazia',label:'Avenida vazia',x:68,y:48,lines:[['NARRADOR','A ação foi abortada. Os sinais continuaram existindo.']]},
@@ -297,6 +301,27 @@ const scenes = [
     ]
   }
 ];
+
+// Os dados antigos permanecem junto às cenas como arquivo editorial, mas não
+// dirigem mais a interação. Cada chave abaixo substitui a antiga bancada de
+// associações por um mecanismo visual com regra própria.
+const adventurePuzzles = {
+  '0_telefone':{mode:'mosaic',title:'A minuta rasgada',kicker:'DOCUMENTO FÍSICO',prompt:'Recomponha a página. Bordas, carimbos e linhas precisam continuar de um fragmento para o outro.',pieces:['58% DO CAPITAL','49% DAS ORDINÁRIAS','100% DAS PREFERENCIAIS','APROVAÇÃO SOCIETÁRIA','APROVAÇÃO LEGISLATIVA','BANCO CENTRAL'],start:[3,0,5,2,1,4],success:'A página recomposta mostra que anúncio e conclusão eram coisas diferentes.'},
+  '1_envelope':{mode:'slider',title:'O veto no triturador',kicker:'DOCUMENTO DESLIZANTE',prompt:'Há um espaço vazio no triturador. Deslize os oito fragmentos até o texto voltar a correr sem saltos.',pieces:['3 SET','BANCO CENTRAL','REJEITA','A OPERAÇÃO','ESTRUTURA','DO NEGÓCIO','SEM EFEITO','PROTOCOLO'],scramble:[7,6,3,4,5,2,1],success:'O veto volta a existir como documento — não como resumo de reunião.'},
+  '4_gravador':{mode:'dials',title:'Três relógios, uma versão',kicker:'CONTRADIÇÃO TEMPORAL',prompt:'Ajuste os três mostradores usando o celular, a minuta e o plano de voo. A declaração só abre quando os horários não contradizem os documentos.',clue:'Mensagem “sem assinatura”: 18h02 · plano de voo: 19h31 · estado da venda: ainda sem assinatura.',wheels:[{label:'MENSAGEM',values:['17:46','18:02','18:20'],answer:'18:02'},{label:'PLANO DE VOO',values:['18:31','19:03','19:31'],answer:'19:31'},{label:'CONTRATO',values:['ASSINADO','SEM ASSINATURA','CANCELADO'],answer:'SEM ASSINATURA'}],success:'A versão agora respeita os três registros em vez de costurá-los à força.'},
+  '5_pasta_sigilo':{mode:'dials',title:'A fechadura do sigilo',kicker:'TRÊS ANÉIS CONCÊNTRICOS',prompt:'Gire os anéis. O índice deve continuar visível, os anexos sensíveis ficam isolados e o núcleo permanece sob a chave do relator.',clue:'Do lado de fora para dentro: acesso público → restrição seletiva → controle do gabinete.',wheels:[{label:'ÍNDICE',values:['FECHADO','PÚBLICO','VAZIO'],answer:'PÚBLICO'},{label:'ANEXOS',values:['PÚBLICOS','DESTRUÍDOS','RESTRITOS'],answer:'RESTRITOS'},{label:'NÚCLEO',values:['PF','RELATOR','IMPRENSA'],answer:'RELATOR'}],success:'A pasta abre por camadas. O custo do mecanismo fica visível.'},
+  '6_caixa_lacrada':{mode:'circuit',title:'Cadeia sem atalho',kicker:'CIRCUITO DE CUSTÓDIA',prompt:'Gire as peças até formar um único caminho contínuo entre APREENSÃO e PERÍCIA. Qualquer ramificação solta invalida o circuito.',cols:4,pieces:[['line',1,0],['corner',2,1],['corner',1,2],['line',0,1],['corner',3,0],['line',1,0],['corner',0,3],['line',0,1]],success:'Identificação, lacre, transporte e extração agora formam um rastro auditável.'},
+  '7_chave_final':{mode:'mosaic',title:'O resort sob três camadas',kicker:'ACETATOS SOBREPOSTOS',prompt:'Troque as placas até planta, registro societário e documento do fundo alinharem datas e lotes. A negativa pública deve permanecer na margem.',pieces:['PLANTA · LOTE A','REGISTRO · FAMÍLIA','DATA · ENTRADA','FUNDO · VÍNCULO REPORTADO','NOTA · NEGATIVA','MARGEM · CONTESTAÇÃO'],start:[4,1,5,0,3,2],success:'A convergência aparece sem apagar a negativa pública de favorecimento.'},
+  '8_despacho_fluxo':{mode:'circuit',title:'A fronteira do fluxo',kicker:'CIRCUITO DE PERMISSÕES',prompt:'Reconecte a perícia aos cem aparelhos. O caminho precisa passar por equipe direta, autorização do relator e bloqueio de exportação.',cols:4,pieces:[['line',1,0],['corner',0,1],['corner',3,2],['line',0,1],['corner',2,3],['line',1,0],['corner',1,0],['line',0,1]],success:'A perícia volta a andar sem transformar acesso técnico em porta irrestrita.'},
+  '9_relatorio_nomes':{mode:'switches',title:'Ruído de contexto',kicker:'MATRIZ FORENSE',prompt:'Apague os blocos de ruído. Cada toque altera também os quatro blocos vizinhos; só restará a janela de conversa preservada.',cols:3,rows:3,seedMoves:[0,4,7],success:'O trecho relevante emerge com mensagens adjacentes, horário e metadados.'},
+  '10_ordem_afastamento':{mode:'slider',title:'A ordem que perdeu efeito',kicker:'PROTOCOLO DESLIZANTE',prompt:'Reorganize o circuito documental até descobrir qual ato ainda produzia efeito após o pedido de vista.',pieces:['RELATÓRIO','ORDEM 8/9','AFASTAMENTO','SUSPENSÃO 9/9','RETORNO','2 VOTOS','PEDIDO DE VISTA','SUSPENSÃO VIGENTE'],scramble:[7,6,3,4,5,2,1],success:'O afastamento termina suspenso; o julgamento colegiado não chegou ao fim.'},
+  '11_terminal_cripto':{mode:'switches',title:'O volume que não monta',kicker:'BLOCOS DE INTEGRIDADE',prompt:'Normalize os nove blocos do volume. Se todos apagarem e o arquivo continuar fechado, o defeito não está na cópia.',cols:3,rows:3,seedMoves:[1,3,5,8],success:'Hash íntegro. A cópia existe; a chave de descriptografia, não.'},
+  '12_cronologia_reuniao':{mode:'mosaic',title:'O verso da folha',kicker:'IMPRESSÃO DE 9 DE NOVEMBRO',prompt:'A chuva separou a folha de carbono em seis partes. Refaça as fibras, carimbos e marcas de pressão — a cronologia aparece no verso.',pieces:['8 NOV · RASCUNHO','9 NOV · IMPRESSÃO','10 NOV · CONTATO','11 NOV · HORÁRIO','12 NOV · REUNIÃO ALEGADA','DEFESAS CONTESTAM'],start:[2,5,0,4,1,3],rewardItem:'folha_carbono',success:'O papel recomposto liga preparação, impressão e reunião sem converter acusação em fato incontroverso.'},
+  '13_quadro_linhas':{mode:'circuit',title:'A caixa dos seis aparelhos',kicker:'PLACA DE ATIVAÇÃO',prompt:'A folha de carbono revela o desenho da placa. Gire os contatos para energizar seis saídas e preserve dois encaixes de identidade deliberadamente vazios.',requiresItem:'folha_carbono',cols:3,pieces:[['corner',2,1],['tee',1,0],['corner',0,3],['line',1,0],['tee',2,1],['line',0,1],['corner',3,0],['tee',0,3],['corner',1,2]],rewardItem:'matriz_sinais',success:'As seis linhas entram no mesmo circuito; as duas identidades não confirmadas continuam vazias.'},
+  '14_rastro_urbano':{mode:'switches',title:'Brasília em camadas',kicker:'MAPA DE SINAIS',prompt:'A matriz dos aparelhos acende zonas conflitantes. Toque nos quadrantes até eliminar o ruído e conservar apenas a continuidade entre novembro e 14 de dezembro.',requiresItem:'matriz_sinais',cols:4,rows:3,seedMoves:[0,3,5,10],rewardItem:'acetato_zonas',success:'O acetato mostra continuidade em áreas amplas, sem revelar rotas ou endereços.'},
+  '15_painel_posicoes':{mode:'dials',title:'A noite mudou de forma',kicker:'PAINEL MECÂNICO DE CAMPO',prompt:'Use o acetato para ajustar os estados publicados. Posição não é autorização: o último mostrador decide se existe ordem de avanço.',requiresItem:'acetato_zonas',clue:'Sessão encerrada · um sinal perto do STF · outro em deslocamento · outro na região residencial · nenhuma nova ordem.',wheels:[{label:'CONTEXTO',values:['SESSÃO ATIVA','SESSÃO ENCERRADA','SEM SESSÃO'],answer:'SESSÃO ENCERRADA'},{label:'PONTO A',values:['STF','AEROPORTO','PLANALTO'],answer:'STF'},{label:'PONTO B',values:['PARADO','DESLOCAMENTO','SEM SINAL'],answer:'DESLOCAMENTO'},{label:'PONTO C',values:['COMERCIAL','RESIDENCIAL','RURAL'],answer:'RESIDENCIAL'},{label:'ORDEM',values:['AVANÇAR','AGUARDAR','ENCERRAR CANAL'],answer:'AGUARDAR'}],rewardItem:'fita_2057',success:'Três posições aparecem no painel. Nenhuma delas, sozinha, vira ordem.'},
+  '16_cadeia_aborto':{mode:'cipher',title:'Dois minutos no rádio',kicker:'DECODIFICADOR 20H57–20H59',prompt:'Encaixe a fita de 20h57 e gire os quatro cilindros até a mensagem final deixar de ser ruído.',requiresItem:'fita_2057',clue:'A pergunta vem às 20h57. Dois minutos depois, a ordem muda o estado e determina o retorno ao desembarque.',wheels:[{label:'ENTRADA',values:['20:55','20:57','20:59'],answer:'20:57'},{label:'RESPOSTA',values:['20:58','20:59','21:01'],answer:'20:59'},{label:'ESTADO',values:['AGUARDAR','AVANÇAR','ABORTAR'],answer:'ABORTAR'},{label:'DESTINO',values:['POSIÇÃO','DESEMBARQUE','TRIBUNAL'],answer:'DESEMBARQUE'}],success:'20h59. A ação é abortada; o rastro digital permanece.'}
+};
 
 const messagesByScene = [
   [{from:'Caio',time:'21:14',text:'Saiu. BRB confirmou o acordo.'},{from:'Helena',time:'21:19',text:'Não chame de operação concluída. Há aprovações pendentes.'},{mine:true,time:'21:22',text:'Reunião no escritório. Agora.'}],
@@ -328,16 +353,16 @@ function readMutedPreference(){
 }
 
 const audio=(()=>{
-  let ctx=null,master=null,fxGain=null,muted=readMutedPreference();
+  let ctx=null,master=null,fxGain=null,muted=readMutedPreference(),resumePromise=null,wantsWakeSound=false,wakePlayed=false;
   const speakerPitch={DANIEL:168,HELENA:214,'OTÁVIO':148,CAIO:244,INVESTIGADORA:184,TOFFOLI:142,MENDONÇA:154,ASSESSORA:206,'CHEFE DE GABINETE':198,DELEGADA:181,FE:158,GANA:142,'ÁUSTRIA':188,BRASIL:166,ARGENTINA:176,'JAPÃO':152,ALEMANHA:136,SISTEMA:118,NARRADOR:126};
 
   function ensure(){
     if(ctx)return true;
     const AudioCtor=globalThis.AudioContext||globalThis.webkitAudioContext;
     if(!AudioCtor)return false;
-    ctx=new AudioCtor();
+    ctx=new AudioCtor({latencyHint:'interactive'});
     master=ctx.createGain();fxGain=ctx.createGain();
-    master.gain.value=muted?0:.72;fxGain.gain.value=.78;
+    master.gain.value=muted?0:.92;fxGain.gain.value=.9;
     fxGain.connect(master);master.connect(ctx.destination);
     return true;
   }
@@ -361,17 +386,25 @@ const audio=(()=>{
     source.connect(filter);filter.connect(gain);gain.connect(fxGain);source.start();
   }
 
-  function start(){if(!ensure())return;ctx.resume?.().catch?.(()=>{})}
-  function ui(){tone(310,.025,.016,'triangle',-35)}
-  function interact(){noise(.04,.018,950);tone(185,.055,.018,'sine',35)}
-  function advance(){tone(245,.032,.014,'triangle',18)}
-  function item(){tone(330,.055,.022,'triangle',90);setTimeout(()=>tone(470,.06,.018,'sine',55),42)}
-  function success(){tone(294,.07,.025,'triangle',60);setTimeout(()=>tone(440,.1,.022,'sine',80),64)}
-  function error(){tone(145,.08,.02,'sawtooth',-35)}
+  function wakeSound(){if(wakePlayed||muted||!ctx||ctx.state!=='running')return;wakePlayed=true;tone(360,.055,.045,'triangle',70);setTimeout(()=>tone(520,.07,.035,'sine',40),55)}
+  function start(audible=false){
+    if(!ensure())return Promise.resolve(false);
+    wantsWakeSound=wantsWakeSound||audible;
+    if(ctx.state==='running'){if(wantsWakeSound)wakeSound();return Promise.resolve(true)}
+    if(!resumePromise)resumePromise=Promise.resolve(ctx.resume?.()).then(()=>{resumePromise=null;if(wantsWakeSound)wakeSound();return ctx.state==='running'}).catch(()=>{resumePromise=null;return false});
+    return resumePromise;
+  }
+  function ui(){tone(330,.035,.034,'triangle',-45)}
+  function interact(){noise(.05,.034,1200);tone(195,.065,.032,'sine',45)}
+  function advance(){tone(265,.04,.028,'triangle',22)}
+  function puzzleTick(){tone(420,.035,.032,'square',-55)}
+  function item(){tone(350,.065,.04,'triangle',100);setTimeout(()=>tone(510,.075,.034,'sine',65),48)}
+  function success(){tone(310,.08,.046,'triangle',75);setTimeout(()=>tone(480,.12,.04,'sine',90),72)}
+  function error(){tone(155,.1,.038,'sawtooth',-40)}
 
   function blip(speaker,charCode=0){
     if(charCode%2)return;
-    tone((speakerPitch[speaker]||198)+(charCode%5)*4,.022,.009,'triangle',-8);
+    tone((speakerPitch[speaker]||198)+(charCode%5)*4,.026,.019,'triangle',-8);
   }
 
   function toggle(){
@@ -380,15 +413,16 @@ const audio=(()=>{
     if(master){
       const now=ctx.currentTime;
       master.gain.cancelScheduledValues(now);
-      master.gain.setTargetAtTime(muted?0:.72,now,.02);
+      master.gain.setTargetAtTime(muted?0:.92,now,.02);
     }
-    if(!muted){start();success()}
+    if(!muted){wakePlayed=false;start(true).then(()=>success())}
     return muted;
   }
 
   function resume(){if(ctx&&!muted)ctx.resume?.().catch?.(()=>{})}
   function isMuted(){return muted}
-  return {start,blip,ui,interact,advance,item,success,error,toggle,resume,isMuted};
+  function debug(){return {supported:!!(globalThis.AudioContext||globalThis.webkitAudioContext),state:ctx?.state||'uninitialized',muted,wakePlayed}}
+  return {start,blip,ui,interact,advance,puzzleTick,item,success,error,toggle,resume,isMuted,debug};
 })();
 
 function updateAudioButton(){
@@ -460,7 +494,7 @@ if(globalThis.navigator?.serviceWorker){
 }
 
 function launchGame(action){
-  try{audio.start()}catch{}
+  try{audio.start(true)}catch{}
   try{enterImmersive()}catch{}
   action();
   updateAudioButton();
@@ -532,9 +566,9 @@ function nextLine(){
   if(!item){dialogue.classList.add('hidden');choicesEl.innerHTML='';hideCharacter();const cb=afterDialogue;afterDialogue=null;if(cb)cb();return}
   const [speaker,text]=item; speakerEl.textContent=speaker;showCharacter(speaker);typeText(text)
 }
-function typeText(text){clearInterval(typeTimer);typing=true;currentFullText=text;lineEl.textContent='';choicesEl.innerHTML='';$('#dialogue-hint').textContent='toque para continuar';let i=0;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;if(reduced){finishTyping();return}typeTimer=setInterval(()=>{lineEl.textContent=text.slice(0,++i);const char=text[i-1];if(i%8===0&&char&&/\S/.test(char))audio.blip(speakerEl.textContent,char.charCodeAt(0));if(i>=text.length)finishTyping()},13)}
+function typeText(text){clearInterval(typeTimer);typing=true;currentFullText=text;lineEl.textContent='';choicesEl.innerHTML='';$('#dialogue-hint').textContent='toque para continuar';let i=0;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;if(reduced){finishTyping();return}typeTimer=setInterval(()=>{lineEl.textContent=text.slice(0,++i);const char=text[i-1];if(i%5===0&&char&&/\S/.test(char))audio.blip(speakerEl.textContent,char.charCodeAt(0));if(i>=text.length)finishTyping()},16)}
 function finishTyping(){clearInterval(typeTimer);lineEl.textContent=currentFullText;typing=false}
-function showCharacter(speaker){const map={DANIEL:'daniel',HELENA:'helena',OTÁVIO:'otavio',CAIO:'caio',INVESTIGADORA:'investigadora',TOFFOLI:'toffoli',MENDONÇA:'mendonca',FE:'fe',GANA:'fe','ÁUSTRIA':'fe',BRASIL:'fe',ARGENTINA:'fe','JAPÃO':'fe',ALEMANHA:'fe'};const person=map[speaker];if(!person){hideCharacter();return}character.dataset.person=person;character.className='show '+(['daniel','toffoli','mendonca','fe'].includes(person)?'':'right')}
+function showCharacter(speaker){const map={DANIEL:'daniel',HELENA:'helena',OTÁVIO:'otavio',CAIO:'caio',INVESTIGADORA:'investigadora',TOFFOLI:'toffoli',MENDONÇA:'mendonca'};const person=map[speaker];if(!person){hideCharacter();return}character.dataset.person=person;character.className='show '+(['daniel','toffoli','mendonca'].includes(person)?'':'right')}
 function hideCharacter(){character.className='';}
 
 function updateBadges(){
@@ -546,53 +580,106 @@ function openModal(title,kicker,html){$('#modal-title').textContent=title;$('#mo
 function closeModal(){activePuzzle=null;$('#modal').classList.add('hidden')}
 
 function showPuzzle(puzzle,key,done){
-  const tools=puzzle.tools.filter(tool=>!tool.inventoryId||state.inventory.includes(tool.inventoryId));
-  activePuzzle={puzzle,key,done,tools,completed:[],selectedTool:null,mistakes:0,feedback:''};
+  const design=adventurePuzzles[key];
+  if(!design){throw new Error(`Puzzle visual ausente: ${key}`)}
+  if(design.requiresItem&&!state.inventory.includes(design.requiresItem)){
+    const item=inventoryCatalog[design.requiresItem];
+    openModal('Ainda falta uma peça','EXPLORE O CENÁRIO',`<div class="puzzle-missing"><span>${item.icon}</span><p>Este mecanismo precisa de <b>${item.name}</b>. Ela foi obtida no capítulo anterior; volte ao ponto luminoso principal se o autosave foi interrompido.</p></div>`);
+    return;
+  }
+  const model={};
+  if(design.mode==='mosaic')model.order=[...design.start];
+  if(design.mode==='slider'){
+    model.order=[...design.pieces.map((_,i)=>i),null];
+    for(const value of design.scramble||[]){
+      const from=model.order.indexOf(value),blank=model.order.indexOf(null);
+      if(sliderAdjacent(from,blank,3))[model.order[from],model.order[blank]]=[model.order[blank],model.order[from]];
+    }
+  }
+  if(design.mode==='dials'||design.mode==='cipher')model.positions=design.wheels.map(()=>0);
+  if(design.mode==='circuit')model.rotations=design.pieces.map(piece=>piece[1]);
+  if(design.mode==='switches'){
+    model.cells=Array(design.cols*design.rows).fill(false);
+    for(const index of design.seedMoves||[])toggleLogicCell(model.cells,index,design.cols,design.rows);
+  }
+  activePuzzle={source:puzzle,puzzle:design,key,done,model,selected:null,moves:0,failedChecks:0,feedback:'',hint:false};
   renderPuzzle();
 }
 
-function renderPuzzle(feedback=activePuzzle?.feedback||'Escolha uma ferramenta e use no ponto certo da mesa.'){
+function sliderAdjacent(a,b,cols){return a>=0&&b>=0&&(Math.abs(a-b)===cols||(Math.abs(a-b)===1&&Math.floor(a/cols)===Math.floor(b/cols)))}
+function toggleLogicCell(cells,index,cols,rows){
+  const x=index%cols,y=Math.floor(index/cols);
+  [[x,y],[x-1,y],[x+1,y],[x,y-1],[x,y+1]].forEach(([cx,cy])=>{if(cx>=0&&cx<cols&&cy>=0&&cy<rows){const i=cy*cols+cx;cells[i]=!cells[i]}})
+}
+function circuitGlyph(shape){return shape==='corner'?'┗':shape==='tee'?'┻':'━'}
+function puzzleBody(a){
+  const p=a.puzzle;
+  if(p.mode==='mosaic')return `<div class="mosaic-board" style="--cols:3">${a.model.order.map((piece,cell)=>`<button class="mosaic-piece ${a.selected===cell?'selected':''}" data-puzzle-action="mosaic" data-index="${cell}"><span>${p.pieces[piece]}</span></button>`).join('')}</div><p class="mechanic-note">Toque em dois fragmentos para trocar suas posições.</p>`;
+  if(p.mode==='slider')return `<div class="slider-board">${a.model.order.map((piece,cell)=>piece===null?'<span class="slider-blank"></span>':`<button class="slider-piece" data-puzzle-action="slide" data-index="${cell}"><small>${String(piece+1).padStart(2,'0')}</small><span>${p.pieces[piece]}</span></button>`).join('')}</div><p class="mechanic-note">Só o fragmento ao lado do espaço vazio pode deslizar.</p>`;
+  if(p.mode==='dials'||p.mode==='cipher')return `<div class="dial-machine ${p.mode}">${p.wheels.map((wheel,i)=>`<div class="dial-column"><small>${wheel.label}</small><button data-puzzle-action="wheel" data-index="${i}"><i>▲</i><strong>${wheel.values[a.model.positions[i]]}</strong><i>▼</i></button></div>`).join('')}</div>${p.clue?`<div class="puzzle-clue">${p.clue}</div>`:''}<button class="puzzle-check" data-puzzle-action="check">TESTAR MECANISMO</button>`;
+  if(p.mode==='circuit')return `<div class="circuit-shell"><span class="circuit-port in">ENTRADA</span><div class="circuit-board" style="--cols:${p.cols}">${p.pieces.map((piece,i)=>`<button data-puzzle-action="rotate" data-index="${i}" aria-label="Girar conexão ${i+1}"><span style="transform:rotate(${a.model.rotations[i]*90}deg)">${circuitGlyph(piece[0])}</span></button>`).join('')}</div><span class="circuit-port out">SAÍDA</span></div><p class="mechanic-note">Cada toque gira uma conexão em 90°. Não pode sobrar ponta aberta.</p>`;
+  if(p.mode==='switches')return `<div class="logic-board" style="--cols:${p.cols}">${a.model.cells.map((on,i)=>`<button class="${on?'on':''}" data-puzzle-action="logic" data-index="${i}" aria-label="Bloco ${i+1}"><span></span></button>`).join('')}</div><p class="mechanic-note">Um toque altera o bloco e os vizinhos ortogonais. Apague toda a matriz.</p>`;
+  return '';
+}
+
+function renderPuzzle(feedback=activePuzzle?.feedback||'Observe o mecanismo antes de tocar.'){
   if(!activePuzzle)return;
   const a=activePuzzle,p=a.puzzle;
-  const availableTools=a.tools.filter(tool=>!tool.requires||tool.requires.every(id=>a.completed.includes(id)));
-  const progress=`${a.completed.length}/${p.targets.length}`;
-  openModal(p.title,p.kicker,`<section class="puzzle workbench" data-type="${p.type}"><div class="puzzle-head"><p class="puzzle-prompt">${p.prompt}</p><b>${progress}</b></div><div class="workbench-layout"><div class="puzzle-tools" aria-label="Ferramentas">${availableTools.map(tool=>`<button class="puzzle-tool ${a.selectedTool===tool.id?'selected':''}" data-puzzle-tool="${tool.id}"><span>${tool.icon||'◇'}</span><strong>${tool.label}</strong><small>${tool.inventoryId?'Inventário · ':''}${tool.detail||''}</small></button>`).join('')}</div><div class="puzzle-targets" aria-label="Mesa de trabalho">${p.targets.map(target=>{const done=a.completed.includes(target.id);const locked=(target.requires||[]).some(id=>!a.completed.includes(id));return `<button class="puzzle-target ${done?'done':''} ${locked?'locked':''}" data-puzzle-target="${target.id}" ${done?'disabled':''}><span>${done?'✓':target.icon||'◫'}</span><strong>${target.label}</strong><small>${done?target.result:target.detail}</small></button>`}).join('')}</div></div><p class="puzzle-feedback" aria-live="polite">${feedback}</p><p class="puzzle-instruction">Toque numa ferramenta e depois no objeto em que deseja usá-la.</p></section>`);
-  document.querySelectorAll('[data-puzzle-tool]').forEach(button=>button.onclick=()=>selectPuzzleTool(button.dataset.puzzleTool));
-  document.querySelectorAll('[data-puzzle-target]').forEach(button=>button.onclick=()=>usePuzzleTool(button.dataset.puzzleTarget));
+  openModal(p.title,p.kicker,`<section class="puzzle mechanism" data-mode="${p.mode}"><div class="puzzle-head"><p class="puzzle-prompt">${p.prompt}</p><b>${a.moves} movimentos</b></div>${puzzleBody(a)}<p class="puzzle-feedback" aria-live="polite">${feedback}</p></section>`);
+  document.querySelectorAll('[data-puzzle-action]').forEach(button=>button.onclick=()=>handlePuzzleAction(button.dataset.puzzleAction,Number(button.dataset.index)));
 }
 
-function selectPuzzleTool(id){
+function handlePuzzleAction(action,index){
   if(!activePuzzle)return false;
-  activePuzzle.selectedTool=activePuzzle.selectedTool===id?null:id;audio.ui();
-  const tool=activePuzzle.tools.find(item=>item.id===id);
-  renderPuzzle(tool?`${tool.label} em mãos. Onde isso funciona?`:'');return true;
+  const a=activePuzzle,p=a.puzzle;a.moves++;audio.puzzleTick?.();
+  if(action==='mosaic'){
+    if(a.selected===null)a.selected=index;
+    else if(a.selected===index)a.selected=null;
+    else{[a.model.order[a.selected],a.model.order[index]]=[a.model.order[index],a.model.order[a.selected]];a.selected=null}
+  }
+  if(action==='slide'){
+    const blank=a.model.order.indexOf(null);
+    if(sliderAdjacent(index,blank,3))[a.model.order[index],a.model.order[blank]]=[a.model.order[blank],a.model.order[index]];
+    else{audio.error();a.feedback='Esse fragmento não alcança o espaço vazio.'}
+  }
+  if(action==='wheel'){
+    const wheel=p.wheels[index];a.model.positions[index]=(a.model.positions[index]+1)%wheel.values.length;
+  }
+  if(action==='rotate')a.model.rotations[index]=(a.model.rotations[index]+1)%4;
+  if(action==='logic')toggleLogicCell(a.model.cells,index,p.cols,p.rows);
+  const solved=isAdventureSolved(a);
+  if(action==='check'&&!solved){a.failedChecks++;audio.error();a.feedback=p.mode==='cipher'?'Os cilindros ainda formam uma ordem impossível.':'Um dos mostradores contradiz a pista.'}
+  if(solved&&(action==='check'||!['dials','cipher'].includes(p.mode))){finishActivePuzzle();return true}
+  renderPuzzle(a.feedback||'O mecanismo respondeu. Continue observando o conjunto.');return true;
 }
 
-function usePuzzleTool(targetId){
+function isAdventureSolved(a){
+  const p=a.puzzle,m=a.model;
+  if(p.mode==='mosaic')return m.order.every((piece,i)=>piece===i);
+  if(p.mode==='slider')return m.order.every((piece,i)=>i===m.order.length-1?piece===null:piece===i);
+  if(p.mode==='dials'||p.mode==='cipher')return p.wheels.every((wheel,i)=>wheel.values[m.positions[i]]===wheel.answer);
+  if(p.mode==='circuit')return p.pieces.every((piece,i)=>m.rotations[i]===piece[2]);
+  if(p.mode==='switches')return m.cells.every(cell=>!cell);
+  return false;
+}
+
+function solveAdventurePuzzle(){
   if(!activePuzzle)return false;
-  const a=activePuzzle,target=a.puzzle.targets.find(item=>item.id===targetId);if(!target)return false;
-  const missing=(target.requires||[]).filter(id=>!a.completed.includes(id));
-  if(missing.length){registerPuzzleMistake();audio.error();renderPuzzle(target.locked||'Ainda falta preparar outra parte do mecanismo.');return false}
-  if(!a.selectedTool){audio.error();renderPuzzle('Você precisa escolher o que usar primeiro.');return false}
-  const accepted=Array.isArray(target.accept)?target.accept:[target.accept];
-  if(!accepted.includes(a.selectedTool)){registerPuzzleMistake();audio.error();renderPuzzle(target.wrong||'Isso não reage a essa ferramenta. Observe os detalhes.');return false}
-  a.completed.push(target.id);a.selectedTool=null;audio.item();
-  if(target.grants&&!a.tools.some(tool=>tool.id===target.grants.id))a.tools.push(target.grants);
-  if(a.completed.length===a.puzzle.targets.length){finishActivePuzzle();return true}
-  renderPuzzle(target.result);return true;
-}
-
-function registerPuzzleMistake(){
-  if(!activePuzzle)return;
-  activePuzzle.mistakes++;
+  const a=activePuzzle,p=a.puzzle;
+  if(p.mode==='mosaic')a.model.order=p.pieces.map((_,i)=>i);
+  if(p.mode==='slider')a.model.order=[...p.pieces.map((_,i)=>i),null];
+  if(p.mode==='dials'||p.mode==='cipher')a.model.positions=p.wheels.map(wheel=>wheel.values.indexOf(wheel.answer));
+  if(p.mode==='circuit')a.model.rotations=p.pieces.map(piece=>piece[2]);
+  if(p.mode==='switches')a.model.cells.fill(false);
+  return finishActivePuzzle(true);
 }
 
 function finishActivePuzzle(force=false){
   if(!activePuzzle)return false;
   const a=activePuzzle;
-  if(force)a.completed=a.puzzle.targets.map(target=>target.id);
   state.flags['puzzle_'+a.key]=true;
-  if(!a.mistakes){state.flags['puzzle_clean_'+a.key]=true;state.metrics.trust+=1}
+  if(!a.failedChecks){state.flags['puzzle_clean_'+a.key]=true;state.metrics.trust+=1}
+  if(a.puzzle.rewardItem&&!state.inventory.includes(a.puzzle.rewardItem))addItem(a.puzzle.rewardItem);
   save();const done=a.done,success=a.puzzle.success;activePuzzle=null;$('#modal').classList.add('hidden');audio.success();toast(success);done();return true;
 }
 function openPhone(){state.unread=0;save();const msgs=messagesByScene[state.scene]||[];openModal('Celular','MENSAGENS',`<div class="messages">${msgs.map(m=>`<div class="entry ${m.mine?'mine':'theirs'}"><span class="message-time">${m.from||'Você'} · ${m.time}</span><p>${m.text}</p></div>`).join('')}</div>`)}
@@ -629,7 +716,7 @@ function showCopaEnding(){
 }
 
 dialogue.addEventListener('click',e=>{if(!e.target.closest('.choice'))nextLine()});$('#scene').addEventListener('click',()=>{if(!dialogue.classList.contains('hidden'))nextLine()});
-document.addEventListener('pointerdown',e=>{try{audio.start();if(e.target.closest('button')&&!e.target.closest('.hotspot,.choice,[data-puzzle-tool],[data-puzzle-target],#audio-btn'))audio.ui()}catch{}});
+document.addEventListener('pointerdown',e=>{try{audio.start();if(e.target.closest('button')&&!e.target.closest('.hotspot,.choice,[data-puzzle-action],#audio-btn'))audio.ui()}catch{}});
 $('#new-game').onclick=()=>launchGame(()=>reset('master'));$('#bonus-game').onclick=()=>launchGame(()=>reset('copa'));$('#continue-game').onclick=()=>launchGame(()=>{const saved=load();if(saved){state={...freshState(saved.campaign||'master'),...saved};begin()}});$('#start-sources').onclick=openAbout;
 $('#phone-btn').onclick=openPhone;$('#inventory-btn').onclick=openInventory;$('#dossier-btn').onclick=openDossier;$('#audio-btn').onclick=()=>{try{audio.start();audio.toggle()}catch{}updateAudioButton()};$('#menu-btn').onclick=openMenu;$('#modal-close').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if((e.key===' '||e.key==='Enter')&&!dialogue.classList.contains('hidden'))nextLine()});

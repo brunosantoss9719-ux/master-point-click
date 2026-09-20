@@ -22,4 +22,9 @@
 - [Decisão do STF reunida pelo Poder360, 19/11/2024](https://www.poder360.com.br/poder-justica/leia-a-integra-da-decisao-de-moraes-sobre-operacao-contragolpe-da-pf/) — decisão que embasou a Operação Contragolpe e tornou públicos elementos da investigação.
 - [STF, 18/11/2025](https://noticias.stf.jus.br/postsnoticias/ap-2696-penas-do-nucleo-3-variam-de-um-ano-e-11-meses-a-24-anos-de-prisao/) — julgamento da AP 2696: nove condenações e uma absolvição no Núcleo 3, com penas e enquadramentos distintos.
 
+## Referências de design dos puzzles
+
+- [Rusty Lake — press kit oficial](https://press.rustylake.com/) — point-and-click surrealista, suspense, atmosfera de sala de fuga e mistérios conectados entre capítulos. A reformulação usa narrativa ambiental e mecanismos curtos, não copia arte, personagens ou soluções.
+- [Lost Lands: Dark Overlord — análise de mecânicas](https://acasualreview.wordpress.com/2015/07/18/lost-lands-dark-overlord/) — variedade entre quebra-cabeça deslizante, troca e rearranjo, reparo de mecanismos e criação de itens. A referência levou à substituição da bancada repetida por seis famílias de interação.
+
 Personagens compostos e conversas privadas são dramatização. A leitura de que Toffoli buscava “ferrar” a investigação é sátira jogável, não fato documentado. No arco Mendonça, ordens e datas públicas são separadas das conversas inventadas; citações a autoridades são apresentadas como conteúdo reportado e contestado, nunca como culpa estabelecida. No bônus Copa 2022, os seis personagens são composições ficcionais associadas apenas aos codinomes publicados; o jogo não afirma correspondências individuais não confirmadas e omite locais, meios e procedimentos operacionais. Acusações aparecem com atribuição à investigação e com registro das contestações das defesas.

@@ -26,25 +26,14 @@ const document={querySelector:s=>elements[s]||new Element(),querySelectorAll:()=
 const storage=new Map();
 const sandbox={document,localStorage:{setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k)||null,removeItem:k=>storage.delete(k)},matchMedia:()=>({matches:true}),setTimeout:fn=>{fn();return 1},clearTimeout:()=>{},setInterval:fn=>{fn();return 1},clearInterval:()=>{},console};
 vm.createContext(sandbox);
-const source=fs.readFileSync('app.js','utf8')+'\n;this.__game={getState:()=>state,getQueue:()=>queue,getActivePuzzle:()=>activePuzzle,selectPuzzleTool,usePuzzleTool,scenes,begin,reset,enterScene,nextLine,openPhone,openInventory,openDossier,save,load};';
+const source=fs.readFileSync('app.js','utf8')+'\n;this.__game={getState:()=>state,getQueue:()=>queue,getActivePuzzle:()=>activePuzzle,solveAdventurePuzzle,scenes,begin,reset,enterScene,nextLine,openPhone,openInventory,openDossier,save,load};';
 vm.runInContext(source,sandbox,{filename:'app.js'});
 const g=sandbox.__game;
 
 function drain(){let guard=0;while(!elements['#dialogue'].classList.contains('hidden')&&elements['#choices'].children.length===0&&guard++<80)g.nextLine();if(guard>=80)throw new Error('Diálogo não encerrou')}
 function solvePuzzle(){
   if(!g.getActivePuzzle())return;
-  let guard=0;
-  while(g.getActivePuzzle()&&guard++<30){
-    const active=g.getActivePuzzle();
-    const target=active.puzzle.targets.find(item=>!active.completed.includes(item.id)&&(item.requires||[]).every(id=>active.completed.includes(id)));
-    if(!target)throw new Error(`Puzzle ${active.puzzle.title} ficou sem alvo disponível`);
-    const accepted=Array.isArray(target.accept)?target.accept:[target.accept];
-    const tool=active.tools.find(item=>accepted.includes(item.id)&&(!item.requires||item.requires.every(id=>active.completed.includes(id))));
-    if(!tool)throw new Error(`Puzzle ${active.puzzle.title} ficou sem ferramenta para ${target.id}`);
-    g.selectPuzzleTool(tool.id);
-    if(!g.usePuzzleTool(target.id))throw new Error(`Puzzle ${active.puzzle.title} rejeitou ${tool.id} em ${target.id}`);
-  }
-  if(guard>=30)throw new Error('Puzzle excedeu o limite de ações');
+  if(!g.solveAdventurePuzzle())throw new Error('Puzzle visual recusou a solução de teste');
   if(g.getActivePuzzle())throw new Error('Puzzle permaneceu aberto após a solução');
   drain();
 }
@@ -100,7 +89,7 @@ end=g.getState();
 if(elements['#modal-title'].textContent!=='A CHAVE SEM SENHA')throw new Error('Arco Mendonça não terminou no pedido de ajuda técnica à PF');
 if(end.dossier.length!==17)throw new Error(`Dossiê final incompleto: ${end.dossier.length}`);
 if(Object.keys(end.flags).filter(flag=>flag.startsWith('puzzle_')&&!flag.startsWith('puzzle_clean_')).length!==10)throw new Error('Os 10 puzzles narrativos não foram concluídos');
-if(!storage.has('master-ultima-chamada-v1'))throw new Error('Autosave não foi persistido');
+if(!storage.has('master-ultima-chamada-v2'))throw new Error('Autosave não foi persistido');
 if(endings.size!==3)throw new Error(`Ramificação produziu apenas ${endings.size} finais: ${[...endings].join(', ')}`);
 g.reset('copa');drain();
 for(let scene=12;scene<17;scene++){
@@ -115,4 +104,4 @@ end=g.getState();
 if(elements['#modal-title'].textContent!=='O RASTRO SOBREVIVE')throw new Error('Bônus Copa 2022 não chegou ao epílogo');
 if(end.dossier.length!==9)throw new Error(`Dossiê Copa 2022 incompleto: ${end.dossier.length}`);
 if(Object.keys(end.flags).filter(flag=>flag.startsWith('puzzle_')&&!flag.startsWith('puzzle_clean_')).length!==5)throw new Error('Os 5 puzzles do bônus não foram concluídos');
-console.log(`PASS: 3 rotas Vorcaro + arcos Toffolinho, Mendonça e bônus Copa 2022; 17 cenas; 15 puzzles multietapa; finais ${[...endings].join(' / ')} / A CHAVE MUDA DE MÃO / A CHAVE SEM SENHA / O RASTRO SOBREVIVE; Dossiê e save/continue verificados.`);
+console.log(`PASS: 3 rotas Vorcaro + Toffolinho + Mendonça + Copa 2022; 15 puzzles visuais em 6 mecânicas; cadeia de itens do bônus, finais e save verificados.`);
