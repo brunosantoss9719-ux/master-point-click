@@ -142,11 +142,27 @@ try{
   if(!mendonca||mendonca.person!=='mendonca'||!mendonca.show||!mendonca.background.includes('andre-mendonca.webp'))throw new Error('Arco Mendonça não apareceu: '+JSON.stringify(mendonca));
   await capture(send,'artifacts/mobile-mendonca.png');
 
-  await evaluate(send,"enterScene(12); true");
+  await evaluate(send,"reset('copa'); true");
   await sleep(300);
   const copa=await evaluate(send,"(()=>{const el=document.querySelector('#character');return {portrait:!!el?.classList.contains('show'),scene:document.querySelector('#scene-bg')?.getAttribute('src')||'',line:document.querySelector('#line')?.textContent||''}})()");
   if(copa.portrait||!copa.scene.includes('copa-residence-street.webp'))throw new Error('Bônus deveria abrir na rua e sem fila de retratos: '+JSON.stringify(copa));
   await capture(send,'artifacts/mobile-copa-2022.png');
+
+  for(let i=0;i<12;i++){
+    const hidden=await evaluate(send,"document.querySelector('#dialogue').classList.contains('hidden')");
+    if(hidden)break;
+    await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(60);
+  }
+  await evaluate(send,"document.querySelector('.hotspot.required').click(); true");
+  for(let i=0;i<8;i++){
+    const open=await evaluate(send,"!document.querySelector('#modal').classList.contains('hidden') && document.querySelector('.mechanism')?.dataset.mode==='mosaic'");
+    if(open)break;
+    await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(60);
+  }
+  const copaPuzzle=await evaluate(send,"(()=>({mode:document.querySelector('.mechanism')?.dataset.mode||'',pieces:document.querySelectorAll('.mosaic-piece').length,portrait:document.querySelector('#character')?.classList.contains('show')}))()");
+  if(copaPuzzle.mode!=='mosaic'||copaPuzzle.pieces!==6||copaPuzzle.portrait)throw new Error('Primeiro puzzle do bônus inválido: '+JSON.stringify(copaPuzzle));
+  await capture(send,'artifacts/mobile-copa-puzzle.png');
+  await evaluate(send,"closeModal(); true");
 
   await evaluate(send,"enterScene(8); true");
   await sleep(200);
