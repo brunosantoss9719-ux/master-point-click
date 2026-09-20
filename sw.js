@@ -1,9 +1,9 @@
-const CACHE='master-shell-v11';
+const CACHE='master-shell-v12';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=copa-street-1',
-  './app.js?v=copa-street-1',
+  './styles.css?v=copa-street-2',
+  './app.js?v=copa-street-2',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',
