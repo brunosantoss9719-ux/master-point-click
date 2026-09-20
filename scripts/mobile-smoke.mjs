@@ -144,8 +144,8 @@ try{
 
   await evaluate(send,"reset('copa'); true");
   await sleep(300);
-  const copa=await evaluate(send,"(()=>{const el=document.querySelector('#character');return {portrait:!!el?.classList.contains('show'),scene:document.querySelector('#scene-bg')?.getAttribute('src')||'',line:document.querySelector('#line')?.textContent||''}})()");
-  if(copa.portrait||!copa.scene.includes('copa-residence-street.webp'))throw new Error('Bônus deveria abrir na rua e sem fila de retratos: '+JSON.stringify(copa));
+  const copa=await evaluate(send,"(()=>{const el=document.querySelector('#character');return {portrait:!!el?.classList.contains('show'),scene:document.querySelector('#scene-bg')?.getAttribute('src')||'',speaker:document.querySelector('#speaker')?.textContent||'',line:document.querySelector('#line')?.textContent||''}})()");
+  if(copa.portrait||!copa.scene.includes('copa-residence-street.webp')||copa.speaker!=='NARRADOR'||!copa.line.startsWith('Meia-noite.'))throw new Error('Bônus deveria abrir na rua, sem retrato e com roteiro próprio: '+JSON.stringify(copa));
   await capture(send,'artifacts/mobile-copa-2022.png');
 
   for(let i=0;i<12;i++){

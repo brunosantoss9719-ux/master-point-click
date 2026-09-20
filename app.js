@@ -558,7 +558,7 @@ function showChoices(h,key,finish){
   })
 }
 
-function play(lines,done){queue=[...lines];afterDialogue=done;dialogue.classList.remove('hidden');nextLine()}
+function play(lines,done){clearInterval(typeTimer);typing=false;queue=[...lines];afterDialogue=done;dialogue.classList.remove('hidden');nextLine()}
 function nextLine(){
   if(typing){finishTyping();return}
   if(queue.length)audio.advance();
