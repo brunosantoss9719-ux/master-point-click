@@ -10,15 +10,15 @@ Arquitetura simples: `app.js` contém o motor e UI; `content/master-case.js` con
 
 ## LAST TEST
 
-2026-09-20: `node --check` passou em motor e conteúdo. `npm test` passou: 9 cenas, 21 evidências temporais, fontes, PWA, DOM, rota principal, duas ordens de leads, caminhos alternativos e fail forward. O teste visual local ficou bloqueado porque este executor não possui Chrome/Chromium; não está marcado como PASS visual.
+2026-09-20: `node --check` passou em motor e conteúdo. `npm test` passou: 9 cenas, 21 evidências temporais, fontes, PWA, DOM, rota principal, duas ordens de leads, caminhos alternativos e fail forward. No preview público, o navegador confirmou carregamento, abertura do jogo, descoberta de evidências, hipótese `SUPPORTED`, avanço de cena, persistência após reload e botão Continuar. A captura desktop foi revisada. O teste automatizado nos viewports móveis exatos ficou bloqueado porque o executor local não possui Chrome/Chromium e o navegador conectado não expõe mudança de viewport; não está marcado como PASS mobile.
 
 ## LAST COMMIT
 
-`feat: rebuild Master as investigative thriller` — campanha principal reconstruída com conteúdo separado, Dossiê temporal, hipótese, confronto, fail forward e ramificação convergente.
+`3d06bfa` — correção de hotspots por delegação de eventos sobre o checkpoint `8d38fdd` da campanha investigativa.
 
 ## CURRENT BLOCKERS
 
-- QA visual em navegador real ainda precisa ser concluído em 915×412, landscape menor e retrato.
+- QA visual em navegador real ainda precisa ser concluído em 915×412, landscape menor e retrato; a captura desktop já foi revisada.
 - Playtest humano cego de dificuldade ainda não foi realizado; testes automatizados comprovam lógica, não diversão.
 - O bônus Copa 2022 está preservado, mas temporariamente fora do fluxo jogável principal até adaptação ao novo motor.
 
