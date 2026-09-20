@@ -1,5 +1,5 @@
 const SAVE_KEY = 'master-ultima-chamada-v2';
-const AUDIO_PREF_KEY = 'master-ultima-chamada-audio-muted-v3';
+const AUDIO_PREF_KEY = 'master-ultima-chamada-audio-muted-v4';
 
 const dossier = [
   {id:'brb',tag:'DOCUMENTADO',title:'O anúncio do BRB',text:'Em março de 2025, o BRB anunciou a aquisição de 49% das ações ordinárias e 100% das preferenciais do Master — 58% do capital total — sujeita a aprovações.',source:'Reuters, 29 abr. 2025',url:'https://www.reuters.com/business/finance/brazils-brb-close-completing-due-diligence-acquire-banco-master-2025-04-29/'},
@@ -355,7 +355,7 @@ function readMutedPreference(){
 const audio=(()=>{
   let ctx=null,master=null,fxGain=null,muted=readMutedPreference(),resumePromise=null,wakePlayed=false;
   let mediaPlays=0,mediaFailures=0,lastMediaError='';
-  const mediaFiles={wake:'assets/audio/wake.wav',ui:'assets/audio/ui.wav',interact:'assets/audio/interact.wav',advance:'assets/audio/advance.wav',blip:'assets/audio/blip.wav',success:'assets/audio/success.wav',error:'assets/audio/error.wav'};
+  const mediaFiles={wake:'assets/audio/wake.mp3',ui:'assets/audio/ui.mp3',interact:'assets/audio/interact.mp3',advance:'assets/audio/advance.mp3',blip:'assets/audio/blip.mp3',success:'assets/audio/success.mp3',error:'assets/audio/error.mp3'};
   const mediaPools={};
   const speakerPitch={DANIEL:168,HELENA:214,'OTÁVIO':148,CAIO:244,INVESTIGADORA:184,TOFFOLI:142,MENDONÇA:154,ASSESSORA:206,'CHEFE DE GABINETE':198,DELEGADA:181,FE:158,GANA:142,'ÁUSTRIA':188,BRASIL:166,ARGENTINA:176,'JAPÃO':152,ALEMANHA:136,SISTEMA:118,NARRADOR:126};
 
@@ -749,4 +749,4 @@ $('#new-game').onclick=()=>launchGame(()=>reset('master'));$('#bonus-game').oncl
 $('#phone-btn').onclick=openPhone;$('#inventory-btn').onclick=openInventory;$('#dossier-btn').onclick=openDossier;$('#audio-btn').onclick=()=>{try{audio.start();audio.toggle()}catch{}updateAudioButton()};$('#menu-btn').onclick=openMenu;$('#modal-close').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if((e.key===' '||e.key==='Enter')&&!dialogue.classList.contains('hidden'))nextLine()});
 
-updateAudioButton();const saved=load();if(saved?.started){$('#continue-game').hidden=false}
+updateAudioButton();const saved=load();if(saved?.started){$('#continue-game').hidden=false

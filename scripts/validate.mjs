@@ -1,10 +1,10 @@
 import fs from 'node:fs';
-const audioFiles=['assets/audio/wake.wav','assets/audio/ui.wav','assets/audio/interact.wav','assets/audio/advance.wav','assets/audio/blip.wav','assets/audio/success.wav','assets/audio/error.wav'];
+const audioFiles=['assets/audio/wake.mp3','assets/audio/ui.mp3','assets/audio/interact.mp3','assets/audio/advance.mp3','assets/audio/blip.mp3','assets/audio/success.mp3','assets/audio/error.mp3'];
 const required=['index.html','styles.css','app.js','manifest.webmanifest','sw.js','assets/icon-192.svg','assets/icon-512.svg','assets/office.webp','assets/boardroom.webp','assets/hangar.webp','assets/interview.webp','assets/characters.webp','assets/toffoli.webp','assets/stf-office.webp','assets/andre-mendonca.webp','assets/pf-lab.webp','assets/copa-2022-operatives.webp','assets/copa-residence-street.webp','assets/copa-civic-avenue.webp','assets/copa-abort-road.webp',...audioFiles,'AGENTS.md','PROJECT_STATE.md','SOURCES.md','STORY.md','ART_BIBLE.md'];
 const missing=required.filter(f=>!fs.existsSync(f));
 if(missing.length){console.error('Arquivos ausentes:',missing.join(', '));process.exit(1)}
-const invalidAudio=audioFiles.filter(file=>fs.readFileSync(file).subarray(0,4).toString()!=='RIFF');
-if(invalidAudio.length){console.error('Arquivos WAV inválidos:',invalidAudio.join(', '));process.exit(1)}
+const invalidAudio=audioFiles.filter(file=>fs.statSync(file).size<1000||fs.readFileSync(file).subarray(0,3).toString()!=='ID3');
+if(invalidAudio.length){console.error('Arquivos MP3 inválidos:',invalidAudio.join(', '));process.exit(1)}
 const js=fs.readFileSync('app.js','utf8');
 const html=fs.readFileSync('index.html','utf8');
 const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
@@ -18,6 +18,6 @@ const iconSizes=new Set((manifest.icons||[]).map(icon=>icon.sizes));
 if(!iconSizes.has('192x192')||!iconSizes.has('512x512')){console.error('Ícones PWA obrigatórios ausentes');process.exit(1)}
 if(!html.includes('rel="manifest"')||!html.includes('id="bonus-game"')||html.includes('id="rotate"')){console.error('Entrada PWA/bônus/rotação inválida');process.exit(1)}
 if(!js.includes('requestFullscreen')||!js.includes("orientation.lock('landscape')")||!js.includes('serviceWorker.register')){console.error('Modo imersivo incompleto');process.exit(1)}
-if(!js.includes('audio.blip')||!js.includes('audio.interact')||!js.includes('audio.puzzleTick')||!js.includes('audio.success')||!js.includes('wakeSound')||!js.includes("new globalThis.Audio(mediaFiles[name])")||!html.includes('assets/audio/wake.wav')||js.includes('scheduleChord')||js.includes('startAmbience')){console.error('Efeitos pontuais/arquivos reais/desbloqueio de áudio ausentes ou música contínua ainda presente');process.exit(1)}
+if(!js.includes('audio.blip')||!js.includes('audio.interact')||!js.includes('audio.puzzleTick')||!js.includes('audio.success')||!js.includes('wakeSound')||!js.includes("new globalThis.Audio(mediaFiles[name])")||!html.includes('assets/audio/wake.mp3')||js.includes('scheduleChord')||js.includes('startAmbience')){console.error('Efeitos pontuais/arquivos reais/desbloqueio de áudio ausentes ou música contínua ainda presente');process.exit(1)}
 if(js.includes('data-puzzle-tool')||js.includes('data-puzzle-target')||js.includes('Ligue cada')){console.error('Interface antiga de ferramenta/alvo ainda está ativa');process.exit(1)}
 console.log(`OK: ${scenes} cenas, ${puzzles} puzzles em ${mechanisms.length} mecanismos, campanha bônus Copa 2022, ${endings} finais principais, PWA fullscreen landscape e áudio desbloqueável.`);
