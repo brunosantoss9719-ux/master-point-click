@@ -7,13 +7,13 @@ Direção visual em pixel art/cartum detalhado. A nova bancada usa duas áreas r
 
 O jogo permanece uma PWA instalável em tela cheia e landscape preferencial, com fallback jogável em retrato. A música, o baixo, a batida e o ruído contínuo foram removidos. Restaram somente efeitos procedurais discretos de interface, cenário, avanço de fala, digitação espaçada, item, erro e solução; o controle agora se chama `Efeitos`.
 
-Preview do código integrado: será atualizado após o commit desta reformulação.
+Preview do código integrado: https://raw.githack.com/brunosantoss9719-ux/master-point-click/d136408369e27ecbfcb0c654b6fbb322b698199d/index.html
 
 ## LAST TEST
-2026-09-20: `npm test` resolveu os 10 novos puzzles pelas dependências e ferramentas reais, percorreu 3 rotas Vorcaro e os arcos Toffolinho e Mendonça completos, preservando 5 encerramentos, 17 entradas de Dossiê, inventário e save/Continuar. A validação visual local aguarda o Chrome disponível no CI.
+2026-09-20: QA run 32 (`35482030644`) passou no commit `d136408369e27ecbfcb0c654b6fbb322b698199d`. `npm test` resolveu os 10 novos puzzles pelas dependências e ferramentas reais, percorreu 3 rotas Vorcaro e os arcos Toffolinho e Mendonça completos, preservando 5 encerramentos, 17 entradas de Dossiê, inventário e save/Continuar. O Chrome headless validou a nova bancada em landscape 915×412 e retrato 412×915, além de service worker, personagens e cenas. As capturas foram revisadas sem corte de ferramentas, alvos ou instruções.
 
 ## LAST COMMIT
-Pendente: reformulação de puzzles, diálogos e áudio.
+d136408369e27ecbfcb0c654b6fbb322b698199d (10 puzzles multietapa, diálogos enxutos, efeitos pontuais sem música e shell PWA v9).
 
 ## CURRENT BLOCKERS
 Nenhum bloqueador funcional conhecido. A experiência instalada em um aparelho Android físico ainda precisa de conferência manual.
