@@ -33,3 +33,8 @@
 
 @media (orientation:portrait) and (max-width:900px){#character[data-person="daniel"] .sprite,#character[data-person="toffoli"] .sprite,#character[data-person="mendonca"] .sprite{background-size:contain;background-position:center bottom}#character[data-person="toffoli"],#character[data-person="mendonca"]{width:62vw;height:52vh;bottom:26vh;left:-5vw}.workbench-layout{grid-template-columns:1fr}.puzzle-tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (orientation:landscape) and (max-height:520px){.modal-panel{max-height:96vh}.modal-panel header{padding:.45rem .75rem}.modal-panel header h2{font-size:1rem}#modal-body{max-height:calc(96vh - 3.4rem);padding:.55rem .75rem}.puzzle-prompt{margin-bottom:.4rem;font-size:.76rem}.workbench-layout{gap:.55rem}.puzzle-tools,.puzzle-targets{gap:.35rem;padding:.4rem}.puzzle-tool,.puzzle-target{min-height:3rem;padding:.35rem .45rem}.puzzle-feedback{margin:.4rem 0 .15rem}.puzzle-instruction{display:none}}
+
+.start-actions .bonus{border-color:#4e8f79!important;color:#c9ffe9;background:linear-gradient(135deg,rgba(8,39,34,.92),rgba(6,14,25,.88))!important}
+#character[data-person="fe"]{width:min(48vw,42rem);height:min(72vh,42rem);bottom:16vh;left:1vw}
+#character[data-person="fe"] .sprite{background-image:url('assets/copa-2022-operatives.webp');background-size:contain;background-position:center bottom;background-repeat:no-repeat}
+@media (orientation:portrait) and (max-width:900px){#character[data-person="fe"]{width:92vw;height:50vh;bottom:27vh;left:4vw}#character[data-person="fe"] .sprite{background-size:contain;background-position:center bottom}}

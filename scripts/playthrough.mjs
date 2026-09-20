@@ -19,7 +19,7 @@ class Element {
   addEventListener(){ }
   closest(){return null}
 }
-const selectors=['#start-screen','#game-screen','#dialogue','#line','#speaker','#choices','#character','#toast','#scene-bg','#scene-tint','#chapter','#date','#hotspots','#phone-badge','#dossier-count','#modal-title','#modal-kicker','#modal-body','#modal','#new-game','#continue-game','#start-sources','#phone-btn','#inventory-btn','#dossier-btn','#menu-btn','#modal-close','#scene','#dialogue-hint'];
+const selectors=['#start-screen','#game-screen','#dialogue','#line','#speaker','#choices','#character','#toast','#scene-bg','#scene-tint','#chapter','#date','#hotspots','#phone-badge','#dossier-count','#modal-title','#modal-kicker','#modal-body','#modal','#new-game','#bonus-game','#continue-game','#start-sources','#phone-btn','#inventory-btn','#dossier-btn','#audio-btn','#menu-btn','#modal-close','#scene','#dialogue-hint'];
 const elements=Object.fromEntries(selectors.map(s=>[s,new Element(s==='#dialogue'||s==='#modal'?'hidden':'')]));
 elements['#start-screen'].classList.add('active');
 const document={querySelector:s=>elements[s]||new Element(),querySelectorAll:()=>[],createElement:()=>new Element(),addEventListener:()=>{}};
@@ -102,4 +102,17 @@ if(end.dossier.length!==17)throw new Error(`Dossiê final incompleto: ${end.doss
 if(Object.keys(end.flags).filter(flag=>flag.startsWith('puzzle_')&&!flag.startsWith('puzzle_clean_')).length!==10)throw new Error('Os 10 puzzles narrativos não foram concluídos');
 if(!storage.has('master-ultima-chamada-v1'))throw new Error('Autosave não foi persistido');
 if(endings.size!==3)throw new Error(`Ramificação produziu apenas ${endings.size} finais: ${[...endings].join(', ')}`);
-console.log(`PASS: 3 rotas Vorcaro + arcos Toffolinho e Mendonça; 12 cenas; 10 puzzles multietapa; finais ${[...endings].join(' / ')} / A CHAVE MUDA DE MÃO / A CHAVE SEM SENHA; Dossiê e save/continue verificados.`);
+g.reset('copa');drain();
+for(let scene=12;scene<17;scene++){
+  if(g.getState().scene!==scene)throw new Error(`Esperava cena Copa 2022 ${scene}, recebeu ${g.getState().scene}`);
+  const sceneData=g.scenes[scene];
+  const optional=sceneData.hotspots.findIndex(h=>!h.required);
+  const required=sceneData.hotspots.findIndex(h=>h.required);
+  clickHotspot(optional);
+  clickHotspot(required,scene%2);
+}
+end=g.getState();
+if(elements['#modal-title'].textContent!=='O RASTRO SOBREVIVE')throw new Error('Bônus Copa 2022 não chegou ao epílogo');
+if(end.dossier.length!==9)throw new Error(`Dossiê Copa 2022 incompleto: ${end.dossier.length}`);
+if(Object.keys(end.flags).filter(flag=>flag.startsWith('puzzle_')&&!flag.startsWith('puzzle_clean_')).length!==5)throw new Error('Os 5 puzzles do bônus não foram concluídos');
+console.log(`PASS: 3 rotas Vorcaro + arcos Toffolinho, Mendonça e bônus Copa 2022; 17 cenas; 15 puzzles multietapa; finais ${[...endings].join(' / ')} / A CHAVE MUDA DE MÃO / A CHAVE SEM SENHA / O RASTRO SOBREVIVE; Dossiê e save/continue verificados.`);

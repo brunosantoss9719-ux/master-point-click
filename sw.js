@@ -1,9 +1,9 @@
-const CACHE='master-shell-v9';
+const CACHE='master-shell-v11';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=adventure-puzzles-1',
-  './app.js?v=adventure-puzzles-1',
+  './styles.css?v=copa-street-1',
+  './app.js?v=copa-street-1',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',
@@ -15,6 +15,10 @@ const SHELL=[
   './assets/stf-office.webp',
   './assets/andre-mendonca.webp',
   './assets/pf-lab.webp',
+  './assets/copa-2022-operatives.webp',
+  './assets/copa-residence-street.webp',
+  './assets/copa-civic-avenue.webp',
+  './assets/copa-abort-road.webp',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/icon-192.svg',

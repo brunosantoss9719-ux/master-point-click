@@ -1,6 +1,6 @@
 # MASTER — Última Chamada
 
-Jogo narrativo point-and-click 2D sobre a crise do Banco Master. Jogue em landscape.
+Jogo narrativo point-and-click 2D sobre a crise do Banco Master, com a campanha bônus **Copa 2022** baseada em registros públicos sobre o plano “Punhal Verde e Amarelo”. Jogue em landscape.
 
 ```bash
 npm start

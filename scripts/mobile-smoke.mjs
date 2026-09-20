@@ -55,7 +55,7 @@ async function capture(send,file){
 
 async function waitForDom(send){
   for(let i=0;i<80;i++){
-    const ready=await evaluate(send,"document.readyState==='complete' && !!document.querySelector('#new-game')");
+    const ready=await evaluate(send,"document.readyState==='complete' && !!document.querySelector('#new-game') && !!document.querySelector('#bonus-game')");
     if(ready)return;
     await sleep(100);
   }
@@ -135,6 +135,20 @@ try{
   }
   if(!mendonca||mendonca.person!=='mendonca'||!mendonca.show||!mendonca.background.includes('andre-mendonca.webp'))throw new Error('Arco Mendonça não apareceu: '+JSON.stringify(mendonca));
   await capture(send,'artifacts/mobile-mendonca.png');
+
+  await evaluate(send,"enterScene(12); true");
+  await sleep(300);
+  let copa=null;
+  for(let i=0;i<8;i++){
+    copa=await evaluate(send,"(()=>{const el=document.querySelector('#character');const sprite=el?.querySelector('.sprite');return {person:el?.dataset.person||'',show:!!el?.classList.contains('show'),background:sprite?getComputedStyle(sprite).backgroundImage:'',scene:document.querySelector('#scene-bg')?.getAttribute('src')||''}})()");
+    if(copa.person==='fe'&&copa.show&&copa.background.includes('copa-2022-operatives.webp')&&copa.scene.includes('copa-residence-street.webp'))break;
+    await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(160);
+  }
+  if(!copa||copa.person!=='fe'||!copa.show||!copa.background.includes('copa-2022-operatives.webp')||!copa.scene.includes('copa-residence-street.webp'))throw new Error('Bônus Copa 2022 não apareceu: '+JSON.stringify(copa));
+  await capture(send,'artifacts/mobile-copa-2022.png');
+
+  await evaluate(send,"enterScene(8); true");
+  await sleep(200);
 
   for(let i=0;i<14;i++){
     const hidden=await evaluate(send,"document.querySelector('#dialogue').classList.contains('hidden')");

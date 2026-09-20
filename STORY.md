@@ -29,6 +29,16 @@ Puzzles do arco: operar uma fechadura de acesso em três camadas, preparar fisic
 
 Puzzles do arco: configurar permissões da PF num terminal, trabalhar mensagens numa estação forense, descobrir qual decisão permanece operante pela mesa de protocolo e diagnosticar a cópia criptografada até identificar a chave ausente. O arco termina no estado documentado em 19 de setembro de 2026; o conflito permanecia aberto.
 
+## Bônus — Punhal Verde e Amarelo
+
+13. **A Reunião (8–12/11/2022):** do lado de fora de uma residência funcional, um FE ficcional reconstrói as mensagens preparatórias, a impressão do documento “Punhal Verde e Amarelo” e a reunião situada pela acusação em 12 de novembro.
+14. **Seis Linhas (8–9/12/2022):** já na rua, seis operadores compostos aparecem sob os codinomes Alemanha, Argentina, Áustria, Brasil, Gana e Japão; o jogador monta o quadro do grupo “Copa 2022” sem fabricar as duas identidades que as fontes públicas não fecham.
+15. **Um Mês em Campo (novembro–14/12/2022):** mensagens, sinais, mapas da PF e diligências posteriores são cruzados para estabelecer continuidade do monitoramento, sempre em zonas abstratas.
+16. **15 de Dezembro:** a equipe está nas ruas; um sinal aparece perto do STF, outro em deslocamento e outro numa região residencial. O quadro diferencia posição de autorização.
+17. **20h59:** a pergunta das 20h57, a ordem de abortar das 20h59, o retorno ao ponto de desembarque e o fechamento do grupo encerram a operação. “Cancelamento do jogo” aparece apenas como a expressão codificada reportada pela investigação.
+
+O epílogo salta para a Operação Contragolpe, em 2024, e para o julgamento do Núcleo 3, em 2025. Endereços, rotas e procedimentos operacionais são deliberadamente omitidos. Os cinco puzzles tratam de cronologia preparatória, limites da identificação, continuidade do monitoramento, estados da equipe em campo e reconstrução do cancelamento.
+
 ## Ritmo e interação
 
-Os 10 puzzles usam bancadas multietapa: o jogador escolhe ferramentas, manipula documentos, aparelhos, lacres, terminais e mecanismos, e recebe mudanças visíveis a cada ação. Os diálogos de abertura foram reduzidos; fatos extensos ficam no Dossiê e a investigação acontece principalmente pelo cenário.
+Os 15 puzzles usam bancadas multietapa: o jogador escolhe ferramentas, manipula documentos, aparelhos, lacres, terminais e mecanismos, e recebe mudanças visíveis a cada ação. Os diálogos de abertura foram reduzidos; fatos extensos ficam no Dossiê e a investigação acontece principalmente pelo cenário.

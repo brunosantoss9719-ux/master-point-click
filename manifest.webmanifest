@@ -2,7 +2,7 @@
   "id": "./",
   "name": "MASTER — Última Chamada",
   "short_name": "MASTER",
-  "description": "Jogo narrativo point-and-click sobre o caso Banco Master.",
+  "description": "Jogo narrativo point-and-click sobre o caso Banco Master, com o bônus Copa 2022.",
   "lang": "pt-BR",
   "start_url": "./",
   "scope": "./",
