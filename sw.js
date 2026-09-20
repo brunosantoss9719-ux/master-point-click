@@ -1,9 +1,9 @@
-const CACHE='master-investigation-v1';
+const CACHE='master-audio-comfort-v1';
 const SHELL=[
   './',
   './index.html',
   './styles.css?v=investigation-1',
-  './app.js?v=investigation-1',
+  './app.js?v=audio-comfort-1',
   './content/sources.js?v=investigation-1',
   './content/master-case.js?v=investigation-1',
   './manifest.webmanifest',

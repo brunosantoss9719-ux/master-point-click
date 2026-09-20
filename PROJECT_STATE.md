@@ -10,11 +10,11 @@ Arquitetura simples: `app.js` contém o motor e UI; `content/master-case.js` con
 
 ## LAST TEST
 
-2026-09-20: `node --check` passou em motor e conteúdo. `npm test` passou: 9 cenas, 21 evidências temporais, fontes, PWA, DOM, rota principal, duas ordens de leads, caminhos alternativos e fail forward. No preview público, o navegador confirmou carregamento, abertura do jogo, descoberta de evidências, hipótese `SUPPORTED`, avanço de cena, persistência após reload e botão Continuar. A captura desktop foi revisada. O teste automatizado nos viewports móveis exatos ficou bloqueado porque o executor local não possui Chrome/Chromium e o navegador conectado não expõe mudança de viewport; não está marcado como PASS mobile.
+2026-09-20: `node --check` e `npm test` passaram após a troca sonora. A validação confirma filtro passa-baixas, efeitos distintos e ausência dos antigos disparos agudos. As 9 cenas, 21 evidências, PWA, rotas alternativas e fail forward continuam íntegros. O cache foi alterado para `master-audio-comfort-v1`, evitando que a PWA mantenha o `app.js` sonoro anterior.
 
 ## LAST COMMIT
 
-`3d06bfa` — correção de hotspots por delegação de eventos sobre o checkpoint `8d38fdd` da campanha investigativa.
+`fix: soften procedural audio palette` — paleta procedural grave e filtrada, com atualização do cache PWA.
 
 ## CURRENT BLOCKERS
 

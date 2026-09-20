@@ -28,4 +28,4 @@ Pessoas reais não aparecem como avatares controláveis na campanha. Assets anti
 
 - Dossiê: papel escuro, etiquetas pequenas e metadados; não interpreta automaticamente conexões.
 - Hipótese: seleção por toque de evidência A/B/C; nunca drag obrigatório.
-- Áudio: Web Audio procedural curto para gesto inicial, diálogo, evidência, contradição e conclusão. Sem música/ambiência contínua; falha de áudio nunca bloqueia o jogo.
+- Áudio: Web Audio procedural curto, grave e acolhedor. Senoides e triângulos filtrados em low-pass, ataques macios e caudas curtas para gesto inicial, diálogo, evidência, contradição e conclusão. A referência é a sensação confortável de um café noturno, sem copiar efeitos de `Coffee Talk`. Sem música/ambiência contínua; falha de áudio nunca bloqueia o jogo.
