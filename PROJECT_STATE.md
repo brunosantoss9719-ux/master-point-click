@@ -29,21 +29,22 @@ Chave `master-investigation-v2`: cena, evidências, inspeções, conclusões, fa
 
 ## LAST VERIFIED STATE
 
-20/09/2026 — campanha v2 implementada; fluxo e dados validados. Passe final no preview publicado pendente.
+20/09/2026 — campanha v2 implementada e percorrida no preview publicado até o final. Objetos por toque, dedução exagerada + correção, fail forward da oitiva, save/reload/Continuar, Dossiê, convergência e retomada do final passaram. Controle de som alternou sem erro de página.
 
 ## LAST TEST
 
-`npm test` — PASS: 9 cenas, 26 evidências, 8 mecânicas, firewall temporal, áudio/PWA, rotas alternativas e convergência.
+`npm test` — PASS: 9 cenas, 26 evidências, 8 mecânicas, firewall temporal, áudio/PWA, rotas alternativas e convergência. Browser: rota A Turma → Os Meninos → final PASS; save/reload e final retomável PASS.
 
 ## LAST COMMIT
 
-A preencher após checkpoint desta reformulação.
+`eb741e9b9f9be818ee8816968e459c14f61dfc53` — último commit de código percorrido integralmente no preview. Este documento registra o QA posterior.
 
 ## CURRENT BLOCKERS
 
-- Playtest humano cego ainda necessário.
+- Playtest humano cego ainda necessário para calibrar diversão e dificuldade.
+- O navegador de QA conectado não oferece mudança de viewport; o passe visual mobile exato por screenshot continua pendente, sem falso PASS.
 - Bônus Copa 2022 preservado fora do fluxo principal.
 
 ## NEXT REAL
 
-Publicar checkpoint, executar no preview em landscape 915×412, landscape menor e retrato, corrigir falhas e registrar commit final.
+Executar playtest humano cego e passe visual em aparelho/viewport móvel real; ajustar somente problemas observados.
