@@ -34,12 +34,9 @@ const scenes = [
   {
     chapter:'CAPÍTULO I · A PONTE', date:'28 MAR 2025 · SÃO PAULO', bg:'assets/office.webp', tint:'rgba(22,10,52,.18)',
     intro:[
-      ['NARRADOR','A chuva transforma São Paulo num balanço ilegível. Dentro do escritório, o futuro tem assinatura e cláusula suspensiva.'],
-      ['CAIO','O BRB anunciou. Cinquenta e oito por cento do capital total. A imprensa já chama de salvamento.'],
-      ['DANIEL','Aquisição. “Salvamento” é palavra de quem não cobra assessoria.'],
-      ['HELENA','Também é palavra de quem leu os CDBs, Daniel.'],
-      ['DANIEL','Então vamos dar a eles outra palavra.'],
-      ['NARRADOR','Examine a sala. O telefone dourado encerra a cena quando você estiver pronto.']
+      ['NARRADOR','Chove sobre São Paulo. Na mesa, uma compra anunciada — e ainda não concluída.'],
+      ['CAIO','O BRB confirmou os 58%. A imprensa chama de salvamento.'],
+      ['DANIEL','Então precisamos de uma palavra melhor.']
     ],
     hotspots:[
       {id:'tv',label:'Televisão',x:8,y:24,dossier:'brb',lines:[['REPÓRTER NA TV','O acordo depende de autorizações e ainda passará pelo Banco Central.'],['DANIEL','Na televisão, toda condição parece uma sentença.']]},
@@ -47,8 +44,8 @@ const scenes = [
         {text:'Mostrar tudo ao conselho.',effects:{trust:2,exposure:1},flag:'abriu_pasta',reply:[['DANIEL','Sem surpresa interna. Se doer, dói na mesa.'],['HELENA','Vou registrar que foi sua decisão.']]},
         {text:'Circular só o resumo executivo.',effects:{trust:-1,pressure:-1},flag:'resumo',reply:[['DANIEL','Menos páginas, menos interpretações.'],['HELENA','Ou menos testemunhas.']]}
       ]},
-      {id:'janela',label:'A cidade',x:48,y:31,lines:[['DANIEL','Lá embaixo, cada janela acesa acredita que o banco é uma coisa sólida.'],['CAIO','E aqui em cima?'],['DANIEL','Aqui a iluminação é melhor.']]},
-      {id:'telefone',label:'Telefone dourado',x:79,y:55,required:true,dossier:'modelo',lines:[['OTÁVIO','Daniel. Antes de falar com o mercado, separe o que foi fechado do que ainda é promessa.']],puzzle:{type:'select',title:'A cláusula suspensiva',kicker:'PUZZLE · LEITURA DO ACORDO',prompt:'Marque somente o que ainda dependia de aprovação em 28 de março.',options:[{text:'Aval do Banco Central',correct:true},{text:'Autorizações societárias e legislativas',correct:true},{text:'O anúncio público dos 58%',correct:false},{text:'A escolha do nome “Banco Master”',correct:false}],success:'O anúncio era fato. A conclusão da compra, não.'},choices:[
+      {id:'janela',label:'A cidade',x:48,y:31,lines:[['CAIO','Lá embaixo, todo mundo acha que banco é uma coisa sólida.'],['DANIEL','A distância ajuda.']]},
+      {id:'telefone',label:'Telefone dourado',x:79,y:55,required:true,dossier:'modelo',lines:[['OTÁVIO','A imprensa espera. Primeiro descubra o que este contrato realmente permite dizer.']],puzzle:{type:'document',title:'A cláusula suspensiva',kicker:'MESA DE CONTRATOS',prompt:'A minuta está incompleta. Abra a pasta, revele as condições e prepare a única nota que não mente sobre o estágio do negócio.',tools:[{id:'abre-carta',icon:'⌁',label:'Abre-cartas',detail:'A lâmina cabe no fecho interno.'},{id:'lente',icon:'⌕',label:'Lente de mesa',detail:'Destaca tinta e notas quase apagadas.'},{id:'carimbo',icon:'▣',label:'Carimbo “condicionado”',detail:'Marca anúncio que ainda depende de aprovação.'}],targets:[{id:'fecho',icon:'▤',label:'Fecho oculto da pasta',detail:'Há uma lingueta sob o couro.',accept:'abre-carta',result:'O fundo falso libera o anexo societário.',grants:{id:'anexo',icon:'▧',label:'Anexo societário',detail:'Lista as autorizações ainda pendentes.'}},{id:'rodape',icon:'⌕',label:'Rodapé desbotado',detail:'Uma linha foi impressa quase sem tinta.',accept:'lente',requires:['fecho'],result:'A lente revela: conclusão sujeita ao Banco Central.'},{id:'minuta',icon:'▥',label:'Encaixe da minuta',detail:'Falta a página que define as condições.',accept:'anexo',requires:['fecho'],result:'O anexo confirma as aprovações societárias e legislativas.'},{id:'nota',icon:'□',label:'Nota ao mercado',detail:'O anúncio está escrito como negócio concluído.',accept:'carimbo',requires:['rodape','minuta'],result:'A nota agora separa anúncio público de compra concluída.'}],success:'Contrato reconstruído. O anúncio existia; a conclusão ainda tinha portas pela frente.'},choices:[
         {text:'“É expansão, não resgate.”',effects:{exposure:2,trust:-1},flag:'discurso_expansao',reply:[['DANIEL','Prepara a nota. Ambição cabe melhor na manchete que urgência.'],['CAIO','E se perguntarem sobre liquidez?'],['DANIEL','Fale sobre futuro. O futuro não apresenta extrato.']]},
         {text:'Não alimentar a imprensa.',effects:{exposure:-1,pressure:1,trust:1},flag:'silencio_marco',reply:[['DANIEL','Hoje, silêncio. Amanhã, números.'],['OTÁVIO','Silêncio também publica uma versão. Só não é a nossa.']]}
       ],advance:true}
@@ -59,15 +56,13 @@ const scenes = [
     intro:[
       ['NARRADOR','Cinco meses depois, a ponte termina numa sala vazia.'],
       ['CAIO','Chegou a decisão. O Banco Central rejeitou a compra.'],
-      ['DANIEL','Rejeitou esta compra. Há diferença.'],
-      ['HELENA','A diferença pode caber numa nova proposta. O problema é o que não cabe mais no tempo.'],
-      ['OTÁVIO','O mercado abre em menos de doze horas. E ele não lê nota de rodapé.']
+      ['OTÁVIO','O mercado abre em doze horas.']
     ],
     hotspots:[
-      {id:'relogio',label:'Relógio',x:82,y:14,lines:[['NARRADOR','22h17. No mercado financeiro, o tempo não passa: vence.'],['DANIEL','Ainda temos uma noite inteira.'],['HELENA','Essa frase nunca melhora uma noite.']]},
-      {id:'agua',label:'Copo d’água',x:66,y:69,lines:[['OTÁVIO','Você não tocou na água.'],['DANIEL','Ela não vai a lugar nenhum.'],['OTÁVIO','Exatamente.']]},
-      {id:'xandao_tv',label:'Xandão na TV',x:91,y:26,dossier:'veto',lines:[['CAIO','A ação do BRB caiu. A notícia correu antes da explicação.'],['NARRADOR','Na TV sem som, Alexandre de Moraes encara o plenário — e, por tabela, a sala.'],['CAIO','O Xandão está olhando para cá ou é impressão?'],['DANIEL','Em Brasília, até a televisão participa da reunião.'],['NARRADOR','Participação satírica. Nenhuma fala foi atribuída a Moraes nesta cena.']]},
-      {id:'envelope',label:'Decisão do BC',x:49,y:77,required:true,dossier:'liminar',lines:[['HELENA','A decisão não veio com espaço para otimismo.'],['OTÁVIO','Antes de responder, reconstrua como chegamos até esta porta.']],puzzle:{type:'order',title:'Três batidas na porta',kicker:'PUZZLE · CRONOLOGIA',prompt:'Toque nos acontecimentos do primeiro ao último.',options:[{id:'veto',text:'3 SET · Banco Central rejeita a operação'},{id:'anuncio',text:'28 MAR · BRB anuncia a aquisição'},{id:'liminar',text:'7 MAI · Justiça impede a assinatura definitiva'}],solution:['anuncio','liminar','veto'],success:'Anúncio, trava judicial, veto regulatório. A ponte encolheu nessa ordem.'},choices:[
+      {id:'relogio',label:'Relógio',x:82,y:14,lines:[['NARRADOR','22h17. O mercado abre em menos de doze horas.']]},
+      {id:'agua',label:'Copo d’água',x:66,y:69,lines:[['OTÁVIO','Você não tocou na água.'],['DANIEL','Ela pode esperar.']]},
+      {id:'xandao_tv',label:'Xandão na TV',x:91,y:26,dossier:'veto',lines:[['NARRADOR','Na TV sem som, Alexandre de Moraes ocupa o plenário. Participação satírica; nenhuma fala é atribuída a ele.'],['DANIEL','Em Brasília, até a televisão participa da reunião.']]},
+      {id:'envelope',label:'Decisão do BC',x:49,y:77,required:true,dossier:'liminar',lines:[['HELENA','A decisão veio desmontada pelo triturador de segurança. Remonte o que ainda produz efeito.']],puzzle:{type:'reconstruction',title:'A porta fechada',kicker:'RECONSTRUÇÃO DOCUMENTAL',prompt:'Os papéis misturaram anúncio, liminar e veto. Recupere o documento que encerrou esta versão do negócio.',tools:[{id:'luz',icon:'☼',label:'Luz rasante',detail:'Revela marcas d’água e vincos coincidentes.'},{id:'fita',icon:'═',label:'Fita de arquivo',detail:'Une fragmentos sem cobrir a impressão.'},{id:'protocolo',icon:'▦',label:'Carimbo do protocolo',detail:'Registra a peça restaurada.'}],targets:[{id:'fragmentos',icon:'▱',label:'Fragmentos sobrepostos',detail:'As bordas parecem iguais; o papel, não.',accept:'luz',result:'A marca d’água separa o veto dos papéis antigos.',grants:{id:'veto-folhas',icon:'▱',label:'Folhas do veto',detail:'Três partes do documento de 3 de setembro.'}},{id:'mesa',icon:'▥',label:'Mesa de recomposição',detail:'O espaço vazio corresponde às três folhas.',accept:'veto-folhas',requires:['fragmentos'],result:'As páginas se encaixam; falta estabilizar as emendas.'},{id:'emendas',icon:'⌁',label:'Emendas abertas',detail:'O texto ainda se desfaz ao levantar.',accept:'fita',requires:['mesa'],result:'O veto volta a ser um documento legível.'},{id:'registro',icon:'▣',label:'Livro de protocolo',detail:'Sem registro, é apenas papel reconstruído.',accept:'protocolo',requires:['emendas'],result:'3 SET 2025. Operação rejeitada pelo Banco Central.'}],success:'O veto foi restaurado e protocolado. Esta estrutura da compra terminou aqui.'},choices:[
         {text:'Divulgar uma nota neutra e procurar outro comprador.',effects:{trust:1,pressure:1},flag:'nota_neutra',reply:[['DANIEL','Sem ataque. Sem rendição. Digam que avaliamos alternativas.'],['CAIO','Uma frase que parece calma e soa como alarme.']]},
         {text:'Questionar publicamente o veto.',effects:{exposure:2,pressure:1,trust:-1},flag:'atacou_veto',reply:[['DANIEL','Se fecharam a porta, o público merece ouvir o estrondo.'],['HELENA','E quem ainda estava no corredor vai embora.']]},
         {text:'Abrir os dados e pedir tempo ao regulador.',effects:{trust:2,pressure:2,exposure:1},flag:'abriu_dados',reply:[['DANIEL','Mandem os dados. Todos.'],['OTÁVIO','Isso compra credibilidade.'],['HELENA','E vende privacidade.']]}
@@ -77,13 +72,9 @@ const scenes = [
   {
     chapter:'CAPÍTULO III · SEGUNDA-FEIRA', date:'17 NOV 2025 · SÃO PAULO', bg:'assets/office.webp', tint:'rgba(90,0,12,.22)',
     intro:[
-      ['NARRADOR','Setenta e cinco dias. O escritório é o mesmo; os verbos mudaram: negociar, substituir, explicar, sobreviver.'],
-      ['CAIO','O Grupo Fictor quer anunciar hoje. Investidores de fora entrariam no bloco.'],
-      ['HELENA','“Entrariam” é uma palavra fazendo o trabalho de um contrato.'],
-      ['OTÁVIO','Há outra coisa. Gente perguntando sobre operação da Polícia Federal.'],
-      ['DANIEL','Perguntar não é saber.'],
-      ['CAIO','Seu voo está pronto para Guarulhos.'],
-      ['NARRADOR','O celular recebeu mensagens. A rota para Dubai foi adicionada ao inventário.']
+      ['NARRADOR','Setenta e cinco dias depois, os verbos são outros: negociar, explicar, sobreviver.'],
+      ['HELENA','A Fictor quer anunciar. Ainda não assinou.'],
+      ['CAIO','E seu voo para Dubai está pronto.']
     ],onEnter:(s)=>{addItem('passagem'); addItem('celular'); s.unread=3},
     hotspots:[
       {id:'celular_mesa',label:'Mensagens',x:80,y:57,dossier:'fictor',lines:[['CAIO','A equipe quer uma confirmação agora. Anuncia a venda?']],choices:[
@@ -106,14 +97,12 @@ const scenes = [
     chapter:'CAPÍTULO IV · PORTÃO', date:'17 NOV 2025 · GUARULHOS', bg:'assets/hangar.webp', tint:'rgba(25,0,30,.15)',
     intro:[
       ['NARRADOR','22h. A pista é um espelho. O jato espera atrás do vidro como uma hipótese cara.'],
-      ['CAIO','A tripulação pergunta se embarca a bagagem.'],
-      ['OTÁVIO','A defesa consegue sustentar que a viagem era de negócio. Sustentar não é garantir.'],
-      ['DANIEL','E ficar?'],
-      ['OTÁVIO','Ficar também será interpretado. A diferença é por quem.']
+      ['OTÁVIO','A viagem pode ser negócio. Também pode parecer fuga.'],
+      ['DANIEL','E ficar também será interpretado.']
     ],
     hotspots:[
-      {id:'cafe',label:'Café',x:13,y:42,lines:[['CAIO','Quer um café?'],['DANIEL','Se eu disser sim, o avião continua no chão?'],['CAIO','Por quarenta segundos.']]},
-      {id:'camera',label:'Câmera',x:22,y:11,lines:[['NARRADOR','A câmera não pisca. É o funcionário mais descansado do aeroporto.'],['DANIEL','Quem guarda essas imagens?'],['OTÁVIO','Hoje? Todo mundo.']]},
+      {id:'cafe',label:'Café',x:13,y:42,lines:[['CAIO','Um café compra quarenta segundos.']]},
+      {id:'camera',label:'Câmera',x:22,y:11,lines:[['NARRADOR','A câmera não pisca. Hoje, todo mundo guarda a imagem.']]},
       {id:'mala_hangar',label:'Bagagem',x:75,y:58,lines:[['CAIO','Uma mala pequena para uma viagem grande.'],['DANIEL','Você esperava o quê?'],['CAIO','Menos metáfora.']]},
       {id:'aviao',label:'Jato',x:53,y:47,required:true,dossier:'operacao',lines:[['OTÁVIO','Decide agora. O relógio já decidiu o resto.']],choices:[
         {text:'Embarcar. A venda exige presença.',effects:{exposure:3,pressure:2},flag:'tentou_embarcar',reply:[['DANIEL','Embarca tudo. Vamos assinar.'],['NARRADOR','As portas automáticas se abrem. Antes do ar frio, entram quatro agentes.'],['AGENTE','Daniel Vorcaro? Polícia Federal. O senhor nos acompanha.']]},
@@ -127,15 +116,13 @@ const scenes = [
     intro:[
       ['NARRADOR','Antes do amanhecer, a noite já tem nome: Operação Compliance Zero.'],
       ['INVESTIGADORA','O senhor entende por que está aqui?'],
-      ['DANIEL','Tenho várias versões. Imagino que a senhora tenha uma preferida.'],
-      ['INVESTIGADORA','Prefiro documentos. Versões envelhecem rápido.'],
-      ['NARRADOR','Do outro lado do vidro, o Banco Central prepara a liquidação do Master.']
+      ['INVESTIGADORA','Eu prefiro documentos. Versões envelhecem rápido.']
     ],
     hotspots:[
-      {id:'espelho',label:'Espelho',x:74,y:27,lines:[['DANIEL','Tem alguém atrás?'],['INVESTIGADORA','Sempre tem alguém atrás. Foi assim que seu banco cresceu, não foi?'],['DANIEL','Isso foi uma pergunta ou uma piada?'],['INVESTIGADORA','Ainda estou decidindo.']]},
-      {id:'copo_final',label:'Copo de papel',x:61,y:59,lines:[['NARRADOR','O café tem gosto de sala onde ninguém diz as horas.'],['DANIEL','Ao menos isto não depende do Banco Central.'],['INVESTIGADORA','Depende do orçamento. É pior.']]},
+      {id:'espelho',label:'Espelho',x:74,y:27,lines:[['DANIEL','Tem alguém atrás?'],['INVESTIGADORA','Sempre tem.']]},
+      {id:'copo_final',label:'Copo de papel',x:61,y:59,lines:[['NARRADOR','O café tem gosto de sala sem relógio.']]},
       {id:'evidencia',label:'Celular apreendido',x:41,y:65,lines:[['INVESTIGADORA','Seu telefone conta uma história longa.'],['DANIEL','Telefones juntam frases que nunca estiveram na mesma conversa.'],['INVESTIGADORA','É para isso que existe contexto. E perícia.']]},
-      {id:'gravador',label:'Gravador',x:51,y:55,required:true,dossier:'liquidacao',lines:[['INVESTIGADORA','Antes da sua resposta, ligue cada versão ao rastro que pode sustentá-la.']],puzzle:{type:'match',title:'Versão e vestígio',kicker:'PUZZLE · CRUZAMENTO',prompt:'Toque em uma afirmação e depois no vestígio correspondente.',pairs:[{left:'A compra ainda tinha condições',right:'Anúncio sujeito a aprovações'},{left:'A venda Fictor não estava assinada',right:'Mensagem de Helena às 18h02'},{left:'A viagem tinha uma rota definida',right:'Plano de voo para Dubai'}],success:'Uma versão resiste melhor quando cada frase encontra um vestígio.'},choices:[
+      {id:'gravador',label:'Gravador',x:51,y:55,required:true,dossier:'liquidacao',lines:[['INVESTIGADORA','Se quer contexto, construa um que sobreviva à perícia.']],puzzle:{type:'interrogation',title:'A versão sob perícia',kicker:'MESA DE INTERROGATÓRIO',prompt:'Abra os vestígios, extraia o que pode ser comprovado e monte uma declaração sem preencher as lacunas com conversa.',tools:[{id:'celular-evidencia',inventoryId:'celular',icon:'▣',label:'Celular apreendido',detail:'Mensagens preservadas pela perícia.'},{id:'minuta-fictor',icon:'▤',label:'Minuta Fictor',detail:'Documento recebido antes da viagem.'},{id:'plano-voo',inventoryId:'passagem',icon:'✈',label:'Plano de voo',detail:'Rota e horário registrados.'}],targets:[{id:'leitor',icon:'⌕',label:'Leitor forense',detail:'Pode recuperar a conversa das 18h02.',accept:'celular-evidencia',result:'Helena escreveu: “Ainda não temos assinatura”.',grants:{id:'captura',icon:'◫',label:'Captura autenticada',detail:'Mensagem das 18h02 com metadados.'}},{id:'mesa-luz',icon:'▥',label:'Mesa de luz',detail:'Mostra assinatura, rubrica e páginas ausentes.',accept:'minuta-fictor',result:'Não há assinatura no bloco final.',grants:{id:'laudo-minuta',icon:'□',label:'Laudo da minuta',detail:'Documento incompleto e sem assinatura.'}},{id:'mapa-rota',icon:'⌖',label:'Mapa do aeroporto',detail:'Aceita um plano registrado.',accept:'plano-voo',result:'A rota para Dubai estava definida antes da prisão.',grants:{id:'registro-rota',icon:'✈',label:'Registro da rota',detail:'Plano de voo confirmado às 19h31.'}},{id:'gravador-final',icon:'●',label:'Gravador da sala',detail:'Só grave quando os três pontos estiverem documentados.',accept:['captura','laudo-minuta','registro-rota'],requires:['leitor','mesa-luz','mapa-rota'],result:'A declaração distingue negociação, contrato e viagem sem inventar certezas.'}],success:'A versão agora tem três limites verificáveis — e nenhuma ligação feita no escuro.'},choices:[
         {text:'Cooperar e contextualizar os documentos.',effects:{trust:3,exposure:1},flag:'cooperou',reply:[['DANIEL','Eu falo. Mas começamos em março, não neste aeroporto.'],['INVESTIGADORA','Então comece. O gravador tem mais tempo que o mercado.']]},
         {text:'Entregar uma declaração escrita.',effects:{trust:0,exposure:0},flag:'declaracao',reply:[['DANIEL','Meu advogado entrega a declaração. Não vou improvisar patrimônio.'],['INVESTIGADORA','Papel também fala. Só não responde.']]},
         {text:'Permanecer em silêncio.',effects:{trust:-2,exposure:-1,pressure:1},flag:'silencio_final',reply:[['DANIEL','Vou exercer meu direito ao silêncio.'],['INVESTIGADORA','Registrado. O resto da manhã não fará o mesmo.']]}
@@ -145,15 +132,14 @@ const scenes = [
   {
     chapter:'TOFFOLINHO I · A CHAVE', date:'FIM DE NOV 2025 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(20,8,34,.18)',
     intro:[
-      ['NARRADOR','O processo sobe ao Supremo por causa de uma autoridade citada. O sorteio acende uma luz no gabinete de Dias Toffoli.'],
+      ['NARRADOR','Uma autoridade citada leva o caso ao Supremo. O sorteio acende uma luz no gabinete.'],
       ['TOFFOLI','Um caso grande demais para andar solto.'],
-      ['ASSESSORA','E barulhento demais para ficar aberto.'],
-      ['NARRADOR','A partir daqui, o jogador controla Toffolinho — caricatura satírica. As decisões públicas são reais; as falas privadas são dramatização.']
+      ['NARRADOR','Você controla Toffolinho, caricatura satírica. As falas privadas são dramatização.']
     ],
     hotspots:[
       {id:'janela_stf',label:'Praça dos Três Poderes',x:45,y:19,lines:[['TOFFOLI','Brasília é bonita vista de cima. Os problemas também parecem menores.'],['ASSESSORA','Até subirem de elevador.']]},
-      {id:'telefone_stf',label:'Telefone preto',x:88,y:52,lines:[['ASSESSORA','A imprensa quer saber quem pode consultar os autos.'],['TOFFOLI','Diga que a resposta está nos autos.'],['ASSESSORA','Que estão em sigilo.'],['TOFFOLI','Exatamente.']]},
-      {id:'pasta_sigilo',label:'Pasta do Master',x:73,y:51,required:true,dossier:'sigilo_stf',lines:[['ASSESSORA','O processo chegou com anexos, pedidos e gente demais olhando. Primeiro, ordene as camadas possíveis de acesso.']],puzzle:{type:'order',title:'Três voltas da chave',kicker:'PUZZLE · ACESSO AOS AUTOS',prompt:'Ordene do acesso mais aberto ao mais restrito.',options:[{id:'maximo',text:'Sigilo máximo sobre o processo'},{id:'publico',text:'Autos públicos'},{id:'parcial',text:'Restrição apenas às peças sensíveis'}],solution:['publico','parcial','maximo'],success:'Cada volta da chave reduz quem enxerga os autos — e aumenta o peso de quem controla a chave.'},choices:[
+      {id:'telefone_stf',label:'Telefone preto',x:88,y:52,lines:[['ASSESSORA','A imprensa pergunta quem pode consultar os autos.'],['TOFFOLI','A resposta está nos autos. Sob sigilo.']]},
+      {id:'pasta_sigilo',label:'Pasta do Master',x:73,y:51,required:true,dossier:'sigilo_stf',lines:[['ASSESSORA','A fechadura chegou configurada para ninguém. Abra só o necessário — ou feche tudo.']],puzzle:{type:'mechanism',title:'Três voltas da chave',kicker:'MECANISMO DE ACESSO',prompt:'A pasta tem três anéis e um núcleo. Descubra o encaixe que transforma peças soltas em um regime de acesso verificável.',tools:[{id:'chave-publica',icon:'◇',label:'Chave externa',detail:'Abre o índice público dos autos.'},{id:'selo-sensivel',icon:'◆',label:'Selo de peça sensível',detail:'Isola anexos que exigem restrição.'},{id:'chave-relator',icon:'♢',label:'Chave do relator',detail:'Fecha o núcleo sob controle do gabinete.'}],targets:[{id:'anel-externo',icon:'◎',label:'Anel externo',detail:'O índice está preso junto com o conteúdo.',accept:'chave-publica',result:'O índice se abre sem expor as peças.'},{id:'anel-medio',icon:'◉',label:'Anel intermediário',detail:'Os anexos sensíveis ainda não têm separação.',accept:'selo-sensivel',requires:['anel-externo'],result:'As peças sensíveis ganham compartimento próprio.'},{id:'nucleo',icon:'●',label:'Núcleo da pasta',detail:'A última volta define quem controla o conjunto.',accept:'chave-relator',requires:['anel-medio'],result:'O núcleo fecha. O gabinete passa a controlar a chave.'}],success:'O mecanismo revela o custo de cada volta: menos acesso, mais poder concentrado.'},choices:[
         {text:'Aplicar o nível máximo de sigilo.',effects:{pressure:-1,exposure:-2,trust:-1},flag:'sigilo_maximo',reply:[['TOFFOLI','Nível três. Se todo mundo lê, ninguém controla.'],['NARRADOR','DOCUMENTADO: o caso tramitou sob o grau mais alto de sigilo do STF. A justificativa formal era proteger a investigação.']]},
         {text:'Restringir só as peças sensíveis.',effects:{pressure:1,exposure:1,trust:1},flag:'sigilo_parcial',reply:[['TOFFOLI','Segredo cirúrgico. O resto respira.'],['ASSESSORA','Isso dá mais trabalho.'],['TOFFOLI','Transparência costuma dar.']]}
       ],advance:true}
@@ -162,14 +148,14 @@ const scenes = [
   {
     chapter:'TOFFOLINHO II · A CAIXA', date:'JAN 2026 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(45,0,18,.22)',
     intro:[
-      ['NARRADOR','A segunda fase da operação chega ao gabinete antes do café. Busca, apreensão, celulares e uma pergunta simples: quem abre a caixa?'],
+      ['NARRADOR','Busca, apreensão, celulares. A pergunta chega antes do café: quem abre a caixa?'],
       ['ASSESSORA','A Polícia Federal pede perícia imediata.'],
-      ['TOFFOLI','Imediata é uma palavra perigosa. Parece que o tempo manda no tribunal.']
+      ['TOFFOLI','“Imediata” faz parecer que o tempo manda no tribunal.']
     ],
     hotspots:[
       {id:'tv_operacao',label:'Noticiário sem som',x:61,y:28,lines:[['NARRADOR','Na televisão, agentes carregam caixas. No gabinete, a imagem chega antes do conteúdo.'],['TOFFOLI','A operação sempre tem trilha sonora. O processo, não.']]},
-      {id:'pilha_autos',label:'Pilha de autos',x:66,y:48,lines:[['ASSESSORA','Há pedidos da PF, da PGR, das defesas e do Congresso.'],['TOFFOLI','Ótimo. Quando todos pedem ao mesmo tempo, decidir devagar parece equilíbrio.']]},
-      {id:'caixa_lacrada',label:'Caixa de evidências',x:16,y:43,required:true,dossier:'provas_lacradas',lines:[['ASSESSORA','Os aparelhos apreendidos estão a caminho. Monte uma cadeia que permita descobrir qualquer quebra de custódia.']],puzzle:{type:'order',title:'O caminho da caixa',kicker:'PUZZLE · CADEIA DE CUSTÓDIA',prompt:'Toque nas etapas na ordem que preserva a rastreabilidade.',options:[{id:'pericia',text:'Extrair e periciar os dados'},{id:'apreender',text:'Apreender os aparelhos'},{id:'remeter',text:'Registrar a remessa e cada transferência'},{id:'lacrar',text:'Identificar e lacrar o material'}],solution:['apreender','lacrar','remeter','pericia'],success:'Apreensão, lacre, transferências registradas, perícia. Se uma etapa some, nasce uma dúvida.'},choices:[
+      {id:'pilha_autos',label:'Pilha de autos',x:66,y:48,lines:[['ASSESSORA','PF, PGR, defesas e Congresso. Todos pedem algo.'],['TOFFOLI','Então decidir devagar parecerá equilíbrio.']]},
+      {id:'caixa_lacrada',label:'Caixa de evidências',x:16,y:43,required:true,dossier:'provas_lacradas',lines:[['ASSESSORA','A caixa chegou sem história visível. Faça cada mão deixar uma marca.']],puzzle:{type:'custody',title:'A caixa sem sombra',kicker:'CADEIA DE CUSTÓDIA',prompt:'Prepare o aparelho para que qualquer abertura, transporte ou cópia possa ser auditada depois.',tools:[{id:'etiqueta',icon:'▧',label:'Etiqueta numerada',detail:'Identifica aparelho, local e responsável.'},{id:'lacre',icon:'═',label:'Lacre inviolável',detail:'Registra qualquer abertura física.'},{id:'scanner',icon:'▤',label:'Leitor de remessa',detail:'Grava origem, destino e horário.'},{id:'cabo-forense',icon:'⌁',label:'Cabo bloqueador',detail:'Permite leitura sem alterar o original.'}],targets:[{id:'aparelho',icon:'▣',label:'Celular apreendido',detail:'Ainda não possui identificação individual.',accept:'etiqueta',result:'Aparelho vinculado ao auto de apreensão.'},{id:'caixa',icon:'□',label:'Caixa de transporte',detail:'A tampa fecha, mas não denuncia abertura.',accept:'lacre',requires:['aparelho'],result:'Número do lacre registrado junto ao aparelho.'},{id:'guiche',icon:'▦',label:'Guichê de transferência',detail:'A remessa precisa de origem e destino.',accept:'scanner',requires:['caixa'],result:'Transferência para Brasília registrada com horário.'},{id:'estacao-pericia',icon:'⌘',label:'Estação pericial',detail:'O original não pode ser alterado durante a leitura.',accept:'cabo-forense',requires:['guiche'],result:'A extração pode começar preservando o aparelho.'}],success:'A caixa ganhou um rastro: identidade, lacre, transferência e leitura protegida.'},choices:[
         {text:'Mandar tudo lacrado para o STF.',effects:{pressure:2,exposure:-1,trust:-2},flag:'lacrou_provas',reply:[['TOFFOLI','Primeiro a custódia. Depois a curiosidade. Tudo lacrado para cá.'],['NARRADOR','DOCUMENTADO: o material foi remetido lacrado ao STF. A decisão e seus efeitos foram contestados no debate público.']]},
         {text:'Permitir perícia com cópia preservada.',effects:{pressure:-1,exposure:2,trust:2},flag:'pericia_controlada',reply:[['TOFFOLI','Periciem. Uma cópia fica preservada e cada acesso, registrado.'],['ASSESSORA','Menos controle direto. Mais rastreabilidade.']]}
       ],advance:true}
@@ -179,14 +165,13 @@ const scenes = [
     chapter:'TOFFOLINHO III · O ESPELHO', date:'12 FEV 2026 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(70,8,0,.22)',
     intro:[
       ['NARRADOR','O processo que deveria investigar o Master começa a iluminar o próprio relator.'],
-      ['ASSESSORA','Publicaram a ligação do fundo com o Tayayá. E o relatório da PF menciona conversas encontradas no celular de Vorcaro.'],
-      ['TOFFOLI','Um relator não entra nos autos.'],
-      ['ASSESSORA','Às vezes os autos entram no relator. Os ministros estão esperando.']
+      ['ASSESSORA','Publicaram as ligações com o Tayayá. Os ministros estão esperando.'],
+      ['TOFFOLI','Um relator não entra nos autos.']
     ],
     hotspots:[
       {id:'retrato_resort',label:'Fotografia do resort',x:10,y:13,dossier:'tayaya',lines:[['NARRADOR','REPORTADO: empresa da família Toffoli teve participação no resort. Um fundo ligado ao cunhado de Vorcaro entrou no negócio. Toffoli negou favorecimento.'],['TOFFOLI','Uma fotografia não conhece contrato.'],['ASSESSORA','Mas conhece manchete.']]},
       {id:'nota_colegas',label:'Nota dos ministros',x:78,y:45,lines:[['ASSESSORA','A nota preserva a validade de todos os seus atos e diz que PF e PGR tiveram seus pedidos atendidos.'],['TOFFOLI','Uma saída com firma reconhecida.']]},
-      {id:'chave_final',label:'Chave da relatoria',x:86,y:58,required:true,dossier:'redistribuicao',lines:[['ASSESSORA','Há três horas de reunião atrás desta porta. Antes de responder, desenrole a teia que trouxe o relator para dentro da manchete.']],puzzle:{type:'match',title:'O espelho do resort',kicker:'PUZZLE · RELAÇÕES REPORTADAS',prompt:'Ligue cada elemento ao que foi reportado sobre ele.',pairs:[{left:'Empresa ligada à família Toffoli',right:'Teve participação no Tayayá'},{left:'Fundo ligado ao cunhado de Vorcaro',right:'Entrou no empreendimento'},{left:'Dias Toffoli',right:'Negou favorecimento e irregularidade'}],success:'As relações foram reportadas; a negativa também faz parte do quadro.'},choices:[
+      {id:'chave_final',label:'Chave da relatoria',x:86,y:58,required:true,dossier:'redistribuicao',lines:[['ASSESSORA','Os papéis contam histórias diferentes. A mesa de luz mostra onde elas se tocam.']],puzzle:{type:'overlay',title:'O espelho do resort',kicker:'MESA DE SOBREPOSIÇÃO',prompt:'Alinhe registros independentes sobre a planta iluminada. A relação só aparece quando as camadas ocupam o mesmo lugar.',tools:[{id:'planta-resort',icon:'⌑',label:'Planta do Tayayá',detail:'Mapa cadastral do empreendimento.'},{id:'contrato-familia',icon:'▤',label:'Registro societário',detail:'Empresa ligada à família Toffoli.'},{id:'folha-fundo',icon:'▧',label:'Documento do fundo',detail:'Fundo ligado ao cunhado de Vorcaro.'},{id:'nota-negativa',icon:'□',label:'Nota de Toffoli',detail:'Negativa pública de favorecimento.'}],targets:[{id:'mesa-base',icon:'▱',label:'Mesa de luz vazia',detail:'Precisa de uma referência física.',accept:'planta-resort',result:'A planta fixa os lotes e as datas.'},{id:'camada-familia',icon:'◩',label:'Primeira camada',detail:'O registro precisa coincidir com os lotes.',accept:'contrato-familia',requires:['mesa-base'],result:'A participação da empresa aparece sobre o resort.'},{id:'camada-fundo',icon:'◪',label:'Segunda camada',detail:'Falta localizar a entrada do fundo.',accept:'folha-fundo',requires:['camada-familia'],result:'O fundo se alinha ao mesmo empreendimento.'},{id:'margem',icon:'▯',label:'Margem da apuração',detail:'O quadro também precisa registrar a resposta do citado.',accept:'nota-negativa',requires:['camada-fundo'],result:'A negativa fica anexada sem apagar as relações reportadas.'}],success:'As camadas convergem no resort; a negativa permanece visível na borda do quadro.'},choices:[
         {text:'Pedir a livre redistribuição.',effects:{pressure:-2,exposure:2,trust:0},flag:'redistribuiu',reply:[['TOFFOLI','Envie tudo à Presidência. Livre redistribuição.'],['NARRADOR','12 de fevereiro de 2026. O sorteio eletrônico gira.'],['SISTEMA','Relator sorteado: André Mendonça.'],['TOFFOLI','A chave mudou de bolso. A caixa, não.']]},
         {text:'Insistir em permanecer — até a reunião decidir.',effects:{pressure:3,exposure:3,trust:-2},flag:'resistiu_saida',reply:[['TOFFOLI','Não há impedimento. Os atos são válidos.'],['NARRADOR','Os colegas concordam com a validade dos atos — e a noite termina com o envio do caso para livre redistribuição.'],['SISTEMA','Relator sorteado: André Mendonça.'],['TOFFOLI','Então chamem de decisão institucional.']]}
       ],ending:'toffoli'}
@@ -195,15 +180,14 @@ const scenes = [
   {
     chapter:'MENDONÇA I · O FLUXO', date:'19 FEV 2026 · BRASÍLIA', bg:'assets/stf-office.webp', tint:'rgba(4,35,55,.2)',
     intro:[
-      ['NARRADOR','A chave chega ao gabinete de André Mendonça com o peso dos atos preservados e das críticas ainda frescas.'],
-      ['MENDONÇA','A investigação precisa andar. Mas andar não é correr sem mapa.'],
+      ['NARRADOR','A chave chega a André Mendonça. Os atos foram preservados; as críticas também.'],
       ['CHEFE DE GABINETE','Cerca de cem aparelhos esperam perícia. A PF quer o fluxo normal de volta.'],
-      ['NARRADOR','As decisões públicas são documentadas. As conversas de gabinete deste arco são dramatização.']
+      ['MENDONÇA','Então devolvemos o fluxo sem perder o mapa.']
     ],
     hotspots:[
       {id:'autos_recebidos',label:'Autos redistribuídos',x:69,y:48,lines:[['CHEFE DE GABINETE','O processo veio inteiro. As responsabilidades, em caixas separadas.'],['MENDONÇA','No Supremo, uma caixa nunca chega sem corredor.']]},
       {id:'nivel_sigilo',label:'Controle de acesso',x:84,y:52,lines:[['CHEFE DE GABINETE','O sigilo máximo virou parte da crise.'],['MENDONÇA','Então reduzimos o cadeado sem abandonar a porta.']]},
-      {id:'despacho_fluxo',label:'Primeiro despacho',x:53,y:55,required:true,dossier:'fluxo_pf',lines:[['CHEFE DE GABINETE','Defina a fronteira: o que volta ao fluxo policial e o que ainda depende do relator?']],puzzle:{type:'select',title:'A fronteira do fluxo',kicker:'PUZZLE · COMPETÊNCIA',prompt:'Marque apenas o que a PF foi autorizada a fazer no fluxo já existente.',options:[{text:'Periciar os aparelhos apreendidos',correct:true},{text:'Compartilhar dados entre agentes diretamente envolvidos',correct:true},{text:'Abrir qualquer nova investigação sem consulta',correct:false},{text:'Divulgar publicamente o conteúdo dos dispositivos',correct:false}],success:'A perícia volta ao fluxo; novas frentes continuam passando pelo relator.'},choices:[
+      {id:'despacho_fluxo',label:'Primeiro despacho',x:53,y:55,required:true,dossier:'fluxo_pf',lines:[['CHEFE DE GABINETE','O terminal está travado entre controle e paralisia. Configure um fluxo que realmente funcione.']],puzzle:{type:'terminal',title:'A fronteira do fluxo',kicker:'CONTROLE DE PERMISSÕES',prompt:'Autorize a perícia já determinada sem abrir uma porta irrestrita para novos inquéritos ou divulgação.',tools:[{id:'token-pericia',icon:'▣',label:'Token de perícia',detail:'Libera processamento do material apreendido.'},{id:'perfil-equipe',icon:'◇',label:'Perfil “equipe direta”',detail:'Restringe acesso aos agentes envolvidos.'},{id:'clausula-autorizacao',icon:'§',label:'Cláusula de autorização',detail:'Exige decisão do relator para nova frente.'},{id:'selo-sigilo',icon:'◆',label:'Selo de sigilo',detail:'Impede exportação pública dos dados.'}],targets:[{id:'fila',icon:'⌘',label:'Fila dos cem aparelhos',detail:'O processamento está suspenso.',accept:'token-pericia',result:'A perícia volta ao fluxo ordinário.'},{id:'usuarios',icon:'♙',label:'Grupo de usuários',detail:'O acesso ainda alcança a instituição inteira.',accept:'perfil-equipe',requires:['fila'],result:'Somente agentes diretamente envolvidos podem consultar.'},{id:'novas-frentes',icon:'⌁',label:'Módulo “nova investigação”',detail:'A função não tem regra de aprovação.',accept:'clausula-autorizacao',requires:['usuarios'],result:'Toda nova frente exige pedido fundamentado ao relator.'},{id:'exportacao',icon:'⇥',label:'Saída pública',detail:'Os dados ainda podem deixar o ambiente.',accept:'selo-sigilo',requires:['novas-frentes'],result:'A exportação externa é bloqueada e registrada.'}],success:'O fluxo volta a andar com perícia liberada, acesso limitado e novas frentes sob autorização.'},choices:[
         {text:'Liberar a perícia e exigir autorização para novas frentes.',effects:{trust:2,pressure:1,exposure:1},flag:'fluxo_controlado',reply:[['MENDONÇA','Perícia no fluxo ordinário. Nova investigação, pedido fundamentado.'],['NARRADOR','DOCUMENTADO: foi essa a arquitetura do despacho de 19 de fevereiro.']]},
         {text:'Centralizar também cada etapa da perícia.',effects:{trust:-1,pressure:2,exposure:-1},flag:'centralizou_pericia',reply:[['MENDONÇA','Nada se move sem nova conferência do gabinete.'],['CHEFE DE GABINETE','Mais controle. E mais um gargalo.'],['NARRADOR','DRAMATIZAÇÃO: na decisão real, a perícia dos aparelhos voltou ao fluxo ordinário da PF.']]}
       ],advance:true}
@@ -212,15 +196,14 @@ const scenes = [
   {
     chapter:'MENDONÇA II · A PERGUNTA', date:'24 AGO 2026 · BRASÍLIA', bg:'assets/pf-lab.webp', tint:'rgba(0,30,48,.18)',
     intro:[
-      ['NARRADOR','Seis meses de perícias transformam aparelhos em conversas, conversas em nomes e nomes em problemas de competência.'],
+      ['NARRADOR','Seis meses de perícia transformam aparelhos em nomes.'],
       ['DELEGADA','Ministro, o material menciona “Paulo” e “Andrei”. Também há diálogos atribuídos a outras autoridades.'],
-      ['MENDONÇA','Quando a investigação cita quem a conduz, o organograma vira evidência.'],
-      ['DELEGADA','E qualquer pergunta parece interferência.']
+      ['MENDONÇA','Quando a investigação cita quem a conduz, o organograma vira evidência.']
     ],
     hotspots:[
       {id:'monitores_pf',label:'Monitores forenses',x:62,y:37,lines:[['NARRADOR','Os dados não chegam em frases completas. Chegam em fragmentos, horários, imagens e lacunas.'],['MENDONÇA','Uma lacuna também precisa de cadeia de custódia.']]},
       {id:'armario_evidencias',label:'Armário de evidências',x:88,y:28,lines:[['DELEGADA','Originais preservados. Cópias de trabalho registradas.'],['MENDONÇA','Que cada mão deixe uma assinatura.']]},
-      {id:'relatorio_nomes',label:'Relatório preliminar',x:42,y:67,required:true,dossier:'relatorio_pf',lines:[['DELEGADA','Antes da ordem, reconstrua o caminho que levou uma mensagem a se tornar crise institucional.']],puzzle:{type:'match',title:'Da mensagem ao relatório',kicker:'PUZZLE · RASTRO',prompt:'Ligue cada etapa ao que ela produziu.',pairs:[{left:'Mensagem recuperada',right:'Menções a “Paulo” e “Andrei”'},{left:'Delegados chamados',right:'Ordem para detalhar os achados'},{left:'Relatório entregue',right:'Citações a autoridades e novas providências'}],success:'O conflito nasce quando o rastro técnico alcança o topo do organograma.'},choices:[
+      {id:'relatorio_nomes',label:'Relatório preliminar',x:42,y:67,required:true,dossier:'relatorio_pf',lines:[['DELEGADA','Há nomes demais e contexto de menos. Trabalhe no original antes de transformar menção em conclusão.']],puzzle:{type:'forensic',title:'O nome dentro da máquina',kicker:'ESTAÇÃO FORENSE',prompt:'Preserve a fonte, reduza o ruído e extraia somente o que o material sustenta para o relatório.',tools:[{id:'imagem-forense',icon:'▣',label:'Imagem forense',detail:'Cópia verificada do aparelho.'},{id:'filtro-tempo',icon:'⌚',label:'Filtro de horário',detail:'Recorta a janela da conversa relevante.'},{id:'busca-nomes',icon:'⌕',label:'Busca contextual',detail:'Localiza nomes com mensagens anteriores e posteriores.'},{id:'modelo-relatorio',icon:'▤',label:'Modelo de relatório',detail:'Separa transcrição, inferência e providência.'}],targets:[{id:'estacao',icon:'⌘',label:'Estação isolada',detail:'Nenhum dado foi montado ainda.',accept:'imagem-forense',result:'A cópia abre com hash preservado.'},{id:'linha-tempo',icon:'⋮',label:'Linha do tempo',detail:'Milhares de mensagens cobrem meses.',accept:'filtro-tempo',requires:['estacao'],result:'A janela da conversa é reduzida sem cortar metadados.'},{id:'conversa',icon:'◫',label:'Trecho recuperado',detail:'“Paulo” e “Andrei” aparecem sem contexto suficiente.',accept:'busca-nomes',requires:['linha-tempo'],result:'Mensagens adjacentes identificam menções e limites da interpretação.'},{id:'relatorio',icon:'▥',label:'Relatório em branco',detail:'O documento precisa distinguir achado e hipótese.',accept:'modelo-relatorio',requires:['conversa'],result:'O relatório registra citações e pede providências sem declarar culpa.'}],success:'O nome saiu da máquina com contexto, metadados e limites explícitos.'},choices:[
         {text:'Ouvir diretamente os delegados e fixar prazo de 72 horas.',effects:{pressure:2,exposure:2,trust:0},flag:'chamou_delegados',reply:[['MENDONÇA','Tragam os delegados. Compartimentação máxima. Quero o quadro em setenta e duas horas.'],['NARRADOR','REPORTADO: Mendonça afirmou ter adotado contato direto para preservar sigilo e funcionalidade.']]},
         {text:'Encaminhar tudo pela direção da PF e pela PGR.',effects:{pressure:1,exposure:-1,trust:2},flag:'via_institucional',reply:[['MENDONÇA','A cadeia institucional também é uma cadeia de custódia. Formalizem pelos canais.'],['DELEGADA','Mesmo quando os canais aparecem nas mensagens?'],['NARRADOR','DRAMATIZAÇÃO: o caminho documentado incluiu o contato direto com os delegados.']]}
       ],advance:true}
@@ -231,13 +214,12 @@ const scenes = [
     intro:[
       ['NARRADOR','O relatório atravessa o tribunal. A pergunta sobre a PF vira uma decisão contra a chefia da PF.'],
       ['CHEFE DE GABINETE','A minuta afasta Andrei Rodrigues. A Segunda Turma começou a votar.'],
-      ['MENDONÇA','Se o comando aparece no objeto da apuração, a cautela precisa alcançar o comando.'],
-      ['CHEFE DE GABINETE','E se a cautela parecer tomada de poder?']
+      ['CHEFE DE GABINETE','E a Presidência quer explicações.']
     ],
     hotspots:[
       {id:'votos_turma',label:'Painel da Segunda Turma',x:62,y:28,lines:[['CHEFE DE GABINETE','Dois votos acompanharam a medida antes do pedido de vista.'],['MENDONÇA','No processo eletrônico, até o silêncio tem horário.']]},
       {id:'telefone_fachin',label:'Ligação da Presidência',x:88,y:51,lines:[['CHEFE DE GABINETE','A Presidência quer esclarecimentos. A AGU pediu o retorno imediato do diretor.'],['MENDONÇA','A caneta que pergunta é a mesma que pode suspender.']]},
-      {id:'ordem_afastamento',label:'Ordem de afastamento',x:72,y:55,required:true,dossier:'afastamento_pf',lines:[['NARRADOR','Quatro datas. Uma escalada. Coloque a crise na ordem.']],puzzle:{type:'order',title:'Quatro dias de ruptura',kicker:'PUZZLE · CRONOLOGIA INSTITUCIONAL',prompt:'Toque nos acontecimentos do primeiro ao último.',options:[{id:'debate',text:'15 SET · A medida vira confronto público no STF'},{id:'reuniao',text:'24 AGO · Delegados levam os achados ao relator'},{id:'fachin',text:'9 SET · Fachin suspende o afastamento'},{id:'afasta',text:'8 SET · Mendonça afasta o diretor-geral'}],solution:['reuniao','afasta','fachin','debate'],success:'Uma reunião reservada virou afastamento, reversão e confronto aberto.'},choices:[
+      {id:'ordem_afastamento',label:'Ordem de afastamento',x:72,y:55,required:true,dossier:'afastamento_pf',lines:[['CHEFE DE GABINETE','A caneta assinou uma ordem. Agora descubra o que ainda está juridicamente de pé.']],puzzle:{type:'protocol',title:'A caneta suspensa',kicker:'MESA DE PROTOCOLO',prompt:'Faça os documentos atravessarem o circuito institucional e determine qual ato continua produzindo efeito.',tools:[{id:'relatorio-agosto',icon:'▤',label:'Relatório de agosto',detail:'Base usada para a medida cautelar.'},{id:'ordem-oito',icon:'▣',label:'Ordem de 8 de setembro',detail:'Afasta a direção-geral da PF.'},{id:'suspensao-nove',icon:'⊘',label:'Suspensão de 9 de setembro',detail:'Decisão da Presidência do STF.'},{id:'painel-turma',icon:'▦',label:'Extrato da Segunda Turma',detail:'Dois votos e um pedido de vista.'}],targets:[{id:'fundamento',icon:'□',label:'Bandeja de fundamento',detail:'A minuta ainda não possui peça de apoio.',accept:'relatorio-agosto',result:'O relatório é vinculado à ordem.'},{id:'protocolo-ordem',icon:'▣',label:'Protocolo cautelar',detail:'A medida ainda não foi formalizada.',accept:'ordem-oito',requires:['fundamento'],result:'O afastamento passa a produzir efeito.'},{id:'mesa-presidencia',icon:'⊘',label:'Mesa da Presidência',detail:'Há um ato posterior aguardando registro.',accept:'suspensao-nove',requires:['protocolo-ordem'],result:'A ordem de afastamento fica suspensa; Andrei retorna.'},{id:'placar',icon:'▦',label:'Painel do julgamento',detail:'O colegiado ainda não encerrou a disputa.',accept:'painel-turma',requires:['mesa-presidencia'],result:'O pedido de vista interrompe o julgamento. A suspensão permanece operante.'}],success:'O circuito termina sem decisão colegiada final: o afastamento está suspenso.'},choices:[
         {text:'Afastar cautelarmente a direção da PF.',effects:{pressure:3,exposure:3,trust:-2},flag:'afastou_andrei',reply:[['MENDONÇA','Assino o afastamento cautelar. A apuração não pode depender de quem aparece nela.'],['NARRADOR','DOCUMENTADO: a ordem foi dada em 8 de setembro e suspensa por Fachin no dia seguinte.']]},
         {text:'Levar a suspeita diretamente ao plenário.',effects:{pressure:2,exposure:2,trust:1},flag:'levou_plenario',reply:[['MENDONÇA','Não afasto sozinho. Remeto ao plenário com urgência.'],['CHEFE DE GABINETE','Menos impacto imediato. Mais testemunhas.'],['NARRADOR','DRAMATIZAÇÃO: Mendonça determinou o afastamento; Fachin suspendeu a medida no dia seguinte.']]}
       ],advance:true}
@@ -246,15 +228,14 @@ const scenes = [
   {
     chapter:'MENDONÇA IV · A SENHA', date:'19 SET 2026 · BRASÍLIA', bg:'assets/pf-lab.webp', tint:'rgba(0,18,45,.25)',
     intro:[
-      ['NARRADOR','Onze dias depois da ordem contra a chefia policial, uma cópia do celular de Vorcaro repousa no gabinete. Quinhentos gigabytes. Lacrada. Criptografada.'],
-      ['CHEFE DE GABINETE','O arquivo chegou. Não abre. O gabinete de Fux encontrou o mesmo problema.'],
-      ['MENDONÇA','A prova está aqui. O acesso, não.'],
-      ['CHEFE DE GABINETE','Para abrir, precisamos pedir ajuda à PF.']
+      ['NARRADOR','Quinhentos gigabytes. Lacrados. Criptografados.'],
+      ['CHEFE DE GABINETE','Não abre. O gabinete de Fux teve o mesmo problema.'],
+      ['MENDONÇA','A prova está aqui. A chave, não.']
     ],onEnter:()=>addItem('drive'),
     hotspots:[
       {id:'original_pf',label:'Extração original',x:15,y:45,lines:[['DELEGADA','O aparelho e a extração original permanecem sob guarda técnica da PF.'],['MENDONÇA','O original fica onde a discussão começou.']]},
       {id:'copia_lacrada',label:'Cópia lacrada',x:79,y:70,lines:[['CHEFE DE GABINETE','O senhor disse que a manteve lacrada como contraprova.'],['MENDONÇA','Uma cópia intocada prova o que não fizemos. Não revela o que precisamos ler.']]},
-      {id:'terminal_cripto',label:'Terminal criptografado',x:58,y:39,required:true,dossier:'copia_500gb',lines:[['SISTEMA','ACESSO NEGADO. Reconstrua onde cada parte do material permaneceu.']],puzzle:{type:'order',title:'A chave que falta',kicker:'PUZZLE · CUSTÓDIA DIGITAL',prompt:'Ordene o caminho do dado até o pedido de socorro técnico.',options:[{id:'pedido',text:'Gabinete pede auxílio técnico à PF'},{id:'copia',text:'PF produz uma cópia criptografada'},{id:'falha',text:'Gabinete não consegue acessar os arquivos'},{id:'original',text:'PF preserva aparelho e extração originais'}],solution:['original','copia','falha','pedido'],success:'O original ficou na PF; a cópia chegou ao gabinete; a senha trouxe a PF de volta à sala.'},choices:[
+      {id:'terminal_cripto',label:'Terminal criptografado',x:58,y:39,required:true,dossier:'copia_500gb',lines:[['SISTEMA','VOLUME NÃO MONTADO. Diagnóstico necessário.']],puzzle:{type:'diagnostic',title:'A chave que falta',kicker:'DIAGNÓSTICO CRIPTOGRÁFICO',prompt:'Verifique se a cópia foi corrompida, teste a credencial recebida e identifique exatamente o que o gabinete não possui.',tools:[{id:'drive-copia',inventoryId:'drive',icon:'▥',label:'Cópia de 500 GB',detail:'Volume lacrado recebido da PF.'},{id:'verificador',icon:'#',label:'Verificador de hash',detail:'Compara a cópia com o registro de origem.'},{id:'credencial',icon:'◇',label:'Credencial do gabinete',detail:'Certificado disponível no processo.'},{id:'oficio',icon:'▤',label:'Ofício técnico',detail:'Pedido formal com registro de custódia.'}],targets:[{id:'baia',icon:'⌁',label:'Baia isolada',detail:'A cópia ainda está desconectada.',accept:'drive-copia',result:'O volume é detectado, mas permanece criptografado.'},{id:'integridade',icon:'#',label:'Console de integridade',detail:'É preciso excluir dano ou cópia incompleta.',accept:'verificador',requires:['baia'],result:'Hash confere. Os dados estão íntegros.'},{id:'montagem',icon:'⌘',label:'Terminal de montagem',detail:'Acesso depende da chave correta.',accept:'credencial',requires:['integridade'],result:'Credencial válida para o gabinete, inválida para o volume. Falta a chave de descriptografia.'},{id:'protocolo-ajuda',icon:'⇥',label:'Canal técnico da PF',detail:'O diagnóstico precisa acompanhar o pedido.',accept:'oficio',requires:['montagem'],result:'O gabinete solicita acesso técnico sem romper a cadeia de custódia.'}],success:'A cópia está íntegra. O defeito não é o arquivo: é a chave que não veio.'},choices:[
         {text:'Pedir auxílio técnico formal à PF.',effects:{trust:2,pressure:-1,exposure:1},flag:'pediu_ajuda_pf',reply:[['MENDONÇA','Oficie-se. Precisamos de acesso integral, com registro de cada passo.'],['DELEGADA','A equipe técnica responde. A crise institucional fica fora da sala — se couber.']]},
         {text:'Exigir nova cópia e chave verificável.',effects:{trust:0,pressure:2,exposure:2},flag:'exigiu_nova_copia',reply:[['MENDONÇA','Nova cópia, nova chave e hash de verificação. Tudo formalizado.'],['DELEGADA','É um pedido de ajuda escrito como ordem. Ainda é ajuda.']]}
       ],ending:'mendonca'}
@@ -287,13 +268,7 @@ function readMutedPreference(){
 }
 
 const audio=(()=>{
-  let ctx=null,master=null,musicGain=null,fxGain=null,ambienceGain=null,musicTimer=null,chordIndex=0,started=false,muted=readMutedPreference();
-  const progression=[
-    [60,64,67,71],
-    [57,60,64,67],
-    [62,65,69,72],
-    [55,59,62,65]
-  ];
+  let ctx=null,master=null,fxGain=null,muted=readMutedPreference();
   const speakerPitch={DANIEL:168,HELENA:214,'OTÁVIO':148,CAIO:244,INVESTIGADORA:184,TOFFOLI:142,MENDONÇA:154,ASSESSORA:206,'CHEFE DE GABINETE':198,DELEGADA:181,SISTEMA:118,NARRADOR:126};
 
   function ensure(){
@@ -301,78 +276,42 @@ const audio=(()=>{
     const AudioCtor=globalThis.AudioContext||globalThis.webkitAudioContext;
     if(!AudioCtor)return false;
     ctx=new AudioCtor();
-    master=ctx.createGain();musicGain=ctx.createGain();fxGain=ctx.createGain();ambienceGain=ctx.createGain();
-    // Mix pensado para o alto-falante pequeno do celular, sem estourar fones.
-    master.gain.value=muted?0:.82;musicGain.gain.value=.62;fxGain.gain.value=.92;ambienceGain.gain.value=.28;
-    musicGain.connect(master);fxGain.connect(master);ambienceGain.connect(master);master.connect(ctx.destination);
+    master=ctx.createGain();fxGain=ctx.createGain();
+    master.gain.value=muted?0:.72;fxGain.gain.value=.78;
+    fxGain.connect(master);master.connect(ctx.destination);
     return true;
   }
 
-  function midi(note){return 440*Math.pow(2,(note-69)/12)}
-
-  function softNote(note,when,duration,gainValue,type='triangle',destination=musicGain){
-    const osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter();
-    osc.type=type;osc.frequency.setValueAtTime(midi(note),when);osc.detune.setValueAtTime(((note%5)-2)*2,when);
-    filter.type='lowpass';filter.frequency.setValueAtTime(1450,when);filter.Q.value=.4;
-    gain.gain.setValueAtTime(.0001,when);
-    gain.gain.exponentialRampToValueAtTime(Math.max(.0002,gainValue),when+.22);
-    gain.gain.setValueAtTime(Math.max(.0002,gainValue*.86),when+Math.max(.3,duration-.55));
-    gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
-    osc.connect(filter);filter.connect(gain);gain.connect(destination);
-    osc.start(when);osc.stop(when+duration+.04);
+  function tone(frequency,duration=.045,level=.026,type='sine',slide=0){
+    if(!ctx||muted||ctx.state==='suspended')return;
+    const when=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain(),filter=ctx.createBiquadFilter();
+    osc.type=type;osc.frequency.setValueAtTime(frequency,when);
+    if(slide)osc.frequency.exponentialRampToValueAtTime(Math.max(35,frequency+slide),when+duration);
+    filter.type='lowpass';filter.frequency.value=1800;
+    gain.gain.setValueAtTime(.0001,when);gain.gain.exponentialRampToValueAtTime(level,when+.004);gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
+    osc.connect(filter);filter.connect(gain);gain.connect(fxGain);osc.start(when);osc.stop(when+duration+.01);
   }
 
-  function softKick(when,level=.022){
-    const osc=ctx.createOscillator(),gain=ctx.createGain();
-    osc.type='sine';osc.frequency.setValueAtTime(72,when);osc.frequency.exponentialRampToValueAtTime(43,when+.16);
-    gain.gain.setValueAtTime(level,when);gain.gain.exponentialRampToValueAtTime(.0001,when+.18);
-    osc.connect(gain);gain.connect(musicGain);osc.start(when);osc.stop(when+.2);
-  }
-
-  function softBrush(when,level=.006){
-    const length=Math.max(80,Math.floor(ctx.sampleRate*.045)),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
+  function noise(duration=.035,level=.014,frequency=1400){
+    if(!ctx||muted||ctx.state==='suspended')return;
+    const length=Math.max(80,Math.floor(ctx.sampleRate*duration)),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
     for(let i=0;i<length;i++)data[i]=(Math.random()*2-1)*(1-i/length);
-    const noise=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();
-    noise.buffer=buffer;filter.type='highpass';filter.frequency.value=2800;gain.gain.value=level;
-    noise.connect(filter);filter.connect(gain);gain.connect(musicGain);noise.start(when);
+    const source=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();
+    source.buffer=buffer;filter.type='lowpass';filter.frequency.value=frequency;gain.gain.value=level;
+    source.connect(filter);filter.connect(gain);gain.connect(fxGain);source.start();
   }
 
-  function scheduleChord(){
-    if(!ctx||muted)return;
-    const when=ctx.currentTime+.035,chord=progression[chordIndex++%progression.length],duration=4.05;
-    chord.forEach((note,i)=>softNote(note,when,duration,.021-(i*.0015)));
-    softNote(chord[0]-12,when+.05,2.7,.032,'sine');
-    softNote(chord[1]-12,when+2.03,1.65,.021,'sine');
-    softNote(chord[2]+12,when+.48,.62,.012,'sine');
-    softKick(when+.04,.038);softKick(when+2.04,.029);
-    [0.55,1.55,2.55,3.55].forEach(offset=>softBrush(when+offset,.011));
-  }
-
-  function startAmbience(){
-    const seconds=1.8,length=Math.floor(ctx.sampleRate*seconds),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);
-    for(let i=0;i<length;i++){
-      const drift=Math.sin(i/1900)*.07;
-      data[i]=(Math.random()*2-1)*(.38+drift);
-    }
-    const noise=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();
-    noise.buffer=buffer;noise.loop=true;filter.type='lowpass';filter.frequency.value=1150;filter.Q.value=.2;gain.gain.value=.052;
-    noise.connect(filter);filter.connect(gain);gain.connect(ambienceGain);noise.start();
-  }
-
-  function start(){
-    if(!ensure())return;
-    ctx.resume?.().catch?.(()=>{});
-    if(started)return;
-    started=true;startAmbience();scheduleChord();
-    musicTimer=setInterval(scheduleChord,3950);
-  }
+  function start(){if(!ensure())return;ctx.resume?.().catch?.(()=>{})}
+  function ui(){tone(310,.025,.016,'triangle',-35)}
+  function interact(){noise(.04,.018,950);tone(185,.055,.018,'sine',35)}
+  function advance(){tone(245,.032,.014,'triangle',18)}
+  function item(){tone(330,.055,.022,'triangle',90);setTimeout(()=>tone(470,.06,.018,'sine',55),42)}
+  function success(){tone(294,.07,.025,'triangle',60);setTimeout(()=>tone(440,.1,.022,'sine',80),64)}
+  function error(){tone(145,.08,.02,'sawtooth',-35)}
 
   function blip(speaker,charCode=0){
-    if(!ctx||muted||ctx.state==='suspended')return;
-    const now=ctx.currentTime,osc=ctx.createOscillator(),gain=ctx.createGain(),base=speakerPitch[speaker]||198;
-    osc.type='triangle';osc.frequency.setValueAtTime(base+(charCode%7)*3,now);
-    gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.043,now+.004);gain.gain.exponentialRampToValueAtTime(.0001,now+.032);
-    osc.connect(gain);gain.connect(fxGain);osc.start(now);osc.stop(now+.032);
+    if(charCode%2)return;
+    tone((speakerPitch[speaker]||198)+(charCode%5)*4,.022,.009,'triangle',-8);
   }
 
   function toggle(){
@@ -381,16 +320,15 @@ const audio=(()=>{
     if(master){
       const now=ctx.currentTime;
       master.gain.cancelScheduledValues(now);
-      master.gain.setTargetAtTime(muted?0:.82,now,.025);
-      if(!muted&&!started)start();
-      if(!muted&&started)scheduleChord();
+      master.gain.setTargetAtTime(muted?0:.72,now,.02);
     }
+    if(!muted){start();success()}
     return muted;
   }
 
   function resume(){if(ctx&&!muted)ctx.resume?.().catch?.(()=>{})}
   function isMuted(){return muted}
-  return {start,blip,toggle,resume,isMuted};
+  return {start,blip,ui,interact,advance,item,success,error,toggle,resume,isMuted};
 })();
 
 function updateAudioButton(){
@@ -398,7 +336,7 @@ function updateAudioButton(){
   const muted=audio.isMuted();
   button.classList[muted?'add':'remove']('muted');
   button.setAttribute('aria-pressed',muted?'true':'false');
-  button.setAttribute('aria-label',muted?'Ligar som':'Desligar som');
+  button.setAttribute('aria-label',muted?'Ligar efeitos':'Desligar efeitos');
 }
 
 function lockLandscape(){
@@ -474,7 +412,7 @@ function save(){localStorage.setItem(SAVE_KEY,JSON.stringify(state)); updateBadg
 function load(){try{return JSON.parse(localStorage.getItem(SAVE_KEY))}catch{return null}}
 function reset(){state=freshState(); localStorage.removeItem(SAVE_KEY); begin()}
 function begin(){state.started=true; start.classList.remove('active'); game.classList.add('active'); enterScene(state.scene,true); save()}
-function addItem(id){if(!state.inventory.includes(id))state.inventory.push(id)}
+function addItem(id){if(!state.inventory.includes(id)){state.inventory.push(id);audio.item()}}
 function addDossier(id){if(id&&!state.dossier.includes(id)){state.dossier.push(id); toast('Nova entrada no Dossiê')};save()}
 function toast(text){const el=$('#toast');el.textContent=text;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1800)}
 
@@ -495,6 +433,7 @@ function renderHotspots(){
 
 function interact(h){
   if(!dialogue.classList.contains('hidden'))return;
+  audio.interact();
   const key=state.scene+'_'+h.id, first=!state.seen[key];state.seen[key]=true;
   if(first&&h.item){addItem(h.item);toast(inventoryCatalog[h.item].name+' adicionado')}
   if(first&&h.dossier)addDossier(h.dossier);
@@ -519,7 +458,7 @@ function showChoices(h,key,finish){
   dialogue.classList.remove('hidden'); choicesEl.innerHTML=''; $('#dialogue-hint').textContent='escolha';
   h.choices.forEach(c=>{
     const b=document.createElement('button');b.className='choice';b.textContent=c.text;b.onclick=e=>{
-      e.stopPropagation();state.flags['choice_'+key]=true;state.flags[c.flag]=true;
+      e.stopPropagation();audio.ui();state.flags['choice_'+key]=true;state.flags[c.flag]=true;
       Object.entries(c.effects||{}).forEach(([k,v])=>state.metrics[k]+=v);choicesEl.innerHTML='';save();play(c.reply,finish)
     };choicesEl.appendChild(b)
   })
@@ -528,11 +467,12 @@ function showChoices(h,key,finish){
 function play(lines,done){queue=[...lines];afterDialogue=done;dialogue.classList.remove('hidden');nextLine()}
 function nextLine(){
   if(typing){finishTyping();return}
+  if(queue.length)audio.advance();
   const item=queue.shift();
   if(!item){dialogue.classList.add('hidden');choicesEl.innerHTML='';hideCharacter();const cb=afterDialogue;afterDialogue=null;if(cb)cb();return}
   const [speaker,text]=item; speakerEl.textContent=speaker;showCharacter(speaker);typeText(text)
 }
-function typeText(text){clearInterval(typeTimer);typing=true;currentFullText=text;lineEl.textContent='';choicesEl.innerHTML='';$('#dialogue-hint').textContent='toque para continuar';let i=0;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;if(reduced){finishTyping();return}typeTimer=setInterval(()=>{lineEl.textContent=text.slice(0,++i);const char=text[i-1];if(i%3===0&&char&&/\S/.test(char))audio.blip(speakerEl.textContent,char.charCodeAt(0));if(i>=text.length)finishTyping()},15)}
+function typeText(text){clearInterval(typeTimer);typing=true;currentFullText=text;lineEl.textContent='';choicesEl.innerHTML='';$('#dialogue-hint').textContent='toque para continuar';let i=0;const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;if(reduced){finishTyping();return}typeTimer=setInterval(()=>{lineEl.textContent=text.slice(0,++i);const char=text[i-1];if(i%8===0&&char&&/\S/.test(char))audio.blip(speakerEl.textContent,char.charCodeAt(0));if(i>=text.length)finishTyping()},13)}
 function finishTyping(){clearInterval(typeTimer);lineEl.textContent=currentFullText;typing=false}
 function showCharacter(speaker){const map={DANIEL:'daniel',HELENA:'helena',OTÁVIO:'otavio',CAIO:'caio',INVESTIGADORA:'investigadora',TOFFOLI:'toffoli',MENDONÇA:'mendonca'};const person=map[speaker];if(!person){hideCharacter();return}character.dataset.person=person;character.className='show '+(['daniel','toffoli','mendonca'].includes(person)?'':'right')}
 function hideCharacter(){character.className='';}
@@ -545,78 +485,55 @@ function updateBadges(){
 function openModal(title,kicker,html){$('#modal-title').textContent=title;$('#modal-kicker').textContent=kicker;$('#modal-body').innerHTML=html;$('#modal').classList.remove('hidden')}
 function closeModal(){activePuzzle=null;$('#modal').classList.add('hidden')}
 
-function puzzleCards(puzzle){
-  if(puzzle.type==='match'){
-    const left=puzzle.pairs.map((pair,index)=>({token:'l'+index,group:index,side:'left',text:pair.left}));
-    const right=puzzle.pairs.map((pair,index)=>({token:'r'+index,group:index,side:'right',text:pair.right})).reverse();
-    return left.flatMap((card,index)=>[card,right[index]]);
-  }
-  return puzzle.options.map((option,index)=>({...option,token:String(index)}));
-}
-
 function showPuzzle(puzzle,key,done){
-  activePuzzle={puzzle,key,done,cards:puzzleCards(puzzle),selected:[],matched:[],pending:null,mistakes:0,penalized:false};
+  const tools=puzzle.tools.filter(tool=>!tool.inventoryId||state.inventory.includes(tool.inventoryId));
+  activePuzzle={puzzle,key,done,tools,completed:[],selectedTool:null,mistakes:0,feedback:''};
   renderPuzzle();
 }
 
-function renderPuzzle(feedback=''){
+function renderPuzzle(feedback=activePuzzle?.feedback||'Escolha uma ferramenta e use no ponto certo da mesa.'){
   if(!activePuzzle)return;
   const a=activePuzzle,p=a.puzzle;
-  const picked=p.type==='order'?a.selected.map(token=>a.cards.find(card=>card.token===token)?.text).filter(Boolean):[];
-  openModal(p.title,p.kicker,`<section class="puzzle" data-type="${p.type}"><p class="puzzle-prompt">${p.prompt}</p>${p.type==='order'?`<div class="puzzle-tray">${picked.length?picked.map((text,index)=>`<span><b>${index+1}</b>${text}</span>`).join(''):'<em>A sequência aparece aqui.</em>'}</div>`:''}<div class="puzzle-grid">${a.cards.map(card=>{const selected=a.selected.includes(card.token)||a.pending===card.token;const matched=a.matched.includes(card.group);return `<button class="puzzle-card ${selected?'selected':''} ${matched?'matched':''}" data-puzzle-token="${card.token}" ${matched?'disabled':''}>${card.text}</button>`}).join('')}</div><p class="puzzle-feedback" aria-live="polite">${feedback||'Erros não bloqueiam a história, mas aumentam a pressão.'}</p><div class="puzzle-actions">${p.type==='match'?'':`<button data-puzzle-check>Conferir</button>`}<button data-puzzle-reset>Limpar</button></div></section>`);
-  document.querySelectorAll('[data-puzzle-token]').forEach(button=>button.onclick=()=>selectPuzzleCard(button.dataset.puzzleToken));
-  const check=document.querySelector('[data-puzzle-check]');if(check)check.onclick=checkActivePuzzle;
-  const reset=document.querySelector('[data-puzzle-reset]');if(reset)reset.onclick=()=>{if(!activePuzzle)return;activePuzzle.selected=[];activePuzzle.pending=null;renderPuzzle('Mesa limpa. Tente outra leitura.')};
+  const availableTools=a.tools.filter(tool=>!tool.requires||tool.requires.every(id=>a.completed.includes(id)));
+  const progress=`${a.completed.length}/${p.targets.length}`;
+  openModal(p.title,p.kicker,`<section class="puzzle workbench" data-type="${p.type}"><div class="puzzle-head"><p class="puzzle-prompt">${p.prompt}</p><b>${progress}</b></div><div class="workbench-layout"><div class="puzzle-tools" aria-label="Ferramentas">${availableTools.map(tool=>`<button class="puzzle-tool ${a.selectedTool===tool.id?'selected':''}" data-puzzle-tool="${tool.id}"><span>${tool.icon||'◇'}</span><strong>${tool.label}</strong><small>${tool.inventoryId?'Inventário · ':''}${tool.detail||''}</small></button>`).join('')}</div><div class="puzzle-targets" aria-label="Mesa de trabalho">${p.targets.map(target=>{const done=a.completed.includes(target.id);const locked=(target.requires||[]).some(id=>!a.completed.includes(id));return `<button class="puzzle-target ${done?'done':''} ${locked?'locked':''}" data-puzzle-target="${target.id}" ${done?'disabled':''}><span>${done?'✓':target.icon||'◫'}</span><strong>${target.label}</strong><small>${done?target.result:target.detail}</small></button>`}).join('')}</div></div><p class="puzzle-feedback" aria-live="polite">${feedback}</p><p class="puzzle-instruction">Toque numa ferramenta e depois no objeto em que deseja usá-la.</p></section>`);
+  document.querySelectorAll('[data-puzzle-tool]').forEach(button=>button.onclick=()=>selectPuzzleTool(button.dataset.puzzleTool));
+  document.querySelectorAll('[data-puzzle-target]').forEach(button=>button.onclick=()=>usePuzzleTool(button.dataset.puzzleTarget));
 }
 
-function selectPuzzleCard(token){
-  if(!activePuzzle)return;
-  const a=activePuzzle,p=a.puzzle,card=a.cards.find(item=>item.token===token);if(!card)return;
-  if(p.type==='select'){
-    a.selected=a.selected.includes(token)?a.selected.filter(item=>item!==token):[...a.selected,token];renderPuzzle();return;
-  }
-  if(p.type==='order'){
-    a.selected=a.selected.includes(token)?a.selected.filter(item=>item!==token):[...a.selected,token];renderPuzzle();return;
-  }
-  if(a.matched.includes(card.group))return;
-  if(!a.pending){a.pending=token;renderPuzzle('Agora escolha a outra metade da relação.');return}
-  const first=a.cards.find(item=>item.token===a.pending);
-  if(first.token===token){a.pending=null;renderPuzzle();return}
-  if(first.group===card.group&&first.side!==card.side){
-    a.matched.push(card.group);a.pending=null;
-    if(a.matched.length===p.pairs.length){finishActivePuzzle();return}
-    renderPuzzle('Relação encontrada. Ainda há fios soltos.');return;
-  }
-  registerPuzzleMistake();a.pending=null;renderPuzzle('Essas duas peças não formam a mesma relação.');
-}
-
-function checkActivePuzzle(){
+function selectPuzzleTool(id){
   if(!activePuzzle)return false;
-  const a=activePuzzle,p=a.puzzle;let correct=false;
-  if(p.type==='select'){
-    const expected=a.cards.filter(card=>card.correct).map(card=>card.token).sort();
-    correct=JSON.stringify([...a.selected].sort())===JSON.stringify(expected);
-  }else if(p.type==='order'){
-    const chosen=a.selected.map(token=>a.cards.find(card=>card.token===token)?.id);
-    correct=JSON.stringify(chosen)===JSON.stringify(p.solution);
-  }
-  if(correct){finishActivePuzzle();return true}
-  registerPuzzleMistake();renderPuzzle(p.type==='order'?'A ordem ainda contradiz a cronologia.':'Há uma promessa tratada como fato — ou um fato marcado como promessa.');return false;
+  activePuzzle.selectedTool=activePuzzle.selectedTool===id?null:id;audio.ui();
+  const tool=activePuzzle.tools.find(item=>item.id===id);
+  renderPuzzle(tool?`${tool.label} em mãos. Onde isso funciona?`:'');return true;
+}
+
+function usePuzzleTool(targetId){
+  if(!activePuzzle)return false;
+  const a=activePuzzle,target=a.puzzle.targets.find(item=>item.id===targetId);if(!target)return false;
+  const missing=(target.requires||[]).filter(id=>!a.completed.includes(id));
+  if(missing.length){registerPuzzleMistake();audio.error();renderPuzzle(target.locked||'Ainda falta preparar outra parte do mecanismo.');return false}
+  if(!a.selectedTool){audio.error();renderPuzzle('Você precisa escolher o que usar primeiro.');return false}
+  const accepted=Array.isArray(target.accept)?target.accept:[target.accept];
+  if(!accepted.includes(a.selectedTool)){registerPuzzleMistake();audio.error();renderPuzzle(target.wrong||'Isso não reage a essa ferramenta. Observe os detalhes.');return false}
+  a.completed.push(target.id);a.selectedTool=null;audio.item();
+  if(target.grants&&!a.tools.some(tool=>tool.id===target.grants.id))a.tools.push(target.grants);
+  if(a.completed.length===a.puzzle.targets.length){finishActivePuzzle();return true}
+  renderPuzzle(target.result);return true;
 }
 
 function registerPuzzleMistake(){
   if(!activePuzzle)return;
   activePuzzle.mistakes++;
-  if(!activePuzzle.penalized){activePuzzle.penalized=true;state.metrics.pressure+=1;save()}
 }
 
 function finishActivePuzzle(force=false){
   if(!activePuzzle)return false;
   const a=activePuzzle;
-  if(force&&a.puzzle.type==='match')a.matched=a.puzzle.pairs.map((_,index)=>index);
+  if(force)a.completed=a.puzzle.targets.map(target=>target.id);
   state.flags['puzzle_'+a.key]=true;
   if(!a.mistakes){state.flags['puzzle_clean_'+a.key]=true;state.metrics.trust+=1}
-  save();const done=a.done,success=a.puzzle.success;activePuzzle=null;$('#modal').classList.add('hidden');toast(success);done();return true;
+  save();const done=a.done,success=a.puzzle.success;activePuzzle=null;$('#modal').classList.add('hidden');audio.success();toast(success);done();return true;
 }
 function openPhone(){state.unread=0;save();const msgs=messagesByScene[state.scene]||[];openModal('Celular','MENSAGENS',`<div class="messages">${msgs.map(m=>`<div class="entry ${m.mine?'mine':'theirs'}"><span class="message-time">${m.from||'Você'} · ${m.time}</span><p>${m.text}</p></div>`).join('')}</div>`)}
 function openInventory(){const html=state.inventory.length?`<div class="inventory-grid">${state.inventory.map(id=>{const i=inventoryCatalog[id];return `<button class="item ${state.selected===id?'selected':''}" data-item="${id}"><span class="item-icon">${i.icon}</span><strong>${i.name}</strong><small>${i.desc}</small></button>`}).join('')}</div><p class="fact-note">Selecione um item. Alguns objetos reagem a ele; o jogo nunca exige adivinhação para avançar.</p>`:'<p>O bolso ainda está vazio.</p>';openModal('Inventário','O QUE FICOU',html);document.querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>{state.selected=state.selected===b.dataset.item?null:b.dataset.item;save();openInventory()})}
@@ -646,6 +563,7 @@ function showMendoncaEnding(){
 }
 
 dialogue.addEventListener('click',e=>{if(!e.target.closest('.choice'))nextLine()});$('#scene').addEventListener('click',()=>{if(!dialogue.classList.contains('hidden'))nextLine()});
+document.addEventListener('pointerdown',e=>{try{audio.start();if(e.target.closest('button')&&!e.target.closest('.hotspot,.choice,[data-puzzle-tool],[data-puzzle-target],#audio-btn'))audio.ui()}catch{}});
 $('#new-game').onclick=()=>launchGame(reset);$('#continue-game').onclick=()=>launchGame(()=>{const saved=load();if(saved){state={...freshState(),...saved};begin()}});$('#start-sources').onclick=openAbout;
 $('#phone-btn').onclick=openPhone;$('#inventory-btn').onclick=openInventory;$('#dossier-btn').onclick=openDossier;$('#audio-btn').onclick=()=>{try{audio.start();audio.toggle()}catch{}updateAudioButton()};$('#menu-btn').onclick=openMenu;$('#modal-close').onclick=closeModal;$('#modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if((e.key===' '||e.key==='Enter')&&!dialogue.classList.contains('hidden'))nextLine()});

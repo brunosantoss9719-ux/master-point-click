@@ -1,9 +1,9 @@
-const CACHE='master-shell-v8';
+const CACHE='master-shell-v9';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=mendonca-arc-1',
-  './app.js?v=mendonca-arc-1',
+  './styles.css?v=adventure-puzzles-1',
+  './app.js?v=adventure-puzzles-1',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',

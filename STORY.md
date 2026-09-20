@@ -8,7 +8,7 @@
 
 Consequências ocultas: pressão, exposição e confiança. Finais: **A Pasta Aberta**, **A Fortaleza Vazia**, **O Homem no Vidro**.
 
-Puzzles do arco: separar condições pendentes do acordo BRB, reconstruir a cronologia anúncio–liminar–veto e ligar cada versão do interrogatório ao vestígio correspondente.
+Puzzles do arco: abrir e reconstruir a pasta BRB com ferramentas, restaurar fisicamente a decisão do BC e periciar celular, minuta e plano de voo antes do interrogatório. Não há questionário nem cartões de cronologia.
 
 ## Arco II — Toffolinho
 
@@ -18,7 +18,7 @@ Puzzles do arco: separar condições pendentes do acordo BRB, reconstruir a cron
 
 Toffolinho é uma caricatura satírica controlável. A intenção de “ferrar tudo” estrutura as escolhas e o humor, mas não é apresentada como fato. Decisões, datas e relações documentadas aparecem no Dossiê; pensamentos e diálogos de gabinete são dramatização.
 
-Puzzles do arco: ordenar níveis de acesso aos autos, montar uma cadeia de custódia rastreável e cruzar as relações reportadas do Tayayá. Falhar nunca bloqueia a história, mas aumenta a pressão; resolver sem erro melhora a confiança.
+Puzzles do arco: operar uma fechadura de acesso em três camadas, preparar fisicamente a cadeia de custódia de uma caixa e sobrepor documentos do Tayayá numa mesa de luz. Tentativas erradas dão resposta contextual, sem punir métricas nem bloquear a história.
 
 ## Arco III — André Mendonça
 
@@ -27,4 +27,8 @@ Puzzles do arco: ordenar níveis de acesso aos autos, montar uma cadeia de cust�
 11. **A Caneta (8–10/09/2026):** Mendonça afasta Andrei Rodrigues; Fachin suspende a medida e o conflito chega ao plenário.
 12. **A Senha (19/09/2026):** o gabinete não consegue abrir a cópia criptografada de 500 GB e pede ajuda técnica à própria PF.
 
-Puzzles do arco: definir a fronteira de competência, reconstruir o rastro mensagem–relatório, ordenar a ruptura institucional e remontar a custódia digital. O arco termina no estado documentado em 19 de setembro de 2026; o conflito permanecia aberto.
+Puzzles do arco: configurar permissões da PF num terminal, trabalhar mensagens numa estação forense, descobrir qual decisão permanece operante pela mesa de protocolo e diagnosticar a cópia criptografada até identificar a chave ausente. O arco termina no estado documentado em 19 de setembro de 2026; o conflito permanecia aberto.
+
+## Ritmo e interação
+
+Os 10 puzzles usam bancadas multietapa: o jogador escolhe ferramentas, manipula documentos, aparelhos, lacres, terminais e mecanismos, e recebe mudanças visíveis a cada ação. Os diálogos de abertura foram reduzidos; fatos extensos ficam no Dossiê e a investigação acontece principalmente pelo cenário.

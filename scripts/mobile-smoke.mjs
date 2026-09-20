@@ -143,12 +143,12 @@ try{
   }
   await evaluate(send,"document.querySelector('.hotspot.required').click(); true");
   for(let i=0;i<8;i++){
-    const open=await evaluate(send,"!document.querySelector('#modal').classList.contains('hidden') && document.querySelectorAll('.puzzle-card').length>0");
+    const open=await evaluate(send,"!document.querySelector('#modal').classList.contains('hidden') && document.querySelectorAll('.puzzle-target').length>0");
     if(open)break;
     await evaluate(send,"document.querySelector('#dialogue').click(); true");await sleep(80);
   }
-  const puzzle=await evaluate(send,"(()=>({open:!document.querySelector('#modal').classList.contains('hidden'),cards:document.querySelectorAll('.puzzle-card').length,title:document.querySelector('#modal-title').textContent,overflow:document.querySelector('.modal-panel').scrollHeight>document.querySelector('.modal-panel').clientHeight}))()");
-  if(!puzzle.open||puzzle.cards<4||puzzle.title!=='A fronteira do fluxo')throw new Error('Puzzle Mendonça mobile não abriu corretamente: '+JSON.stringify(puzzle));
+  const puzzle=await evaluate(send,"(()=>({open:!document.querySelector('#modal').classList.contains('hidden'),tools:document.querySelectorAll('.puzzle-tool').length,targets:document.querySelectorAll('.puzzle-target').length,title:document.querySelector('#modal-title').textContent,overflow:document.querySelector('.modal-panel').scrollHeight>document.querySelector('.modal-panel').clientHeight}))()");
+  if(!puzzle.open||puzzle.tools<4||puzzle.targets<4||puzzle.title!=='A fronteira do fluxo')throw new Error('Puzzle Mendonça mobile não abriu corretamente: '+JSON.stringify(puzzle));
   await capture(send,'artifacts/mobile-puzzle.png');
 
   await send('Emulation.setDeviceMetricsOverride',{
