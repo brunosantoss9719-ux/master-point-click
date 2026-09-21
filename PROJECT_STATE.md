@@ -35,26 +35,26 @@ Web Audio procedural, desbloqueado no primeiro gesto e nunca bloqueante. Paleta 
 
 `npm test` valida schema, fontes, PWA, ausência do motor antigo, quatro verbos, resumo de evidências, 41 diligências e quatro playthroughs completos: dois caminhos iniciais × duas ordens de leads. As rotas incluem escolhas ruins, confronto inadequado e conclusão digital exagerada.
 
-O navegador automatizado local não está disponível nesta execução (`google-chrome` e `agent-browser` ausentes). O navegador remoto não alcança `localhost`. Portanto, este arquivo não registra falso PASS visual antes da publicação; a checagem pública deve ocorrer depois do push/deploy.
+O navegador automatizado local não estava disponível (`google-chrome` e `agent-browser` ausentes). Depois da publicação do commit, o navegador remoto abriu o mesmo SHA por espelho estático: título, arte, diálogo, caderno, ação, fail forward e retomada foram exercitados. Os únicos erros de console pertenciam à extensão do navegador de QA, não ao jogo.
 
 ## LAST VERIFIED STATE
 
-21/09/2026 — v3 implementada no worktree canônico; quatro rotas lógicas completas e save schema v3 validados. Visual preservado por CSS incremental. Verificação pública pós-deploy ainda pendente neste checkpoint.
+21/09/2026 — v3 publicada no `main`. Browser em 1363×936: abertura, objetos, Caderno de Diligências, conferência da ordem/embarque, formalização excessiva sobre fuga, correção sem bloqueio, conclusão do prólogo, reload e Continuar em “O mau cheiro” passaram. Não houve overflow horizontal. A checagem foi feita contra o SHA publicado, não contra arquivos locais.
 
 ## LAST TEST
 
-`npm test` — PASS: 9 cenas, 27 evidências, 41 diligências, 4 verbos, firewall, PWA, caminhos alternativos, fail forward e duas ordens de leads.
+`npm test` — PASS: 9 cenas, 27 evidências, 41 diligências, 4 verbos, firewall, PWA, caminhos alternativos, fail forward e duas ordens de leads. Browser público: prólogo, fail forward e save/reload/Continuar PASS.
 
 ## LAST COMMIT
 
-`2bcad150ba9d11e4feb05fc50b8a305c7d225b10` — base canônica anterior; o próximo commit é o checkpoint da reformulação v3.
+`492a6d89c725bf27a5304b7d388e99ad5445079a` — `feat: rebuild case around investigative diligences`.
 
 ## CURRENT BLOCKERS
 
-- Verificação visual pública em 915×412, landscape menor e retrato após deploy.
+- Verificação visual exata em 915×412, landscape menor e retrato: o navegador remoto não expõe mudança de viewport e o Chrome local não existe.
 - Playtest humano cego continua necessário para medir diversão e dificuldade; automação não prova isso.
-- CLI Vercel e vínculo `.vercel` não existem neste ambiente; publicação depende da integração GitHub já configurada ou de acesso posterior ao projeto.
+- Não há integração de deploy no repositório: sem workflow, GitHub Pages, CLI Vercel ou vínculo `.vercel`. O código está no GitHub; não há produção para promover automaticamente.
 
 ## NEXT REAL
 
-Publicar o checkpoint, abrir o deploy em navegador real, percorrer pelo menos uma rota com reload/Continuar e ajustar apenas problemas observados. Depois, realizar playtest humano cego.
+Abrir o jogo em aparelho landscape, percorrer uma campanha sem conhecer as soluções e ajustar somente fricção observada. Depois, configurar um destino de deploy canônico se a publicação pública for desejada.
