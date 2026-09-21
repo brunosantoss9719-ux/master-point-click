@@ -1,9 +1,14 @@
-import fs from 'node:fs';import vm from 'node:vm';const x={window:{}};vm.createContext(x);vm.runInContext(fs.readFileSync('content/master-case.js','utf8'),x);const C=x.window.MASTER_CASE;
-const ids=C.scenes.map(s=>s.id),required=['cold','mau','fantasma','retorno','vidro','genero','turma','meninos','final'];for(const id of required)if(!ids.includes(id))throw Error(`Cena ${id} ausente`);
-const compare=C.scenes.find(s=>s.id==='mau').puzzle;if(compare.accept.length<2)throw Error('Comparação sem caminho alternativo');
-const interview=C.scenes.find(s=>s.id==='fantasma').puzzle;if(interview.acceptedSets.length<2||!interview.wrong.evidence)throw Error('Oitiva sem fail forward ou alternativas');
-const timeline=C.scenes.find(s=>s.id==='retorno').puzzle;if(!timeline.ties.length)throw Error('Cronologia não aceita simultaneidade');
-const links=C.scenes.find(s=>s.id==='turma').puzzle;if(links.accept.length<3)throw Error('Convergência sem alternativas');
-for(const first of ['turma','meninos']){const order=[first,first==='turma'?'meninos':'turma'];if(new Set(order).size!==2)throw Error('Ordem de leads inválida')}
-const digital=C.scenes.find(s=>s.id==='meninos').puzzle;if(digital.accept!=='related'||digital.rungs.at(-1)[0]!=='hack')throw Error('Escada de precisão digital inválida');
-console.log('PASS: rota completa, alternativas, simultaneidade, fail forward, duas ordens de leads e limite digital verificados.');
+import fs from 'node:fs';import vm from 'node:vm';
+const context={window:{}};vm.createContext(context);vm.runInContext(fs.readFileSync('content/master-case.js','utf8'),context);const C=context.window.MASTER_CASE;
+const scene=id=>C.scenes.find(s=>s.id===id),action=id=>C.scenes.flatMap(s=>s.actions).find(a=>a.id===id);
+const fresh=()=>({sceneId:'cold',evidence:[],actions:[],leads:[],conclusions:{},fails:0});
+const add=(arr,x)=>{if(!arr.includes(x))arr.push(x)};
+function available(a,s){if(a.requiresActions?.some(x=>!s.actions.includes(x)))return false;if(a.requiresAnyActions&&!a.requiresAnyActions.some(x=>s.actions.includes(x)))return false;if(a.requiresEvidence?.some(x=>!s.evidence.includes(x)))return false;if(a.requiresAnyEvidence&&!a.requiresAnyEvidence.some(x=>s.evidence.includes(x)))return false;if(a.requiresAnyConditions&&!a.requiresAnyConditions.some(c=>{const[k,id]=c.split(':');return k==='lead'?s.leads.includes(id):s.evidence.includes(id)}))return false;return true}
+function enter(s,id){s.sceneId=id;scene(id).starter.forEach(x=>add(s.evidence,x))}
+function doAction(s,id){const a=action(id);if(!a)throw Error(`Ação ${id} ausente`);if(!available(a,s))throw Error(`Ação ${id} travada indevidamente em ${s.sceneId}`);add(s.actions,id);(a.discover||[]).forEach(x=>add(s.evidence,x));if(a.fail)s.fails++;if(a.complete)s.conclusions[s.sceneId]=a.conclusion;if(a.lead)add(s.leads,a.lead);return a}
+function commonPrefix(route){const s=fresh();enter(s,'cold');doAction(s,'cold-flight');doAction(s,'cold-overreach');doAction(s,'cold-order');doAction(s,'cold-execute');enter(s,'mau');if(route==='id'){doAction(s,'mau-id');doAction(s,'mau-history')}else{doAction(s,'mau-origin')}doAction(s,'mau-absence');doAction(s,'mau-gap');enter(s,'fantasma');doAction(s,'fan-wrong');doAction(s,'fan-date');doAction(s,'fan-reveal');doAction(s,'fan-close');enter(s,'retorno');doAction(s,'ret-cause');doAction(s,'ret-dates');doAction(s,'ret-defense');doAction(s,'ret-limit');enter(s,'vidro');doAction(s,'vid-request');doAction(s,'vid-openall');doAction(s,'vid-map');doAction(s,'vid-close');enter(s,'genero');doAction(s,'gen-repeat');doAction(s,'gen-fin');doAction(s,'gen-info');doAction(s,'gen-scale');return s}
+function lead(s,id){enter(s,id);if(id==='turma'){doAction(s,'tur-role');doAction(s,'tur-pay');doAction(s,'tur-visit');doAction(s,'tur-alias');doAction(s,'tur-close')}else{doAction(s,'men-meta');doAction(s,'men-hack');doAction(s,'men-system');doAction(s,'men-close')}}
+for(const route of ['id','origin'])for(const order of [['turma','meninos'],['meninos','turma']]){const s=commonPrefix(route);lead(s,order[0]);lead(s,order[1]);enter(s,'final');doAction(s,'fin-destination');doAction(s,'fin-hash');doAction(s,'fin-merit');const end=doAction(s,'fin-seal');if(!end.end||s.leads.length!==2||Object.keys(s.conclusions).length!==9||s.fails<7)throw Error(`Rota incompleta ${route}/${order.join('>')}`)}
+if(available(action('fan-reveal'),{actions:[],evidence:[],leads:[]}))throw Error('Confronto liberado sem prova');
+if(!action('men-hack').fail||!action('tur-role').fail||!action('cold-overreach').fail)throw Error('Fail forward sensível ausente');
+console.log('PASS: 4 rotas completas, dois caminhos iniciais, duas ordens de leads, confrontos ruins e fail forward.');

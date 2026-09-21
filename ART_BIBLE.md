@@ -30,11 +30,13 @@ Pessoas reais não aparecem como avatares controláveis na campanha. Assets anti
 - Hipótese: seleção por toque de evidência A/B/C; nunca drag obrigatório.
 - Áudio: Web Audio procedural curto, grave e acolhedor. Senoides e triângulos filtrados em low-pass, ataques macios e caudas curtas para gesto inicial, diálogo, evidência, contradição e conclusão. A referência é a sensação confortável de um café noturno, sem copiar efeitos de `Coffee Talk`. Sem música/ambiência contínua; falha de áudio nunca bloqueia o jogo.
 
-## Interação v2
+## Interação v3
 
 - Não usar anéis, círculos ou “+” flutuantes.
 - Objeto examinável recebe etiqueta retangular, filete lateral e linha física.
 - Estado visitado reduz contraste e troca EXAMINAR por REVER; não depende só de cor.
-- Mesa do Caso usa papel, pasta, carimbo, transcrição e mídia, não dashboard.
-- Toque A → toque B substitui drag-and-drop.
-- Som principal entre 92–196 Hz; fala usa blips baixos por personagem.
+- O Caderno de Diligências usa o mesmo papel escuro, filetes, carimbos e tipografia do jogo; não usa rodas, radial menus, sidebar ou grade empresarial.
+- Quatro verbos permanecem em toda a campanha: RASTREAR, VERIFICAR, CONFRONTAR e FORMALIZAR. A lista mostra decisões concretas da cena, não “minigames”.
+- Abrir objetos é opcional e contextual. Nunca bloquear uma diligência até todos os marcadores terem sido tocados.
+- Resultado de uma escolha retorna ao cenário e às vozes; o painel não vira uma tela abstrata separada do thriller.
+- Som principal entre 73–147 Hz, passa-baixa de 260–340 Hz, ataques macios e caudas mais audíveis. Fala usa blips baixos por personagem.

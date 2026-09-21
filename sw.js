@@ -1,11 +1,11 @@
-const CACHE='master-casework-v3';
+const CACHE='master-diligencias-v4';
 const SHELL=[
   './',
   './index.html',
-  './styles.css?v=casework-3',
-  './app.js?v=casework-3',
-  './content/sources.js?v=casework-3',
-  './content/master-case.js?v=casework-3',
+  './styles.css?v=diligencias-1',
+  './app.js?v=diligencias-1',
+  './content/sources.js?v=diligencias-1',
+  './content/master-case.js?v=diligencias-1',
   './manifest.webmanifest',
   './assets/office.webp',
   './assets/boardroom.webp',

@@ -17,12 +17,14 @@ Atualizado em 20/09/2026. Datas de acontecimento, documento, publicação e disp
 | plenaria | Em 15/09 houve vista durante questão de ordem da Pet 16662; mérito não foi julgado. | DOCUMENTADO / PENDENTE | 15/09/2026 | sessão pública do STF | Não é decisão final. | final |
 | copia500 | Em 19/09 gabinetes pediram auxílio técnico à PF para cópia de cerca de 500 GB. | REPORTADO / PENDENTE | 19/09/2026 | UOL / registros reportados | Destino e tratamento abertos no corte temporal. | final |
 
-## Pesquisa de design aplicada
+## Pesquisa de design aplicada na v3
 
-- Color Gray Games: Thought Paths, lógica do mundo, mistério local + arco macro e testes frequentes. Aplicação: cada cena tem caminho; origem e data aceitam redundância.
-- Lucas Pope / Obra Dinn: livro organiza informação; conhecimento é progressão. Aplicação: Dossiê guarda fatos sem explicar relações.
-- Sam Barlow / Her Story: mecanismo simples ganha profundidade; descoberta fora de ordem recontextualiza. Aplicação: aeroporto revisto e ordem variável.
-- inkle/ink: conteúdo e estado separados. Aplicação: `content/master-case.js` separado do motor e `sceneProgress` serializado.
+- Color Gray Games: Thought Paths, lógica do mundo, mistério local + arco macro e testes frequentes. Aplicação: cada cena contém dependências explícitas e mais de uma primeira diligência útil.
+- Lucas Pope / Obra Dinn: livro organiza informação; conhecimento é progressão. Aplicação: Dossiê guarda fatos e o desbloqueio depende do que foi descoberto, não de pontos.
+- Sam Barlow / Her Story e Telling Lies: um verbo central pode ganhar profundidade por contexto e recontextualização. Aplicação: quatro verbos persistentes substituem oito minigames descartáveis.
+- Overboard!/Expelled!: personagens reagem ao que foi revelado e conclusões ruins mudam a conversa. Aplicação: confronto inadequado e extrapolação produzem fail forward.
+- Paradise Killer: o jogador escolhe a próxima linha e constrói uma teoria com evidências sem um único clique autoral. Aplicação: caminhos pelo lote ou pela origem e ordem livre das duas linhas.
+- inkle/ink: conteúdo e estado separados. Aplicação: `content/master-case.js` descreve diligências; `app.js` executa o grafo e serializa conhecimento, ações e ordem.
 - Política de autoplay do Chrome: áudio precisa nascer/retomar em gesto. Aplicação: `pointerdown/touchend`, fila e `await audio.resume()`.
 
-As referências informam princípios. Nenhuma interface, personagem, puzzle, texto ou áudio foi copiado.
+As referências informam princípios. Nenhuma interface, personagem, puzzle, texto ou áudio foi copiado. A reformulação v3 não altera as afirmações factuais do ledger; altera como o jogador as encontra e limita.
